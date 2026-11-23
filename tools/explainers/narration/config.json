@@ -1,6 +1,6 @@
 {
-  "voice_id": null,
-  "voice_name": null,
+  "voice_id": "cjVigY5qzO86Huf0OWal",
+  "voice_name": "Eric - Smooth, Trustworthy",
   "model_id": "eleven_multilingual_v2",
   "output_format": "mp3_44100_128",
   "voice_settings": {
