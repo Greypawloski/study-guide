@@ -13,7 +13,8 @@
   /* Returns {done: bool, detail: string} */
   B.status = function (t) {
     const s = Store.get();
-    const rec = s.boot && s.boot.tasks[t.id];
+    const rec0 = s.boot && s.boot.tasks && s.boot.tasks[t.id];
+    const rec = rec0 && !rec0.removed ? rec0 : null;
     switch (t.type) {
       case "lessons": {
         const m = SECTIONS.find(x => x.id === t.sections[0]);

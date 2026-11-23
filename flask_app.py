@@ -4,8 +4,13 @@ PythonAnywhere's WSGI file imports `app` from this module, so keep the name.
 """
 
 import random
+from datetime import timedelta
+from urllib.parse import urlparse
 
-from flask import Flask, abort, render_template, request
+from flask import (Flask, abort, g, jsonify, redirect, render_template, request,
+                   session, url_for)
+
+import accounts
 
 from content.bootcamp import BOOTCAMP
 from content.flashcards import FLASHCARDS
@@ -13,6 +18,14 @@ from content.lessons import ARIZONA_NUMBERS, EXAM_INFO, SECTION_BY_ID, SECTIONS
 from content.questions import QUESTIONS
 
 app = Flask(__name__)
+app.config.update(
+    SECRET_KEY=accounts.load_secret_key(),
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    PERMANENT_SESSION_LIFETIME=timedelta(days=90),
+    MAX_CONTENT_LENGTH=2 * 1024 * 1024,
+)
+accounts.init_db()
 
 SECTION_META = [
     {k: s[k] for k in ("id", "num", "title", "weight", "icon", "summary")}
@@ -37,7 +50,108 @@ def inject_globals():
         "qmeta": QMETA,
         "cmeta": CMETA,
         "bootcamp": BOOTCAMP,
+        "user": g.get("user"),
+        "server_progress": g.get("server_progress"),
     }
+
+
+@app.before_request
+def load_user():
+    g.user = None
+    uid = session.get("uid")
+    if uid:
+        row = accounts.get_user(uid)
+        if row:
+            g.user = {"id": row["id"], "username": row["username"]}
+        else:
+            session.clear()
+    # Pages get the saved progress embedded so it shows without a delay.
+    if g.user and request.method == "GET" and not request.path.startswith(("/api/", "/static/")):
+        g.server_progress = accounts.get_progress(g.user["id"])
+
+
+def _safe_next(target):
+    """Only allow redirects back to pages on this site."""
+    if not target:
+        return url_for("home")
+    p = urlparse(target)
+    if p.scheme or p.netloc or not target.startswith("/") or target.startswith("//"):
+        return url_for("home")
+    return target
+
+
+# ------------------------------------------------------------- accounts
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if g.user:
+        return redirect(url_for("home"))
+    error = None
+    if request.method == "POST":
+        username = request.form.get("username", "")
+        password = request.form.get("password", "")
+        if password != request.form.get("confirm", ""):
+            error = "The passwords don't match."
+        else:
+            uid, error = accounts.create_user(username, password)
+            if uid:
+                session.clear()
+                session.permanent = True
+                session["uid"] = uid
+                return redirect(url_for("home", welcome=1))
+    return render_template("auth.html", mode="register", error=error,
+                           username=request.form.get("username", ""))
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    nxt = _safe_next(request.values.get("next"))
+    if g.user:
+        return redirect(nxt)
+    error = None
+    if request.method == "POST":
+        row, error = accounts.check_login(request.form.get("username"), request.form.get("password"))
+        if row:
+            session.clear()
+            session.permanent = True
+            session["uid"] = row["id"]
+            return redirect(nxt)
+    return render_template("auth.html", mode="login", error=error, next=nxt,
+                           username=request.form.get("username", ""))
+
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    session.clear()
+    return redirect(url_for("home"))
+
+
+def _require_json_user():
+    if not g.user:
+        abort(401)
+    if not request.is_json:  # blocks cross-site form posts
+        abort(415)
+
+
+@app.route("/api/progress", methods=["GET", "POST"])
+def api_progress():
+    if not g.user:
+        return jsonify({"error": "not logged in"}), 401
+    if request.method == "GET":
+        return jsonify(accounts.get_progress(g.user["id"]) or {})
+    _require_json_user()
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({"error": "bad data"}), 400
+    return jsonify(accounts.save_merged(g.user["id"], data))
+
+
+@app.route("/api/progress/reset", methods=["POST"])
+def api_progress_reset():
+    _require_json_user()
+    stamp = (request.get_json(silent=True) or {}).get("resetAt")
+    accounts.put_progress(g.user["id"], {"resetAt": stamp, "updated": stamp})
+    return jsonify({"ok": True})
 
 
 @app.route("/")

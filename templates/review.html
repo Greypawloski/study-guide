@@ -35,7 +35,7 @@
     const s = Store.get();
     const list = QUESTIONS.filter(q => sec.value === "all" || q.section === sec.value).filter(q => {
       const a = s.answers[q.id];
-      if (f.value === "flagged") return s.flagged[q.id];
+      if (f.value === "flagged") return Store.isFlagged(q.id);
       if (f.value === "hard") return a && a.w >= 2;
       return a && a.last === false;
     });

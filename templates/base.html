@@ -26,6 +26,15 @@
         <a href="{{ url_for('exam_intro') }}" class="{{ 'on' if nav in ('exam_intro','exam_start') }}">Mock Exam</a>
         <a href="{{ url_for('review') }}" class="{{ 'on' if nav == 'review' }}">Review</a>
         <a href="{{ url_for('progress') }}" class="{{ 'on' if nav == 'progress' }}">Progress</a>
+        <span class="nav-user">
+          {% if user %}
+          <span class="user-chip" title="Signed in"><span class="avatar">{{ user.username[0]|upper }}</span>{{ user.username }}<small id="sync-status" data-state="Saved">Saved</small></span>
+          <form method="post" action="{{ url_for('logout') }}"><button class="linkish" type="submit">Log out</button></form>
+          {% else %}
+          <a href="{{ url_for('login', next=request.full_path if request.method == 'GET' else None) }}" class="{{ 'on' if nav == 'login' }}">Log in</a>
+          <a href="{{ url_for('register') }}" class="btn sm primary nav-cta">Sign up</a>
+          {% endif %}
+        </span>
       </nav>
     </div>
   </header>
@@ -43,10 +52,11 @@
         <a href="{{ url_for('cheatsheet') }}">Cheat sheet</a>
       </div>
       <p>Built for the Arizona Life Insurance Producer exam (Series {{ exam.series }}, delivered by {{ exam.vendor }}): {{ exam.questions }} questions · {{ exam.minutes // 60 }} hours · {{ exam.passing }}% to pass.</p>
-      <p class="muted">Independent study aid, not affiliated with DIFI or PSI. Laws change; confirm details against the current PSI candidate bulletin and A.R.S. Title 20. Your progress is saved in this browser only.</p>
+      <p class="muted">Independent study aid, not affiliated with DIFI or PSI. Laws change; confirm details against the current PSI candidate bulletin and A.R.S. Title 20. {% if user %}Your progress is saved to your account.{% else %}Without an account, progress is saved in this browser only.{% endif %}</p>
     </div>
   </footer>
 
+  <script>window.USER = {{ user | tojson }}; window.SERVER_PROGRESS = {{ server_progress | tojson }};</script>
   <script>window.SECTIONS = {{ section_meta | tojson }}; window.BOOTCAMP = {{ bootcamp | tojson }}; window.CMETA = {{ cmeta | tojson }};</script>
   <script src="{{ url_for('static', filename='js/store.js') }}"></script>
   <script src="{{ url_for('static', filename='js/bootcamp.js') }}"></script>

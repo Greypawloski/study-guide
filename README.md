@@ -15,6 +15,10 @@ A study site for the Arizona Life Insurance Producer exam (Series 13-31): 100 qu
 - **Cheat sheet, glossary, exam-day tips, question of the day**
 - **Progress dashboard**: readiness score, accuracy by section, streak, mock exam history (saved in the browser)
 
+## Accounts
+
+Users can register and log in; progress syncs across devices. Data lives in `data/app.db` (SQLite) and the session key in `data/secret_key`. Both are created automatically, git-ignored, and untouched by `git pull`. Back up `data/` to keep accounts.
+
 ## Run locally
 
 ```bash

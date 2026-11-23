@@ -46,7 +46,7 @@
     } else {
       if (source === "unseen") pool = pool.filter(q => !s.answers[q.id]);
       if (source === "missed") pool = pool.filter(q => s.answers[q.id] && s.answers[q.id].last === false);
-      if (source === "flagged") pool = pool.filter(q => s.flagged[q.id]);
+      if (source === "flagged") pool = pool.filter(q => Store.isFlagged(q.id));
       set = pick(pool, n);
       if (mode === "test" || mode === "timed") feedback = "end";
       if (mode === "timed") seconds = set.length * 72;
@@ -80,7 +80,7 @@
     $("quiz-progress").style.width = ((exam ? items.filter(x => x.pick !== null).length : cur + (it.checked ? 1 : 0)) / items.length * 100) + "%";
     $("q-section").textContent = Store.sectionTitle(it.q.section);
     $("q-text").textContent = it.q.q;
-    const flagged = exam ? it.flag : !!Store.get().flagged[it.q.id];
+    const flagged = exam ? it.flag : Store.isFlagged(it.q.id);
     $("flag-btn").innerHTML = (flagged ? "★" : "☆") + " <span>" + (exam ? (flagged ? "Flagged" : "Flag") : (flagged ? "Saved" : "Save")) + "</span>";
     $("flag-btn").classList.toggle("on", flagged);
 

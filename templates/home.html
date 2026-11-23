@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
+{% if user and request.args.get('welcome') %}
+<div class="card welcome"><strong>Welcome, {{ user.username }}! 🎉</strong> Your account is ready. Everything you do now saves to your account. Log in on your phone or computer and your progress follows you.</div>
+{% elif not user %}
+<div class="card guest-note small">📱 Studying on more than one device? <a href="{{ url_for('register') }}">Create a free account</a> so your progress syncs everywhere. <a href="{{ url_for('login') }}">Log in</a></div>
+{% endif %}
 <section class="mission card" id="mission" hidden>
   <div class="mission-left">
     <p class="eyebrow" id="m-eyebrow">Today's mission</p>
@@ -151,7 +156,7 @@
   // Continue button: first section with unfinished lessons
   const next = SECTIONS.find(m => Array.from({ length: m.lessons }, (_, i) => Store.lessonDone(m.id, i)).some(d => !d));
   const btn = document.getElementById("continue-btn");
-  if (Object.keys(s.lessons).length && next) { btn.textContent = "Continue: " + next.title; btn.href = "/study/" + next.id; }
+  if (Object.values(s.lessons).some(v => v === true || v > 0) && next) { btn.textContent = "Continue: " + next.title; btn.href = "/study/" + next.id; }
 
   const now = Date.now();
   let due = 0;

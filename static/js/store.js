@@ -1,33 +1,107 @@
-/* Progress storage (browser localStorage) and shared helpers. */
+/* Progress storage: localStorage, synced to the server when logged in. */
 (function () {
-  const KEY = "azlife_progress_v1";
+  const USER = window.USER || null;
+  const ANON_KEY = "azlife_progress_v1";
+  const KEY = USER ? "azlife_progress_v1_u_" + USER.username.toLowerCase() : ANON_KEY;
 
   const blank = () => ({
     answers: {},      // qid -> {r: right count, w: wrong count, last: bool, t: timestamp}
-    lessons: {},      // "sid:index" -> true
+    lessons: {},      // "sid:index" -> signed timestamp (+ done, - not done)
     cards: {},        // cardId -> box (1-5)
     cardDue: {},      // cardId -> timestamp when due
     exams: [],        // {date, score, correct, total, seconds, bySection:{sid:[right,total]}}
     quizzes: 0,
     days: [],         // ISO dates studied
-    flagged: {},      // qid -> true (saved for later)
-    boot: null,       // {start: ISO date, examDate: "YYYY-MM-DD"|null, tasks: {taskId: {best, last, date, manual}}}
+    flagged: {},      // qid -> signed timestamp (+ saved, - unsaved)
+    boot: null,       // {start, examDate, tasks: {taskId: {best, last, date, manual, removed}}}
+    bootTs: 0,        // last change to the plan
+    resetAt: 0,
+    updated: 0,
   });
 
-  let mem = null;
+  function readLocal(key) {
+    try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  }
+  function writeLocal() {
+    try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) { /* storage unavailable */ }
+  }
+  const hasProgress = d => d && (Object.keys(d.answers || {}).length || Object.keys(d.lessons || {}).length ||
+    Object.keys(d.cards || {}).length || (d.exams || []).length || d.boot);
+
+  let mem = null, version = 0, timer = null, inflight = false, needsReload = false, importedAnon = false;
+
   function load() {
     if (mem) return mem;
-    try {
-      const raw = localStorage.getItem(KEY);
-      mem = Object.assign(blank(), raw ? JSON.parse(raw) : {});
-    } catch (e) {
-      mem = blank();
+    let data;
+    if (USER) {
+      const local = readLocal(KEY);
+      const server = window.SERVER_PROGRESS;
+      if (local && local._dirty) data = local;                    // unsynced changes on this device
+      else if (server) data = server;
+      else if (local) data = local;
+      if (!readLocal(KEY)) {                                      // first login on this device:
+        const anon = readLocal(ANON_KEY);                         // bring this browser's guest progress along
+        if (hasProgress(anon)) { data = anon; data._dirty = true; needsReload = !!server; importedAnon = true; }
+      }
+    } else {
+      data = readLocal(ANON_KEY);
+    }
+    mem = Object.assign(blank(), data || {});
+    if (USER) {
+      writeLocal();
+      if (mem._dirty) setTimeout(sync, 0);
     }
     return mem;
   }
+
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) { /* storage unavailable */ }
+    const s = load();
+    s.updated = Date.now();
+    if (USER) { s._dirty = true; version++; }
+    writeLocal();
+    if (USER) { clearTimeout(timer); timer = setTimeout(sync, 1200); }
   }
+
+  function setStatus(t) {
+    const el = document.getElementById("sync-status");
+    if (el) { el.textContent = t; el.dataset.state = t; }
+  }
+
+  async function sync(keepalive) {
+    if (!USER || !mem || !mem._dirty) return;
+    if (inflight && !keepalive) { clearTimeout(timer); timer = setTimeout(sync, 800); return; }
+    inflight = true;
+    const sent = version;
+    const body = Object.assign({}, mem); delete body._dirty;
+    setStatus("Saving…");
+    try {
+      const res = await fetch("/api/progress", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body), credentials: "same-origin", keepalive: !!keepalive,
+      });
+      if (res.status === 401) { setStatus("Logged out"); return; }
+      if (!res.ok) throw new Error(res.status);
+      const merged = await res.json();
+      if (version === sent) {
+        mem = Object.assign(blank(), merged);
+        mem._dirty = false;
+        writeLocal();
+        setStatus("Saved");
+        if (importedAnon) { importedAnon = false; try { localStorage.removeItem(ANON_KEY); } catch (e) {} }
+        if (needsReload) { needsReload = false; location.reload(); }
+      } else {
+        timer = setTimeout(sync, 300);   // more changes came in while saving; send again
+      }
+    } catch (e) {
+      setStatus("Offline: will retry");
+      clearTimeout(timer); timer = setTimeout(sync, 15000);
+    } finally {
+      inflight = false;
+    }
+  }
+  window.addEventListener("pagehide", () => { if (mem && mem._dirty) sync(true); });
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && mem && mem._dirty) sync(true); });
+
   function today() {
     const d = new Date();
     return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
@@ -35,14 +109,26 @@
   function touchDay() {
     const s = load();
     const t = today();
-    if (!s.days.includes(t)) { s.days.push(t); save(); }
+    if (!s.days.includes(t)) s.days.push(t);
   }
+  function touchBoot() { load().bootTs = Date.now(); }
 
   const Store = {
     get: load,
     save,
-    touchDay,
-    reset() { mem = blank(); save(); },
+    touchDay() { touchDay(); save(); },
+    user: USER,
+    async reset() {
+      const stamp = Date.now();
+      if (USER) {
+        try {
+          await fetch("/api/progress/reset", { method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ resetAt: stamp }), credentials: "same-origin" });
+        } catch (e) { /* the reset marker below still wins on next sync */ }
+      }
+      mem = Object.assign(blank(), { resetAt: stamp, updated: stamp });
+      writeLocal();
+    },
 
     recordAnswer(qid, correct) {
       const s = load();
@@ -54,20 +140,19 @@
       touchDay();
       save();
     },
+    isFlagged(qid) { const v = load().flagged[qid]; return v === true || v > 0; },
     toggleFlag(qid) {
-      const s = load();
-      if (s.flagged[qid]) delete s.flagged[qid]; else s.flagged[qid] = true;
+      const on = !Store.isFlagged(qid);
+      load().flagged[qid] = on ? Date.now() : -Date.now();
       save();
-      return !!s.flagged[qid];
+      return on;
     },
     markLesson(sid, i, done) {
-      const s = load();
-      const k = sid + ":" + i;
-      if (done) s.lessons[k] = true; else delete s.lessons[k];
+      load().lessons[sid + ":" + i] = done ? Date.now() : -Date.now();
       touchDay();
       save();
     },
-    lessonDone(sid, i) { return !!load().lessons[sid + ":" + i]; },
+    lessonDone(sid, i) { const v = load().lessons[sid + ":" + i]; return v === true || v > 0; },
 
     // Leitner spaced repetition: box 1 = daily ... box 5 = mastered
     gradeCard(id, knew) {
@@ -82,8 +167,7 @@
     },
 
     addExam(result) {
-      const s = load();
-      s.exams.push(result);
+      load().exams.push(result);
       touchDay();
       save();
     },
@@ -91,25 +175,40 @@
     /* --- Bootcamp --- */
     startBoot(examDate) {
       const s = load();
-      s.boot = { start: today(), examDate: examDate || null, tasks: (s.boot && s.boot.tasks) || {} };
+      s.boot = { start: today(), examDate: examDate || null, tasks: {} };
+      touchBoot();
       save();
     },
-    setExamDate(d) { const s = load(); if (!s.boot) Store.startBoot(d); else { s.boot.examDate = d || null; save(); } },
-    resetBoot() { const s = load(); s.boot = null; save(); },
+    setExamDate(d) {
+      const s = load();
+      if (!s.boot) return Store.startBoot(d);
+      s.boot.examDate = d || null;
+      touchBoot();
+      save();
+    },
+    resetBoot() { load().boot = null; touchBoot(); save(); },
     recordTask(id, score, manual) {
       const s = load();
       if (!s.boot) s.boot = { start: today(), examDate: null, tasks: {} };
-      const t = s.boot.tasks[id] || { best: null };
-      if (manual === false) { delete s.boot.tasks[id]; save(); return; }
-      t.last = score;
-      t.best = score === null || score === undefined ? t.best : Math.max(t.best ?? -1, score);
-      t.date = Date.now();
-      if (manual) t.manual = true;
-      s.boot.tasks[id] = t;
-      touchDay();
+      if (!s.boot.tasks) s.boot.tasks = {};
+      if (manual === false) {
+        s.boot.tasks[id] = { removed: true, best: null, date: Date.now() };
+      } else {
+        const prev = s.boot.tasks[id];
+        const t = prev && !prev.removed ? prev : { best: null };
+        t.last = score;
+        if (score !== null && score !== undefined) t.best = Math.max(t.best ?? -1, score);
+        t.date = Date.now();
+        if (manual) t.manual = true;
+        delete t.removed;
+        s.boot.tasks[id] = t;
+        touchDay();
+      }
+      touchBoot();
       save();
     },
     today,
+    flush() { return sync(); },
 
     /* --- Stats --- */
     sectionStats(questions) {

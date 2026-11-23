@@ -36,7 +36,7 @@
 {% block scripts %}
 <script>
 document.querySelectorAll(".check[data-k]").forEach(el => {
-  if (Store.get().lessons[el.dataset.k]) { el.textContent = "✓"; el.classList.add("done"); }
+  if (Store.lessonDone(...el.dataset.k.split(":"))) { el.textContent = "✓"; el.classList.add("done"); }
 });
 </script>
 {% endblock %}
