@@ -10,7 +10,7 @@ never written to disk, printed, or committed.
 Commands
   python3 tools/narrate.py check                      plan usage + what's left to generate (free)
   python3 tools/narrate.py voices                     list voices on your account (free)
-  python3 tools/narrate.py use-voice VOICE_ID         save the narrator voice for every video
+  python3 tools/narrate.py use-voice NAME_OR_ID       save the narrator voice (e.g. use-voice Eric)
   python3 tools/narrate.py generate SLUG [SLUG ...]   generate missing/changed segments (uses credits)
   python3 tools/narrate.py generate all               ...for every approved script
   python3 tools/narrate.py status                     which segments are done, changed or missing
@@ -127,14 +127,23 @@ def cmd_voices():
     for v in sorted(voices, key=lambda v: v.get("name", "")):
         labels = ", ".join(f"{k}: {val}" for k, val in (v.get("labels") or {}).items())
         print(f"  {v.get('name'):<28} {v.get('voice_id')}   {labels}")
-    print("\nPick one, then run:  python3 tools/narrate.py use-voice VOICE_ID")
+    print("\nPick one, then run:  python3 tools/narrate.py use-voice NAME   (e.g. use-voice Eric)")
 
 
-def cmd_use_voice(voice_id):
-    data = call("GET", "/v1/voices")
-    match = next((v for v in data.get("voices", []) if v.get("voice_id") == voice_id), None)
+def cmd_use_voice(choice):
+    """Accepts a voice ID or a voice name (e.g. "Eric"), case-insensitive."""
+    voices = call("GET", "/v1/voices").get("voices", [])
+    match = next((v for v in voices if v.get("voice_id") == choice), None)
     if not match:
-        sys.exit("That voice ID isn't on your account. Run `voices` to see the list (add library voices to My Voices first).")
+        want = choice.strip().lower()
+        named = [v for v in voices if (v.get("name") or "").lower() == want
+                 or (v.get("name") or "").lower().split(" - ")[0].strip() == want]
+        if len(named) > 1:
+            sys.exit("More than one voice has that name: " + ", ".join(f"{v['name']} ({v['voice_id']})" for v in named))
+        match = named[0] if named else None
+    if not match:
+        sys.exit("No voice with that name or ID on your account. Run `voices` to see the list (add library voices to My Voices first).")
+    voice_id = match["voice_id"]
     cfg = config()
     cfg["voice_id"], cfg["voice_name"] = voice_id, match.get("name")
     save_config(cfg)
