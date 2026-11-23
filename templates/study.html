@@ -20,7 +20,7 @@
       <p class="muted">{{ s.summary }}</p>
       <ol class="lesson-links">
         {% for l in s.lessons %}
-        <li><a href="{{ url_for('lesson', sid=s.id) }}#l{{ loop.index0 }}"><span class="check" data-k="{{ s.id }}:{{ loop.index0 }}">○</span>{{ l.title }}</a></li>
+        <li><a href="{{ url_for('lesson', sid=s.id) }}#l{{ loop.index0 }}"><span class="check" data-k="{{ s.id }}:{{ loop.index0 }}">○</span>{{ l.title }}{% if l.video %} <span class="vid-badge" title="Has a video">🎬</span>{% endif %}</a></li>
         {% endfor %}
       </ol>
       <div class="btn-row small">

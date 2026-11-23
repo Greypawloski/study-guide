@@ -19,7 +19,7 @@
     <p class="toc-label">In this section</p>
     <ol>
       {% for l in s.lessons %}
-      <li><a href="#l{{ loop.index0 }}"><span class="check" data-i="{{ loop.index0 }}">○</span>{{ l.title }}</a></li>
+      <li><a href="#l{{ loop.index0 }}"><span class="check" data-i="{{ loop.index0 }}">○</span>{{ l.title }}{% if l.video %} <span class="vid-badge" title="Has a video">🎬</span>{% endif %}</a></li>
       {% endfor %}
       <li><a href="#facts"><span class="check">★</span>Key facts to memorize</a></li>
     </ol>
@@ -29,6 +29,15 @@
     {% for l in s.lessons %}
     <article class="lesson card" id="l{{ loop.index0 }}">
       <h2><span class="lesson-num">{{ s.num }}.{{ loop.index }}</span> {{ l.title }}</h2>
+      {% if l.video %}
+      <figure class="lesson-video">
+        <video controls playsinline preload="metadata"
+               poster="{{ url_for('static', filename='videos/' ~ l.video.file ~ '.jpg') }}">
+          <source src="{{ url_for('static', filename='videos/' ~ l.video.file ~ '.mp4') }}" type="video/mp4">
+        </video>
+        <figcaption>🎬 {{ l.video.title }} · {{ l.video.length }} · Watch first, then read the details below.</figcaption>
+      </figure>
+      {% endif %}
       <div class="prose">{{ l.html | safe }}</div>
       <div class="checkpoint" data-i="{{ loop.index0 }}"></div>
       <label class="done-toggle">

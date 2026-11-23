@@ -456,3 +456,9 @@ input[type=date] { font: inherit; padding: 9px 12px; border: 1px solid var(--lin
   .nav-user { margin: 8px 0 0; padding: 10px 0 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.15); flex-wrap: wrap; }
 }
 .guest-note { padding: 12px 18px; }
+
+/* ---------- Lesson videos ---------- */
+.lesson-video { margin: 6px 0 22px; }
+.lesson-video video { width: 100%; aspect-ratio: 16 / 9; display: block; border-radius: 14px; background: var(--navy); box-shadow: var(--shadow); }
+.lesson-video figcaption { font-size: .85rem; color: var(--muted); margin-top: 8px; }
+.vid-badge { font-size: .85em; }

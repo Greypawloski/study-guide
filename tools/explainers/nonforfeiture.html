@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face { font-family: "InterL"; src: local("Inter"); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --navy:#14213d; --sun:#d9622b; --sun2:#f08a4b; --soft:#fdeee4; --bg:#faf7f2; --line:#e7e1d6;
+          --good:#2f9e6e; --goodsoft:#e3f5ec; --low:#d2483f; --lowsoft:#fdeceb; --ink2:#4a5466; --muted:#7a8394; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); font-family: "Inter", sans-serif; color: var(--navy); }
+  .abs { position: absolute; }
+  .scene { position: absolute; inset: 0; opacity: 0; }
+  .brand { left: 70px; top: 52px; display: flex; align-items: center; gap: 16px; font-weight: 700; font-size: 26px; }
+  .mark { width: 54px; height: 54px; border-radius: 14px; background: linear-gradient(135deg, var(--sun), var(--sun2)); color: #fff; display: grid; place-items: center; font-size: 22px; }
+  .brand small { display: block; font-weight: 500; font-size: 18px; color: var(--muted); }
+  .note { right: 70px; top: 66px; font-size: 18px; color: var(--muted); font-weight: 500; }
+  .progress { left: 0; bottom: 0; height: 8px; background: var(--sun); }
+  .card { background: #fff; border: 2px solid var(--line); border-radius: 28px; box-shadow: 0 10px 40px rgba(20,33,61,.08); }
+  h1 { font-size: 96px; font-weight: 800; letter-spacing: -2px; line-height: 1.05; }
+  h2 { font-size: 64px; font-weight: 800; letter-spacing: -1px; }
+  .eyebrow { font-size: 26px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--sun); }
+  .caption { left: 50%; bottom: 70px; transform: translateX(-50%); background: var(--navy); color: #fff; font-size: 34px; font-weight: 500;
+             padding: 20px 40px; border-radius: 18px; white-space: nowrap; opacity: 0; }
+  .caption b { color: var(--sun2); }
+  .bullets { list-style: none; }
+  .bullets li { font-size: 38px; font-weight: 600; margin-bottom: 30px; display: flex; gap: 22px; align-items: center; opacity: 0; }
+  .bullets .ic { width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center; font-size: 30px; flex-shrink: 0; color: #fff; font-weight: 800; }
+  .money { font-variant-numeric: tabular-nums; }
+  .shield { border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; }
+  .tl-track { height: 34px; border-radius: 17px; background: #ece6dc; overflow: hidden; }
+  .tl-fill { height: 100%; border-radius: 17px; }
+  .tag { display: inline-block; padding: 8px 18px; border-radius: 99px; font-size: 24px; font-weight: 700; }
+</style></head>
+<body>
+
+<!-- persistent chrome -->
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Policy Provisions · Nonforfeiture Options</small></div></div>
+<div class="abs note" id="note">Example numbers for illustration</div>
+
+<!-- S1 title -->
+<div class="scene" id="s1">
+  <div class="abs" style="left:160px; top:330px; width:1600px">
+    <p class="eyebrow" id="s1e">Section 5 · Policy Provisions</p>
+    <h1 id="s1h" style="margin-top:24px">Nonforfeiture<br>Options</h1>
+    <p id="s1p" style="font-size:42px; color:var(--ink2); margin-top:34px; font-weight:500">What happens to your cash value when you stop paying premiums?</p>
+  </div>
+</div>
+
+<!-- S2/S3 policy -->
+<div class="scene" id="s2">
+  <div class="abs card" id="policy" style="left:160px; top:230px; width:700px; height:560px; padding:50px">
+    <p class="eyebrow" style="font-size:22px">Whole life policy</p>
+    <p style="font-size:30px; color:var(--ink2); margin-top:28px">Face amount</p>
+    <p class="money" style="font-size:84px; font-weight:800">$100,000</p>
+    <p style="font-size:30px; color:var(--ink2); margin-top:26px">Cash value <span id="years" style="color:var(--muted); font-size:24px"></span></p>
+    <p class="money" id="cv" style="font-size:64px; font-weight:800; color:var(--good)">$0</p>
+    <div class="tl-track" style="margin-top:14px"><div class="tl-fill" id="cvbar" style="background:var(--good); width:0%"></div></div>
+  </div>
+  <div class="abs" id="s2text" style="left:960px; top:300px; width:820px">
+    <h2 style="font-size:58px">Permanent insurance builds <span style="color:var(--good)">cash value</span>.</h2>
+    <p style="font-size:36px; color:var(--ink2); margin-top:30px; line-height:1.4">Arizona law says that value can't simply be forfeited if premiums stop. The owner gets three choices.</p>
+  </div>
+  <div class="abs" id="stamp" style="left:330px; top:440px; font-size:58px; font-weight:800; color:var(--low); border:8px solid var(--low); border-radius:20px; padding:10px 30px; background:rgba(255,255,255,.92); transform:rotate(-12deg); opacity:0">PREMIUMS STOP</div>
+  <svg class="abs" id="branches" width="1920" height="1080" style="left:0; top:0">
+    <path id="b1" d="M 870 510 C 1000 510, 1000 290, 1130 290" stroke="#d9622b" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path id="b2" d="M 870 510 C 1000 510, 1000 510, 1130 510" stroke="#d9622b" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path id="b3" d="M 870 510 C 1000 510, 1000 730, 1130 730" stroke="#d9622b" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </svg>
+  <div class="abs card" id="o1" style="left:1140px; top:220px; width:640px; height:140px; padding:30px 40px; display:flex; align-items:center; gap:26px; opacity:0"><span style="font-size:54px">💵</span><span style="font-size:42px; font-weight:800">1. Cash surrender</span></div>
+  <div class="abs card" id="o2" style="left:1140px; top:440px; width:640px; height:140px; padding:30px 40px; display:flex; align-items:center; gap:26px; opacity:0"><span style="font-size:54px">🛡️</span><span style="font-size:42px; font-weight:800">2. Reduced paid-up</span></div>
+  <div class="abs card" id="o3" style="left:1140px; top:660px; width:640px; height:140px; padding:30px 40px; display:flex; align-items:center; gap:26px; opacity:0"><span style="font-size:54px">⏳</span><span style="font-size:42px; font-weight:800">3. Extended term</span></div>
+</div>
+
+<!-- S4 cash surrender -->
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">Option 1</p><h2>💵 Cash surrender</h2></div>
+  <div class="abs card" style="left:160px; top:360px; width:760px; height:420px; padding:46px">
+    <p style="font-size:30px; color:var(--ink2)">Coverage</p>
+    <p class="money" id="c4cov" style="font-size:84px; font-weight:800">$100,000</p>
+    <div class="tl-track" style="margin-top:18px"><div class="tl-fill" id="c4bar" style="background:var(--navy); width:100%"></div></div>
+    <p id="c4end" style="font-size:34px; font-weight:800; color:var(--low); margin-top:26px; opacity:0">✕ Policy ends</p>
+  </div>
+  <div class="abs" id="c4cash" style="z-index:5; left:520px; top:520px; font-size:56px; font-weight:800; color:#fff; background:var(--good); padding:16px 30px; border-radius:20px; opacity:0">$20,000</div>
+  <div class="abs card" id="c4you" style="left:1000px; top:500px; width:180px; height:180px; display:grid; place-items:center; font-size:90px; opacity:0">🧑</div>
+  <ul class="abs bullets" style="left:1260px; top:390px; width:620px">
+    <li id="c4b1"><span class="ic" style="background:var(--good)">$</span>Owner takes the cash</li>
+    <li id="c4b2"><span class="ic" style="background:var(--low)">✕</span>Coverage ends</li>
+    <li id="c4b3"><span class="ic" style="background:var(--navy)">%</span>Gain over premiums paid is taxable</li>
+  </ul>
+</div>
+
+<!-- S5 reduced paid-up -->
+<div class="scene" id="s5">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">Option 2</p><h2>🛡️ Reduced paid-up</h2></div>
+  <div class="abs shield" id="r5shield" style="left:300px; top:340px; width:420px; height:300px; background:var(--navy); transform-origin:center center">
+    <p style="font-size:28px; opacity:.75">Face amount</p>
+    <p class="money" id="r5amt" style="font-size:80px; font-weight:800">$100,000</p>
+  </div>
+  <div class="abs" style="left:160px; top:720px; width:900px">
+    <div style="display:flex; justify-content:space-between; font-size:26px; color:var(--muted); font-weight:600; margin-bottom:10px"><span>Today</span><span>For life</span></div>
+    <div class="tl-track"><div class="tl-fill" id="r5bar" style="background:var(--good); width:0%"></div></div>
+    <p id="r5life" style="font-size:32px; font-weight:800; color:var(--good); margin-top:16px; opacity:0">✓ Covered for life, no more premiums</p>
+  </div>
+  <ul class="abs bullets" style="left:1180px; top:360px; width:680px">
+    <li id="r5b1"><span class="ic" style="background:var(--sun)">↓</span>Smaller face amount</li>
+    <li id="r5b2"><span class="ic" style="background:var(--navy)">∞</span>Still permanent insurance</li>
+    <li id="r5b3"><span class="ic" style="background:var(--good)">✓</span>Fully paid up, no more premiums</li>
+  </ul>
+</div>
+
+<!-- S6 extended term -->
+<div class="scene" id="s6">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">Option 3</p><h2>⏳ Extended term</h2></div>
+  <div class="abs shield" style="left:300px; top:340px; width:420px; height:300px; background:var(--sun)">
+    <p style="font-size:28px; opacity:.85">Face amount</p>
+    <p class="money" style="font-size:80px; font-weight:800">$100,000</p>
+    <p id="e6same" style="font-size:26px; font-weight:700; margin-top:6px; opacity:0">Same amount ✓</p>
+  </div>
+  <div class="abs" style="left:160px; top:720px; width:900px">
+    <div style="position:relative; height:40px; font-size:26px; color:var(--muted); font-weight:600; margin-bottom:10px"><span>Today</span><span id="e6end" style="position:absolute; left:46%; transform:translateX(-50%); color:var(--sun); opacity:0">▼ Coverage ends</span></div>
+    <div class="tl-track"><div class="tl-fill" id="e6bar" style="background:var(--sun); width:0%"></div></div>
+    <p id="e6time" style="font-size:32px; font-weight:800; color:var(--sun); margin-top:16px; opacity:0">⏱ Covered for <span class="money" id="e6yrs">0</span> years, then it expires</p>
+  </div>
+  <ul class="abs bullets" style="left:1180px; top:330px; width:700px">
+    <li id="e6b1"><span class="ic" style="background:var(--sun)">=</span>Same face amount</li>
+    <li id="e6b2"><span class="ic" style="background:var(--navy)">⏳</span>Becomes term insurance</li>
+    <li id="e6b3"><span class="ic" style="background:var(--ink2)">⌛</span>Lasts as long as the cash value buys</li>
+    <li id="e6b4"><span class="ic" style="background:var(--good)">★</span>Usually the automatic option</li>
+  </ul>
+</div>
+
+<!-- S7 recap -->
+<div class="scene" id="s7">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Recap</p><h2>Know the difference</h2></div>
+  <div class="abs card" id="k1" style="left:160px; top:330px; width:500px; height:380px; padding:40px">
+    <p style="font-size:50px">💵</p><p style="font-size:38px; font-weight:800; margin-top:10px">Cash surrender</p>
+    <p style="font-size:30px; color:var(--ink2); margin-top:20px; line-height:1.45">Get the cash.<br><b style="color:var(--low)">No more coverage.</b></p>
+  </div>
+  <div class="abs card" id="k2" style="left:710px; top:330px; width:500px; height:380px; padding:40px">
+    <p style="font-size:50px">🛡️</p><p style="font-size:38px; font-weight:800; margin-top:10px">Reduced paid-up</p>
+    <p style="font-size:30px; color:var(--ink2); margin-top:20px; line-height:1.45"><b style="color:var(--navy)">Less amount,</b><br>for your whole life.</p>
+  </div>
+  <div class="abs card" id="k3" style="left:1260px; top:330px; width:500px; height:380px; padding:40px; border-color:var(--sun)">
+    <p style="font-size:50px">⏳</p><p style="font-size:38px; font-weight:800; margin-top:10px">Extended term</p>
+    <p style="font-size:30px; color:var(--ink2); margin-top:20px; line-height:1.45"><b style="color:var(--sun)">Same amount,</b><br>for less time.</p>
+  </div>
+  <div class="abs" id="k4" style="left:160px; top:770px; width:1600px; background:var(--navy); color:#fff; border-radius:24px; padding:34px 44px; font-size:36px; font-weight:600">
+    <span style="color:var(--sun2); font-weight:800">EXAM TIP:</span> If the owner doesn't choose an option, the insurer usually applies <b style="color:var(--sun2)">Extended Term</b>.
+  </div>
+</div>
+
+<div class="abs caption" id="cap"></div>
+<div class="abs progress" id="prog"></div>
+
+<script>
+const DURATION = 82;
+const $ = id => document.getElementById(id);
+const clamp = x => Math.max(0, Math.min(1, x));
+const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const easeOut = x => 1 - Math.pow(1 - x, 3);
+const seg = (t, a, b) => ease(clamp((t - a) / (b - a)));
+const segO = (t, a, b) => easeOut(clamp((t - a) / (b - a)));
+// visible between a and b with fades of length f
+const win = (t, a, b, f = .6) => Math.min(seg(t, a, a + f), 1 - seg(t, b - f, b));
+const money = n => "$" + Math.round(n).toLocaleString("en-US");
+function pop(el, t, a, dy = 30) { const p = segO(t, a, a + .6); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; }
+
+const CAPS = [
+  [8.5, 19.5, "Every premium adds to the policy's <b>cash value</b>."],
+  [20.5, 25.8, "If premiums stop, the owner picks one of <b>three nonforfeiture options</b>."],
+  [27, 38.5, "<b>Cash surrender:</b> take the money and walk away."],
+  [40, 52.5, "<b>Reduced paid-up:</b> a smaller policy that never needs another premium."],
+  [54, 66.5, "<b>Extended term:</b> keep the full amount, but only for a limited time."],
+];
+
+// stroke-dash setup for branches
+["b1", "b2", "b3"].forEach(id => { const p = $(id), L = p.getTotalLength(); p.style.strokeDasharray = L; p.dataset.len = L; });
+
+window.render = function (t) {
+  $("prog").style.width = (t / DURATION * 100) + "%";
+  const chrome = 1 - seg(t, 80.5, 82);
+  $("brand").style.opacity = chrome;
+  $("note").style.opacity = win(t, 8, 67) * chrome;
+
+  // S1
+  $("s1").style.opacity = win(t, 0, 7);
+  pop($("s1e"), t, .3); pop($("s1h"), t, .7, 40); pop($("s1p"), t, 1.6);
+
+  // S2 / S3
+  $("s2").style.opacity = win(t, 7, 26.5);
+  pop($("policy"), t, 7.3, 40);
+  const g = seg(t, 9, 17);
+  $("cv").textContent = money(20000 * g);
+  $("cvbar").style.width = (g * 100) + "%";
+  $("years").textContent = g > 0 ? "· year " + Math.max(1, Math.round(g * 15)) : "";
+  const textIn = segO(t, 10, 11) * (1 - seg(t, 20, 20.8));
+  $("s2text").style.opacity = textIn; $("s2text").style.transform = `translateX(${(1 - segO(t, 10, 11)) * 40}px)`;
+  const st = segO(t, 20.5, 21.1);
+  $("stamp").style.opacity = st * (1 - seg(t, 22.6, 23.2));
+  $("stamp").style.transform = `rotate(-12deg) scale(${1.6 - .6 * st})`;
+  ["b1", "b2", "b3"].forEach((id, i) => {
+    const p = $(id), L = +p.dataset.len, d = seg(t, 23 + i * .35, 24.2 + i * .35);
+    p.style.strokeDashoffset = L * (1 - d); p.style.opacity = d > 0 ? 1 : 0;
+  });
+  ["o1", "o2", "o3"].forEach((id, i) => { const el = $(id), p = segO(t, 24 + i * .35, 24.7 + i * .35); el.style.opacity = p; el.style.transform = `translateX(${(1 - p) * 40}px)`; });
+
+  // S4 cash surrender
+  $("s4").style.opacity = win(t, 26.5, 39.5);
+  const fly = seg(t, 28.5, 30.5);
+  $("c4cash").style.opacity = segO(t, 28, 28.5) * (1 - seg(t, 30.6, 31));
+  $("c4cash").style.transform = `translate(${fly * 560}px, ${fly * 20}px) scale(${1 - fly * .3})`;
+  $("c4you").style.opacity = segO(t, 27.6, 28.2);
+  $("c4you").style.transform = `scale(${1 + .15 * Math.sin(clamp((t - 30.4) / .5) * Math.PI)})`;
+  const drain = seg(t, 31.2, 33);
+  $("c4cov").textContent = money(100000 * (1 - drain));
+  $("c4bar").style.width = ((1 - drain) * 100) + "%";
+  $("c4cov").style.color = drain > .99 ? "var(--low)" : "var(--navy)";
+  pop($("c4end"), t, 33.1, 10);
+  pop($("c4b1"), t, 30.6); pop($("c4b2"), t, 33.3); pop($("c4b3"), t, 35);
+
+  // S5 reduced paid-up
+  $("s5").style.opacity = win(t, 39.5, 53.5);
+  pop($("r5shield"), t, 40, 40);
+  const shrink = seg(t, 42, 44.5);
+  $("r5amt").textContent = money(100000 - 65000 * shrink);
+  $("r5shield").style.transform = `scale(${1 - .3 * shrink})`;
+  $("r5shield").style.opacity = segO(t, 40, 40.6);
+  $("r5bar").style.width = (seg(t, 45.5, 48.5) * 100) + "%";
+  pop($("r5life"), t, 48.6, 10);
+  pop($("r5b1"), t, 42.6); pop($("r5b2"), t, 45.8); pop($("r5b3"), t, 48.8);
+
+  // S6 extended term
+  $("s6").style.opacity = win(t, 53.5, 67.5);
+  pop($("e6same"), t, 55.5, 10);
+  const run = seg(t, 56.5, 60);
+  $("e6bar").style.width = (run * 46) + "%";
+  pop($("e6time"), t, 56.8, 10);
+  $("e6yrs").textContent = Math.round(run * 18);
+  $("e6end").style.opacity = segO(t, 60, 60.6);
+  pop($("e6b1"), t, 55.6); pop($("e6b2"), t, 57.4); pop($("e6b3"), t, 59.6); pop($("e6b4"), t, 62.2);
+
+  // S7 recap
+  $("s7").style.opacity = win(t, 67.5, 82, .9);
+  pop($("k1"), t, 68.3, 40); pop($("k2"), t, 69.3, 40); pop($("k3"), t, 70.3, 40); pop($("k4"), t, 73, 30);
+
+  // Captions
+  const c = CAPS.find(([a, b]) => t >= a - .4 && t <= b + .4);
+  const cap = $("cap");
+  if (c) { cap.innerHTML = c[2]; cap.style.opacity = win(t, c[0] - .4, c[1] + .4, .4); }
+  else cap.style.opacity = 0;
+};
+window.DURATION = DURATION;
+render(0);
+</script>
+</body></html>
