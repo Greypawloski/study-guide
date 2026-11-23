@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Cheat Sheet{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Arizona cheat sheet</h1>
+  <p class="lead">The numbers and rules that show up most on the exam. Review this the night before and the morning of your test.</p>
+  <div class="btn-row"><button class="btn sm" onclick="window.print()">Print</button><a class="btn sm ghost" href="{{ url_for('glossary') }}">Full glossary →</a></div>
+</div>
+
+<div class="card">
+  <h2>Arizona numbers to memorize</h2>
+  <table class="facts numbers">
+    {% for k, v in numbers %}<tr><td>{{ k }}</td><td><strong>{{ v }}</strong></td></tr>{% endfor %}
+  </table>
+</div>
+
+<div class="sheet-grid">
+  {% for s in sections %}
+  <div class="card">
+    <h3>{{ s.icon }} {{ s.title }} <span class="pill">{{ s.weight }}%</span></h3>
+    <ul class="facts-list">{% for f in s.key_facts %}<li>{{ f }}</li>{% endfor %}</ul>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="card">
+  <h2>Commonly confused pairs</h2>
+  <table class="facts">
+    <tr><td>Twisting vs. Churning</td><td>Twisting = replacing with a <strong>different</strong> insurer through misrepresentation. Churning = replacing with the <strong>same</strong> insurer for commissions.</td></tr>
+    <tr><td>Moral vs. Morale hazard</td><td>Moral = dishonesty. Morale = indifference ("I'm insured").</td></tr>
+    <tr><td>Peril vs. Hazard</td><td>Peril causes the loss. Hazard increases its chance.</td></tr>
+    <tr><td>Joint vs. Survivorship</td><td>Joint pays at the <strong>first</strong> death. Survivorship pays at the <strong>second</strong>.</td></tr>
+    <tr><td>Fixed period vs. Fixed amount</td><td>Period: time is set, the amount is calculated. Amount: payment is set, the time is calculated.</td></tr>
+    <tr><td>Extended term vs. Reduced paid-up</td><td>Extended: <strong>same face</strong>, shorter time (term). Reduced paid-up: <strong>smaller face</strong>, lifetime (permanent).</td></tr>
+    <tr><td>Per stirpes vs. Per capita</td><td>Stirpes = share passes to the bloodline. Capita = split among survivors.</td></tr>
+    <tr><td>Absolute vs. Collateral assignment</td><td>Absolute = permanent full transfer. Collateral = temporary, to secure a loan.</td></tr>
+    <tr><td>Cross-purchase vs. Entity</td><td>Cross = owners insure each other. Entity = the business insures each owner.</td></tr>
+    <tr><td>General vs. Separate account</td><td>General = fixed products, insurer bears risk. Separate = variable products, owner bears risk.</td></tr>
+    <tr><td>Annuitant vs. Owner</td><td>Annuitant = measuring life. Owner = holds the rights.</td></tr>
+    <tr><td>Life free look vs. Annuity free look (AZ)</td><td>Life: at least 10 days. Annuity: 10 days, 30 if 65+. Replacement: 30 days.</td></tr>
+  </table>
+</div>
+{% endblock %}

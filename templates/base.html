@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AZ Life Exam Prep{% endblock %} · Arizona Life Producer 13-31</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d9622b'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'%3EAZ%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="{{ url_for('home') }}">
+        <span class="brand-mark">AZ</span>
+        <span class="brand-text">Life Exam Prep<small>Series {{ exam.series }}</small></span>
+      </a>
+      <button class="menu-btn" aria-label="Menu" onclick="document.body.classList.toggle('menu-open')">☰</button>
+      <nav class="mainnav">
+        <a href="{{ url_for('home') }}" class="{{ 'on' if nav == 'home' }}">Dashboard</a>
+        <a href="{{ url_for('study') }}" class="{{ 'on' if nav in ('study','lesson') }}">Study</a>
+        <a href="{{ url_for('flashcards') }}" class="{{ 'on' if nav == 'flashcards' }}">Flashcards</a>
+        <a href="{{ url_for('practice') }}" class="{{ 'on' if nav in ('practice','quiz') }}">Practice</a>
+        <a href="{{ url_for('exam_intro') }}" class="{{ 'on' if nav in ('exam_intro','exam_start') }}">Mock Exam</a>
+        <a href="{{ url_for('review') }}" class="{{ 'on' if nav == 'review' }}">Review</a>
+        <a href="{{ url_for('cheatsheet') }}" class="{{ 'on' if nav == 'cheatsheet' }}">Cheat Sheet</a>
+        <a href="{{ url_for('progress') }}" class="{{ 'on' if nav == 'progress' }}">Progress</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-links">
+        <a href="{{ url_for('glossary') }}">Glossary</a>
+        <a href="{{ url_for('tips') }}">Exam-day tips</a>
+        <a href="{{ url_for('daily') }}">Question of the day</a>
+        <a href="{{ url_for('cheatsheet') }}">Cheat sheet</a>
+      </div>
+      <p>Built for the Arizona Life Insurance Producer exam (Series {{ exam.series }}, delivered by {{ exam.vendor }}): {{ exam.questions }} questions · {{ exam.minutes // 60 }} hours · {{ exam.passing }}% to pass.</p>
+      <p class="muted">Independent study aid, not affiliated with DIFI or PSI. Laws change; confirm details against the current PSI candidate bulletin and A.R.S. Title 20. Your progress is saved in this browser only.</p>
+    </div>
+  </footer>
+
+  <script>window.SECTIONS = {{ section_meta | tojson }};</script>
+  <script src="{{ url_for('static', filename='js/store.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

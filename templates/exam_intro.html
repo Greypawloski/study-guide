@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Mock Exam{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Full-length mock exam</h1>
+  <p class="lead">Simulates the real Arizona Life Producer exam: {{ exam.questions }} questions drawn from every section in the official proportions, with a {{ exam.minutes // 60 }}-hour timer and no feedback until you submit.</p>
+</div>
+
+<div class="exam-grid">
+  <div class="card">
+    <h2>How it works</h2>
+    <ul class="checklist">
+      <li>{{ exam.questions }} questions, {{ exam.minutes }} minutes. The timer auto-submits at zero.</li>
+      <li>Flag questions to come back to, and jump around with the question list.</li>
+      <li>Change answers any time before you submit.</li>
+      <li>You need <strong>{{ exam.passing }}%</strong> to pass.</li>
+      <li>Afterward, see your score by section and review every question with explanations.</li>
+    </ul>
+    <a class="btn primary big" href="{{ url_for('exam_start') }}">Start mock exam →</a>
+  </div>
+  <div class="card">
+    <h2>Question breakdown</h2>
+    <table class="sec-table">
+      {% for s in section_meta %}
+      <tr><td>{{ s.icon }} {{ s.title }}</td><td class="num">{{ s.weight }}</td></tr>
+      {% endfor %}
+      <tr class="total"><td>Total</td><td class="num">{{ exam.questions }}</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card" id="history-card" hidden>
+  <h2>Your past mock exams</h2>
+  <table class="sec-table" id="history"></table>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  const ex = Store.get().exams;
+  if (!ex.length) return;
+  document.getElementById("history-card").hidden = false;
+  document.getElementById("history").innerHTML = "<tr><th>Date</th><th>Score</th><th>Result</th><th>Time</th></tr>" +
+    ex.slice().reverse().map(e => "<tr><td>" + new Date(e.date).toLocaleDateString() + "</td><td>" + e.score + "% (" + e.correct + "/" + e.total + ")</td><td>" +
+      (e.score >= 70 ? '<span class="tag good">Pass</span>' : '<span class="tag low">Fail</span>') + "</td><td>" + Math.round(e.seconds / 60) + " min</td></tr>").join("");
+})();
+</script>
+{% endblock %}

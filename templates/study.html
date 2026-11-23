@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Study{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Study guide</h1>
+  <p class="lead">Seven sections that follow the official Arizona Life Producer content outline. Read the lessons, then test yourself with that section's quiz.</p>
+</div>
+
+<div class="outline">
+  {% for s in sections %}
+  <div class="outline-item card" data-sid="{{ s.id }}">
+    <div class="outline-left">
+      <span class="sec-icon big">{{ s.icon }}</span>
+    </div>
+    <div class="outline-body">
+      <div class="outline-title">
+        <h2><a href="{{ url_for('lesson', sid=s.id) }}">{{ s.num }}. {{ s.title }}</a></h2>
+        <span class="pill">{{ s.weight }}% of exam</span>
+      </div>
+      <p class="muted">{{ s.summary }}</p>
+      <ol class="lesson-links">
+        {% for l in s.lessons %}
+        <li><a href="{{ url_for('lesson', sid=s.id) }}#l{{ loop.index0 }}"><span class="check" data-k="{{ s.id }}:{{ loop.index0 }}">○</span>{{ l.title }}</a></li>
+        {% endfor %}
+      </ol>
+      <div class="btn-row small">
+        <a class="btn primary sm" href="{{ url_for('lesson', sid=s.id) }}">Read lessons</a>
+        <a class="btn sm" href="{{ url_for('quiz') }}?sections={{ s.id }}&n=15&mode=practice">Section quiz</a>
+        <a class="btn sm ghost" href="{{ url_for('flashcards') }}?section={{ s.id }}">Flashcards</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.querySelectorAll(".check[data-k]").forEach(el => {
+  if (Store.get().lessons[el.dataset.k]) { el.textContent = "✓"; el.classList.add("done"); }
+});
+</script>
+{% endblock %}

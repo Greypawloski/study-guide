@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Arizona Life Insurance Producer · Series {{ exam.series }}</p>
+    <h1>Pass the Arizona Life exam on your first try.</h1>
+    <p class="lead">{{ total_lessons }} lessons, {{ total_q }} practice questions with explanations, {{ total_cards }} flashcards, and a timed 100-question mock exam weighted exactly like the real thing.</p>
+    <div class="btn-row">
+      <a class="btn primary" id="continue-btn" href="{{ url_for('study') }}">Start studying</a>
+      <a class="btn" href="{{ url_for('exam_intro') }}">Take a mock exam</a>
+    </div>
+  </div>
+  <div class="ready-card card">
+    <div class="ring" id="ready-ring" style="--p:0">
+      <div class="ring-inner"><strong id="ready-score">0</strong><span>Readiness</span></div>
+    </div>
+    <ul class="mini-stats">
+      <li><strong id="st-acc">–</strong><span>Accuracy</span></li>
+      <li><strong id="st-cov">0%</strong><span>Bank covered</span></li>
+      <li><strong id="st-streak">0</strong><span>Day streak</span></li>
+      <li><strong id="st-best">–</strong><span>Best mock</span></li>
+    </ul>
+    <p class="ready-msg" id="ready-msg">Answer some practice questions to see your readiness score.</p>
+  </div>
+</section>
+
+<section class="quick-grid">
+  <a class="quick card" href="{{ url_for('daily') }}"><span class="qi">☀️</span><strong>Question of the day</strong><span>One quick question to keep your streak alive.</span></a>
+  <a class="quick card" href="{{ url_for('quiz') }}?n=10&mode=practice"><span class="qi">⚡</span><strong>Quick 10</strong><span>Ten random questions with instant feedback.</span></a>
+  <a class="quick card" href="{{ url_for('quiz') }}?n=20&mode=weak"><span class="qi">🎯</span><strong>Drill weak spots</strong><span>Questions you missed and topics where you're lowest.</span></a>
+  <a class="quick card" href="{{ url_for('flashcards') }}?due=1"><span class="qi">🃏</span><strong>Flashcards due</strong><span id="due-count">Spaced repetition review.</span></a>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>Exam sections</h2>
+    <p class="muted">Weighted like the real exam. Tap a section to study it.</p>
+  </div>
+  <div class="sec-grid">
+    {% for s in section_meta %}
+    <a class="sec card" href="{{ url_for('lesson', sid=s.id) }}" data-sid="{{ s.id }}">
+      <div class="sec-top"><span class="sec-icon">{{ s.icon }}</span><span class="pill">{{ s.weight }}% · {{ s.weight }} Qs</span></div>
+      <h3>{{ s.num }}. {{ s.title }}</h3>
+      <p>{{ s.summary }}</p>
+      <div class="bar"><span class="bar-fill" style="width:0%"></span></div>
+      <div class="sec-foot"><span class="acc">Not started</span><span class="lessons-done">0/{{ s.lessons }} lessons</span></div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="plan card">
+  <h2>Suggested 2-week study plan</h2>
+  <ol class="plan-list">
+    <li><strong>Days 1–2:</strong> Insurance Regulation and General Insurance lessons, the Cheat Sheet, and section quizzes.</li>
+    <li><strong>Days 3–5:</strong> Life Insurance Basics (the biggest section), then its quiz until you're above 80%.</li>
+    <li><strong>Days 6–8:</strong> Policies and Provisions, Options &amp; Riders. Flashcards every day.</li>
+    <li><strong>Days 9–10:</strong> Annuities and Federal Tax, then a mixed 50-question practice test.</li>
+    <li><strong>Days 11–13:</strong> A full mock exam each day. Review every miss and drill weak spots.</li>
+    <li><strong>Day 14:</strong> Light review of the Cheat Sheet and flashcards. Read the exam-day tips. Rest.</li>
+  </ol>
+  <p class="muted">Aim for 85%+ on mock exams before test day. The real exam needs 70%.</p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>window.QMETA = {{ qmeta | tojson }}; window.CARD_COUNT = {{ total_cards }};</script>
+<script>
+(function () {
+  const r = Store.readiness(QMETA);
+  const s = Store.get();
+  document.getElementById("ready-score").textContent = r.score;
+  document.getElementById("ready-ring").style.setProperty("--p", r.score);
+  document.getElementById("st-acc").textContent = r.accuracy === null ? "–" : r.accuracy + "%";
+  document.getElementById("st-cov").textContent = r.coverage + "%";
+  document.getElementById("st-streak").textContent = Store.streak();
+  const best = s.exams.length ? Math.max(...s.exams.map(e => e.score)) : null;
+  document.getElementById("st-best").textContent = best === null ? "–" : best + "%";
+  const msg = document.getElementById("ready-msg");
+  if (r.accuracy !== null) {
+    if (r.score >= 85) msg.textContent = "You're in great shape. Keep taking mock exams to stay sharp.";
+    else if (r.score >= 70) msg.textContent = "You're close. Drill your weakest section and take a mock exam.";
+    else if (r.coverage < 60) msg.textContent = "Keep going. Your score firms up as you cover more of the question bank.";
+    else msg.textContent = "Focus on the lessons for your lowest sections, then drill weak spots.";
+  }
+
+  const stats = Store.sectionStats(QMETA);
+  document.querySelectorAll(".sec[data-sid]").forEach(el => {
+    const id = el.dataset.sid;
+    const o = stats[id];
+    const meta = SECTIONS.find(x => x.id === id);
+    const done = Array.from({ length: meta.lessons }, (_, i) => Store.lessonDone(id, i)).filter(Boolean).length;
+    el.querySelector(".lessons-done").textContent = done + "/" + meta.lessons + " lessons";
+    if (o.acc !== null) {
+      el.querySelector(".acc").textContent = o.acc + "% accuracy";
+      const f = el.querySelector(".bar-fill");
+      f.style.width = o.acc + "%";
+      f.classList.add(o.acc >= 80 ? "good" : o.acc >= 70 ? "ok" : "low");
+    }
+  });
+
+  // Continue button: first section with unfinished lessons
+  const next = SECTIONS.find(m => Array.from({ length: m.lessons }, (_, i) => Store.lessonDone(m.id, i)).some(d => !d));
+  const btn = document.getElementById("continue-btn");
+  if (Object.keys(s.lessons).length && next) { btn.textContent = "Continue: " + next.title; btn.href = "/study/" + next.id; }
+
+  const now = Date.now();
+  let due = 0;
+  for (let i = 1; i <= CARD_COUNT; i++) if (!s.cardDue[i] || s.cardDue[i] <= now) due++;
+  document.getElementById("due-count").textContent = due + " cards due for review.";
+})();
+</script>
+{% endblock %}

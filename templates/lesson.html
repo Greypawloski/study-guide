@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}{{ s.title }}{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{{ url_for('study') }}">Study</a> / Section {{ s.num }}</nav>
+<div class="page-head lesson-head">
+  <div>
+    <h1>{{ s.icon }} {{ s.title }}</h1>
+    <p class="lead">{{ s.summary }}</p>
+  </div>
+  <div class="lesson-meta card">
+    <strong>{{ s.weight }}%</strong><span>of the exam (~{{ s.weight }} questions)</span>
+    <div class="bar"><span class="bar-fill good" id="lesson-progress" style="width:0%"></span></div>
+    <small id="lesson-progress-text">0 of {{ s.lessons|length }} lessons done</small>
+  </div>
+</div>
+
+<div class="lesson-layout">
+  <aside class="lesson-toc">
+    <p class="toc-label">In this section</p>
+    <ol>
+      {% for l in s.lessons %}
+      <li><a href="#l{{ loop.index0 }}"><span class="check" data-i="{{ loop.index0 }}">○</span>{{ l.title }}</a></li>
+      {% endfor %}
+      <li><a href="#facts"><span class="check">★</span>Key facts to memorize</a></li>
+    </ol>
+  </aside>
+
+  <div class="lesson-body">
+    {% for l in s.lessons %}
+    <article class="lesson card" id="l{{ loop.index0 }}">
+      <h2><span class="lesson-num">{{ s.num }}.{{ loop.index }}</span> {{ l.title }}</h2>
+      <div class="prose">{{ l.html | safe }}</div>
+      <label class="done-toggle">
+        <input type="checkbox" data-i="{{ loop.index0 }}"> I've studied this lesson
+      </label>
+    </article>
+    {% endfor %}
+
+    <article class="lesson card facts-card" id="facts">
+      <h2>★ Key facts to memorize</h2>
+      <ul class="facts-list">
+        {% for f in s.key_facts %}<li>{{ f }}</li>{% endfor %}
+      </ul>
+    </article>
+
+    <div class="cta-card card">
+      <h3>Check your understanding</h3>
+      <p>Test yourself on this section with instant feedback and explanations.</p>
+      <div class="btn-row">
+        <a class="btn primary" href="{{ url_for('quiz') }}?sections={{ s.id }}&n=15&mode=practice">Take the section quiz</a>
+        <a class="btn" href="{{ url_for('flashcards') }}?section={{ s.id }}">Review flashcards</a>
+      </div>
+    </div>
+
+    <div class="pager">
+      {% if prev_s %}<a class="btn ghost" href="{{ url_for('lesson', sid=prev_s.id) }}">← {{ prev_s.title }}</a>{% else %}<span></span>{% endif %}
+      {% if next_s %}<a class="btn ghost" href="{{ url_for('lesson', sid=next_s.id) }}">{{ next_s.title }} →</a>{% else %}<a class="btn primary" href="{{ url_for('exam_intro') }}">Take a mock exam →</a>{% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  const SID = {{ s.id | tojson }};
+  const N = {{ s.lessons | length }};
+  function refresh() {
+    let done = 0;
+    for (let i = 0; i < N; i++) {
+      const d = Store.lessonDone(SID, i);
+      if (d) done++;
+      const c = document.querySelector('.lesson-toc .check[data-i="' + i + '"]');
+      c.textContent = d ? "✓" : "○";
+      c.classList.toggle("done", d);
+      document.querySelector('input[data-i="' + i + '"]').checked = d;
+    }
+    document.getElementById("lesson-progress").style.width = (done / N * 100) + "%";
+    document.getElementById("lesson-progress-text").textContent = done + " of " + N + " lessons done";
+  }
+  document.querySelectorAll(".done-toggle input").forEach(cb => {
+    cb.addEventListener("change", () => { Store.markLesson(SID, +cb.dataset.i, cb.checked); refresh(); });
+  });
+  refresh();
+})();
+</script>
+{% endblock %}

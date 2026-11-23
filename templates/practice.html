@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Practice{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Practice questions</h1>
+  <p class="lead">Build your own quiz. Choose the topics, how many questions, and whether you want feedback after each answer or only at the end.</p>
+</div>
+
+<form class="builder card" id="builder" action="{{ url_for('quiz') }}" method="get">
+  <fieldset>
+    <legend>1. Topics</legend>
+    <div class="check-grid">
+      {% for s in section_meta %}
+      <label class="check-card"><input type="checkbox" name="sec" value="{{ s.id }}" checked>
+        <span><strong>{{ s.icon }} {{ s.title }}</strong><small>{{ s.questions }} questions · <span class="sec-acc" data-sid="{{ s.id }}">not started</span></small></span></label>
+      {% endfor %}
+    </div>
+    <div class="btn-row small"><button type="button" class="btn sm ghost" id="all-on">Select all</button><button type="button" class="btn sm ghost" id="all-off">Clear</button></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>2. Which questions</legend>
+    <div class="radio-row">
+      <label class="radio-card"><input type="radio" name="source" value="all" checked><span><strong>Any</strong><small>Random from the bank</small></span></label>
+      <label class="radio-card"><input type="radio" name="source" value="unseen"><span><strong>New only</strong><small>Ones you haven't tried</small></span></label>
+      <label class="radio-card"><input type="radio" name="source" value="missed"><span><strong>Missed</strong><small>Last attempt was wrong</small></span></label>
+      <label class="radio-card"><input type="radio" name="source" value="flagged"><span><strong>Saved</strong><small>Ones you starred</small></span></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>3. How many</legend>
+    <div class="radio-row">
+      {% for n in [10, 25, 50, 0] %}
+      <label class="radio-card"><input type="radio" name="n" value="{{ n }}" {{ 'checked' if n == 25 }}><span><strong>{{ n if n else 'All' }}</strong></span></label>
+      {% endfor %}
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>4. Mode</legend>
+    <div class="radio-row">
+      <label class="radio-card"><input type="radio" name="mode" value="practice" checked><span><strong>Practice</strong><small>See the answer and explanation after each question</small></span></label>
+      <label class="radio-card"><input type="radio" name="mode" value="test"><span><strong>Test</strong><small>Answers revealed only at the end</small></span></label>
+      <label class="radio-card"><input type="radio" name="mode" value="timed"><span><strong>Timed test</strong><small>Real exam pace: 72 seconds per question</small></span></label>
+    </div>
+  </fieldset>
+
+  <input type="hidden" name="sections" id="sections-field">
+  <p class="form-error" id="builder-error" hidden>Choose at least one topic.</p>
+  <button class="btn primary big" type="submit">Start quiz →</button>
+</form>
+{% endblock %}
+{% block scripts %}
+<script>window.QMETA = {{ qmeta | tojson }};</script>
+<script>
+(function () {
+  const stats = Store.sectionStats(QMETA);
+  document.querySelectorAll(".sec-acc").forEach(el => {
+    const o = stats[el.dataset.sid];
+    if (o.acc !== null) el.textContent = o.acc + "% accuracy";
+  });
+  const boxes = () => document.querySelectorAll('input[name="sec"]');
+  document.getElementById("all-on").onclick = () => boxes().forEach(b => b.checked = true);
+  document.getElementById("all-off").onclick = () => boxes().forEach(b => b.checked = false);
+  document.getElementById("builder").addEventListener("submit", e => {
+    const chosen = Array.from(boxes()).filter(b => b.checked).map(b => b.value);
+    if (!chosen.length) { e.preventDefault(); document.getElementById("builder-error").hidden = false; return; }
+    document.getElementById("sections-field").value = chosen.join(",");
+    boxes().forEach(b => b.disabled = true); // keep the URL short
+  });
+})();
+</script>
+{% endblock %}

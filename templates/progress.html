@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Progress{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Your progress</h1>
+  <p class="lead">Saved in this browser. If you switch devices or clear your browser data, progress starts over.</p>
+</div>
+
+<div class="stat-row">
+  <div class="card stat"><strong id="p-ready">0</strong><span>Readiness score</span></div>
+  <div class="card stat"><strong id="p-answered">0</strong><span>Questions answered</span></div>
+  <div class="card stat"><strong id="p-acc">–</strong><span>Overall accuracy</span></div>
+  <div class="card stat"><strong id="p-exams">0</strong><span>Mock exams taken</span></div>
+  <div class="card stat"><strong id="p-cards">0</strong><span>Cards mastered</span></div>
+  <div class="card stat"><strong id="p-streak">0</strong><span>Day streak</span></div>
+</div>
+
+<div class="card">
+  <h2>Accuracy by section</h2>
+  <p class="muted">Sections sorted weakest first. Anything under 80% deserves another pass through the lessons.</p>
+  <table class="sec-table" id="p-sections"></table>
+</div>
+
+<div class="card" id="p-exam-card" hidden>
+  <h2>Mock exam scores</h2>
+  <div class="chart" id="p-chart"></div>
+</div>
+
+<div class="card danger-zone">
+  <h2>Start over</h2>
+  <p class="muted">Erase all saved progress in this browser.</p>
+  <button class="btn ghost" id="reset-btn">Reset progress</button>
+  <span id="reset-confirm" hidden> Are you sure? <button class="btn sm miss" id="reset-yes">Yes, erase everything</button></span>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.QMETA = {{ qmeta | tojson }};</script>
+<script>
+(function () {
+  const s = Store.get();
+  const r = Store.readiness(QMETA);
+  const stats = Store.sectionStats(QMETA);
+  let right = 0, wrong = 0;
+  Object.values(s.answers).forEach(a => { right += a.r; wrong += a.w; });
+  document.getElementById("p-ready").textContent = r.score;
+  document.getElementById("p-answered").textContent = right + wrong;
+  document.getElementById("p-acc").textContent = right + wrong ? Math.round(right / (right + wrong) * 100) + "%" : "–";
+  document.getElementById("p-exams").textContent = s.exams.length;
+  document.getElementById("p-cards").textContent = Object.values(s.cards).filter(b => b >= 5).length;
+  document.getElementById("p-streak").textContent = Store.streak();
+
+  const rows = SECTIONS.slice().sort((a, b) => (stats[a.id].acc ?? -1) - (stats[b.id].acc ?? -1)).map(sec => {
+    const o = stats[sec.id];
+    const p = o.acc;
+    return "<tr><td>" + sec.icon + " " + sec.title + '</td><td class="small muted">' + o.seen + "/" + o.total + ' seen</td><td><div class="bar"><span class="bar-fill ' +
+      (p === null ? "" : p >= 80 ? "good" : p >= 70 ? "ok" : "low") + '" style="width:' + (p || 0) + '%"></span></div></td><td class="num">' + (p === null ? "–" : p + "%") +
+      '</td><td><a href="/quiz?sections=' + sec.id + '&n=15&mode=practice">Practice</a></td></tr>';
+  });
+  document.getElementById("p-sections").innerHTML = rows.join("");
+
+  if (s.exams.length) {
+    document.getElementById("p-exam-card").hidden = false;
+    document.getElementById("p-chart").innerHTML = '<div class="pass-line" title="70% passing"></div>' + s.exams.slice(-12).map(e =>
+      '<div class="col"><span class="colbar ' + (e.score >= 70 ? "good" : "low") + '" style="height:' + e.score + '%"><b>' + e.score + '</b></span><small>' +
+      new Date(e.date).toLocaleDateString(undefined, { month: "short", day: "numeric" }) + "</small></div>").join("");
+  }
+
+  document.getElementById("reset-btn").onclick = () => document.getElementById("reset-confirm").hidden = false;
+  document.getElementById("reset-yes").onclick = () => { Store.reset(); location.reload(); };
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Mock Exam' if mode == 'exam' else 'Quiz' }}{% endblock %}
+{% block content %}
+<div id="quiz-app" data-mode="{{ mode }}">
+  <div class="quiz-top">
+    <div>
+      <p class="eyebrow" id="quiz-label">Loading…</p>
+      <div class="bar thin"><span class="bar-fill good" id="quiz-progress" style="width:0%"></span></div>
+    </div>
+    <div class="quiz-tools">
+      <span class="timer" id="timer" hidden>⏱ <b id="timer-val">--:--</b></span>
+      <button class="btn sm ghost" id="nav-toggle" hidden>Question list</button>
+    </div>
+  </div>
+
+  <div class="qnav card" id="qnav" hidden></div>
+
+  <div class="question card" id="question-card">
+    <div class="q-meta"><span class="pill" id="q-section"></span><button class="flag-btn" id="flag-btn" title="Flag / save this question">☆ <span>Flag</span></button></div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="choices" id="choices"></div>
+    <div class="explain" id="explain" hidden></div>
+    <div class="q-actions">
+      <button class="btn ghost" id="prev-btn">← Back</button>
+      <button class="btn primary" id="next-btn">Next →</button>
+    </div>
+    <p class="kbd-hint">Keyboard: <kbd>1</kbd>–<kbd>4</kbd> to answer, <kbd>Enter</kbd> for next</p>
+  </div>
+
+  <div class="results" id="results" hidden></div>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-box card">
+      <h3 id="modal-title"></h3>
+      <p id="modal-body"></p>
+      <div class="btn-row">
+        <button class="btn ghost" id="modal-cancel">Keep working</button>
+        <button class="btn primary" id="modal-ok">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.QUESTIONS = {{ questions | tojson }};</script>
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}

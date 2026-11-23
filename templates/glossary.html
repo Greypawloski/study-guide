@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Glossary{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Glossary</h1>
+  <p class="lead">Every key term in one searchable list.</p>
+  <input class="search" id="search" type="search" placeholder="Search terms, e.g. 'grace' or 'annuity'" autofocus>
+</div>
+<div class="glossary card">
+  {% for c in cards %}
+  <div class="g-item" data-text="{{ (c.term ~ ' ' ~ c.definition) | lower }}">
+    <dt>{{ c.term }}</dt>
+    <dd>{{ c.definition }} <span class="g-sec" data-sid="{{ c.section }}"></span></dd>
+  </div>
+  {% endfor %}
+  <p class="muted" id="no-match" hidden>No terms match.</p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.querySelectorAll(".g-sec").forEach(el => el.textContent = Store.sectionTitle(el.dataset.sid));
+document.getElementById("search").addEventListener("input", e => {
+  const t = e.target.value.trim().toLowerCase();
+  let n = 0;
+  document.querySelectorAll(".g-item").forEach(el => { const m = !t || el.dataset.text.includes(t); el.hidden = !m; if (m) n++; });
+  document.getElementById("no-match").hidden = n > 0;
+});
+</script>
+{% endblock %}

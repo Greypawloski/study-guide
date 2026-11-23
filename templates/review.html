@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Review{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Review your mistakes</h1>
+  <p class="lead">Every question you got wrong on your last attempt, plus anything you saved, with the correct answer and why.</p>
+</div>
+
+<div class="fc-controls card">
+  <label>Show
+    <select id="rv-filter">
+      <option value="missed">Missed (last attempt wrong)</option>
+      <option value="flagged">Saved questions</option>
+      <option value="hard">Missed more than once</option>
+    </select>
+  </label>
+  <label>Section
+    <select id="rv-section">
+      <option value="all">All sections</option>
+      {% for s in section_meta %}<option value="{{ s.id }}">{{ s.title }}</option>{% endfor %}
+    </select>
+  </label>
+  <a class="btn primary sm" id="rv-drill" href="#">Drill these →</a>
+</div>
+
+<p class="muted" id="rv-count"></p>
+<div id="rv-list"></div>
+{% endblock %}
+{% block scripts %}
+<script>window.QUESTIONS = {{ questions | tojson }};</script>
+<script>
+(function () {
+  const f = document.getElementById("rv-filter"), sec = document.getElementById("rv-section");
+  function draw() {
+    const s = Store.get();
+    const list = QUESTIONS.filter(q => sec.value === "all" || q.section === sec.value).filter(q => {
+      const a = s.answers[q.id];
+      if (f.value === "flagged") return s.flagged[q.id];
+      if (f.value === "hard") return a && a.w >= 2;
+      return a && a.last === false;
+    });
+    document.getElementById("rv-count").textContent = list.length + " question" + (list.length === 1 ? "" : "s");
+    const src = f.value === "flagged" ? "flagged" : "missed";
+    document.getElementById("rv-drill").href = "/quiz?mode=practice&n=0&source=" + src + (sec.value !== "all" ? "&sections=" + sec.value : "");
+    document.getElementById("rv-drill").hidden = !list.length || f.value === "hard";
+    document.getElementById("rv-list").innerHTML = list.length ? list.map(q => {
+      const a = s.answers[q.id] || { r: 0, w: 0 };
+      return '<div class="rev card bad"><div class="q-meta"><span class="pill">' + Store.esc(Store.sectionTitle(q.section)) + '</span><span class="muted small">Right ' + a.r + " · Wrong " + a.w + "</span></div>" +
+        '<p class="rev-q">' + Store.esc(q.q) + '</p><p class="rev-right">✓ ' + Store.esc(q.choices[q.answer]) + '</p><p class="rev-ex">' + Store.esc(q.explain) + "</p></div>";
+    }).join("") : '<div class="card empty"><h2>Nothing here yet 👍</h2><p>Take some <a href="/practice">practice quizzes</a>. Questions you miss will show up here so you can fix them.</p></div>';
+  }
+  [f, sec].forEach(el => el.addEventListener("change", draw));
+  draw();
+})();
+</script>
+{% endblock %}

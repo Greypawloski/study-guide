@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Flashcards{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Flashcards</h1>
+  <p class="lead">Spaced repetition: cards you know come back less often, and cards you miss come back right away.</p>
+</div>
+
+<div class="fc-controls card">
+  <label>Section
+    <select id="fc-section">
+      <option value="all">All sections</option>
+      {% for s in section_meta %}<option value="{{ s.id }}">{{ s.title }}</option>{% endfor %}
+    </select>
+  </label>
+  <label>Show
+    <select id="fc-filter">
+      <option value="due">Due for review</option>
+      <option value="all">All cards</option>
+      <option value="new">New cards only</option>
+      <option value="weak">Cards I keep missing</option>
+    </select>
+  </label>
+  <label class="inline"><input type="checkbox" id="fc-reverse"> Show definition first</label>
+  <button class="btn sm" id="fc-shuffle">Shuffle</button>
+</div>
+
+<div class="mastery card" id="mastery">
+  <div class="mastery-bar" id="mastery-bar"></div>
+  <div class="mastery-legend">
+    <span><i class="b0"></i>New</span><span><i class="b1"></i>Learning</span><span><i class="b3"></i>Reviewing</span><span><i class="b5"></i>Mastered</span>
+  </div>
+</div>
+
+<div class="fc-stage">
+  <p class="fc-count" id="fc-count"></p>
+  <div class="flashcard" id="card" tabindex="0" aria-live="polite">
+    <div class="fc-inner">
+      <div class="fc-face fc-front"><span class="fc-tag" id="fc-tag-front"></span><div id="fc-front"></div><small>Tap or press space to flip</small></div>
+      <div class="fc-face fc-back"><span class="fc-tag" id="fc-tag-back"></span><div id="fc-back"></div></div>
+    </div>
+  </div>
+  <div class="fc-actions">
+    <button class="btn miss" id="fc-no">✗ Still learning <kbd>1</kbd></button>
+    <button class="btn got" id="fc-yes">✓ Knew it <kbd>2</kbd></button>
+  </div>
+  <div class="fc-done card" id="fc-done" hidden>
+    <h2>🎉 All caught up</h2>
+    <p>No cards match this filter right now. Switch to <strong>All cards</strong> to keep going, or come back tomorrow.</p>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.CARDS = {{ cards | tojson }};</script>
+<script>
+(function () {
+  const params = new URLSearchParams(location.search);
+  const secSel = document.getElementById("fc-section");
+  const filSel = document.getElementById("fc-filter");
+  const rev = document.getElementById("fc-reverse");
+  if (params.get("section")) { secSel.value = params.get("section"); filSel.value = "all"; }
+  const card = document.getElementById("card");
+  let deck = [], pos = 0, flipped = false;
+
+  function build() {
+    const s = Store.get(), now = Date.now();
+    deck = CARDS.filter(c => secSel.value === "all" || c.section === secSel.value).filter(c => {
+      const box = s.cards[c.id];
+      if (filSel.value === "due") return !s.cardDue[c.id] || s.cardDue[c.id] <= now;
+      if (filSel.value === "new") return !box;
+      if (filSel.value === "weak") return box === 1;
+      return true;
+    });
+    deck = Store.shuffle(deck);
+    pos = 0;
+    show();
+    mastery();
+  }
+  function show() {
+    flipped = false;
+    card.classList.remove("flipped");
+    const done = pos >= deck.length;
+    document.getElementById("fc-done").hidden = !done;
+    card.hidden = done;
+    document.querySelector(".fc-actions").hidden = done;
+    document.getElementById("fc-count").textContent = done ? "" : "Card " + (pos + 1) + " of " + deck.length;
+    if (done) return;
+    const c = deck[pos];
+    const tag = Store.sectionTitle(c.section);
+    document.getElementById("fc-tag-front").textContent = tag;
+    document.getElementById("fc-tag-back").textContent = tag;
+    const a = rev.checked ? c.definition : c.term, b = rev.checked ? c.term : c.definition;
+    document.getElementById("fc-front").innerHTML = '<p class="' + (rev.checked ? "fc-def" : "fc-term") + '">' + Store.esc(a) + "</p>";
+    document.getElementById("fc-back").innerHTML = '<p class="' + (rev.checked ? "fc-term" : "fc-def") + '">' + Store.esc(b) + "</p>";
+  }
+  function flip() { flipped = !flipped; card.classList.toggle("flipped", flipped); }
+  function grade(knew) {
+    if (pos >= deck.length) return;
+    Store.gradeCard(deck[pos].id, knew);
+    if (!knew && filSel.value !== "all") deck.push(deck[pos]); // see it again this session
+    pos++;
+    show();
+    mastery();
+  }
+  function mastery() {
+    const s = Store.get();
+    const pool = CARDS.filter(c => secSel.value === "all" || c.section === secSel.value);
+    const counts = [0, 0, 0, 0];
+    pool.forEach(c => {
+      const b = s.cards[c.id] || 0;
+      counts[b === 0 ? 0 : b <= 2 ? 1 : b <= 4 ? 2 : 3]++;
+    });
+    const cls = ["b0", "b1", "b3", "b5"];
+    document.getElementById("mastery-bar").innerHTML = counts.map((n, i) =>
+      n ? '<span class="' + cls[i] + '" style="flex:' + n + '" title="' + n + '">' + n + "</span>" : "").join("");
+  }
+  card.addEventListener("click", flip);
+  document.getElementById("fc-yes").onclick = () => grade(true);
+  document.getElementById("fc-no").onclick = () => grade(false);
+  document.getElementById("fc-shuffle").onclick = () => { deck = Store.shuffle(deck.slice(pos)); pos = 0; show(); };
+  [secSel, filSel].forEach(el => el.addEventListener("change", build));
+  rev.addEventListener("change", show);
+  document.addEventListener("keydown", e => {
+    if (e.target.tagName === "SELECT") return;
+    if (e.code === "Space") { e.preventDefault(); flip(); }
+    if (e.key === "1") grade(false);
+    if (e.key === "2") grade(true);
+  });
+  build();
+})();
+</script>
+{% endblock %}
