@@ -1,0 +1,113 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .legend { display: flex; gap: 30px; font-size: 26px; font-weight: 600; color: var(--ink2); }
+  .legend i { display: inline-block; width: 26px; height: 14px; border-radius: 4px; margin-right: 8px; vertical-align: middle; }
+  table.cmp { border-collapse: collapse; font-size: 32px; width: 1600px; }
+  table.cmp th, table.cmp td { padding: 22px 26px; text-align: left; border-bottom: 2px solid var(--line); }
+  table.cmp th { font-size: 26px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+  table.cmp td:first-child { font-weight: 800; }
+  table.cmp tr { opacity: 0; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Life Insurance Policies · Term vs. Whole vs. Universal</small></div></div>
+<div class="abs note" id="note">Simplified illustration, not to scale</div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 4 · Life Insurance Policies</p>
+  <h1 id="t2" style="margin-top:24px">Term vs. Whole Life<br>vs. Universal Life</h1>
+  <p class="lead" id="t3" style="margin-top:34px">How premium, coverage and cash value behave over a lifetime</p></div></div>
+
+<div class="scene" id="chart">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow" id="cE"></p><h2 id="cT"></h2></div>
+  <div class="abs legend" style="left:240px; top:330px">
+    <span><i style="background:#14213d"></i>Death benefit</span><span><i style="background:#d9622b"></i>Premium</span><span><i style="background:#2f9e6e"></i>Cash value</span></div>
+  <svg class="abs" width="1920" height="1080" style="left:0; top:0">
+    <line x1="240" y1="880" x2="1230" y2="880" stroke="#c8c0b2" stroke-width="4"/>
+    <line x1="240" y1="400" x2="240" y2="880" stroke="#c8c0b2" stroke-width="4"/>
+    <text x="240" y="920" font-size="24" fill="#7a8394" font-family="Inter" text-anchor="middle">Age 30</text>
+    <text x="523" y="920" font-size="24" fill="#7a8394" font-family="Inter" text-anchor="middle">50</text>
+    <text x="806" y="920" font-size="24" fill="#7a8394" font-family="Inter" text-anchor="middle">70</text>
+    <text x="1230" y="920" font-size="24" fill="#7a8394" font-family="Inter" text-anchor="middle">100</text>
+    <g id="bars"></g>
+    <path id="cvA" d="" fill="rgba(47,158,110,.25)" stroke="#2f9e6e" stroke-width="6"/>
+    <path id="db" class="ln" d="" stroke="#14213d" stroke-width="9"/>
+    <text id="endTag" x="0" y="0" font-size="28" font-weight="800" font-family="Inter" fill="#d2483f" opacity="0"></text>
+  </svg>
+  <ul class="abs bullets" id="pts" style="left:1320px; top:400px; width:560px"></ul>
+</div>
+
+<div class="scene" id="s5">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Recap</p><h2>Side by side</h2></div>
+  <table class="cmp abs" style="left:160px; top:320px">
+    <tr id="r0"><th></th><th>Lasts</th><th>Premium</th><th>Cash value</th></tr>
+    <tr id="r1"><td class="sun">Term</td><td>A set period</td><td>Lowest</td><td>None</td></tr>
+    <tr id="r2"><td>Whole life</td><td>For life (endows at 100/121)</td><td>Level, fixed</td><td>Guaranteed</td></tr>
+    <tr id="r3"><td class="good">Universal life</td><td>For life, if funded</td><td>Flexible</td><td>Current rate + guaranteed minimum</td></tr>
+  </table>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 82, NOTE_WIN = [7, 66];
+var CAPS = [
+  [9, 22.5, "<b>Term:</b> pure protection for a set period. Cheapest, but no cash value."],
+  [25, 42.5, "<b>Whole life:</b> level premium for life and guaranteed cash value that grows to the face amount."],
+  [45, 64.5, "<b>Universal life:</b> flexible premiums, as long as the cash value covers the monthly charges."],
+];
+const X = age => 240 + (age - 30) / 70 * 990, Y = v => 880 - v * 440;  // v: 0..1 of face
+const PLANS = [
+  { a: 6.5, b: 23.5, e: "Type 1", t: "<span class='sun'>Term</span> life", until: 50,
+    prem: age => age < 50 ? .1 : 0, cv: () => 0,
+    pts: [["bg-sun", "⏳", "Covers a set period (here, 20 years)"], ["bg-low", "0", "No cash value"], ["bg-good", "$", "Most coverage per premium dollar"], ["bg-navy", "↻", "Renewal costs more at an older age"]] },
+  { a: 23.5, b: 43.5, e: "Type 2", t: "Whole life", until: 100,
+    prem: () => .26, cv: age => Math.pow((age - 30) / 70, 1.6),
+    pts: [["bg-navy", "∞", "Covers your whole life"], ["bg-sun", "=", "Level premium that never changes"], ["bg-good", "↑", "Guaranteed cash value, tax-deferred"], ["bg-ink", "★", "Endows: cash value = face at 100"]] },
+  { a: 43.5, b: 65.5, e: "Type 3", t: "<span class='good'>Universal</span> life", until: 100,
+    prem: age => [.35, .3, .1, .38, 0, 0, .22, .3, .12, .25, .2, .3, .08, .15][Math.floor((age - 30) / 5)] || .2,
+    cv: age => .55 * Math.pow((age - 30) / 70, 1.25),
+    pts: [["bg-sun", "≈", "Flexible premiums: pay more, less or skip"], ["bg-good", "%", "Current interest rate with a guaranteed minimum"], ["bg-navy", "⚖", "Adjustable death benefit (Option A or B)"], ["bg-low", "!", "Lapses if cash value can't cover charges"]] },
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("chart", t, 6.5, 66);
+  const P = PLANS.find(p => t >= p.a && t < p.b) || PLANS[2];
+  $("cE").textContent = P.e; $("cT").innerHTML = P.t;
+  const g = seg(t, P.a + 1.2, P.a + 6);   // drawing progress
+  const ageNow = 30 + 70 * g;
+  // bars: one per 5 years
+  let bars = "";
+  for (let age = 30; age < 100; age += 5) {
+    if (age > ageNow) break;
+    const h = P.prem(age) * 440 * segO(t, P.a + 1.2 + (age - 30) / 70 * 4.8, P.a + 1.8 + (age - 30) / 70 * 4.8);
+    if (h > 0) bars += `<rect x="${X(age) + 8}" y="${880 - h}" width="${X(age + 5) - X(age) - 16}" height="${h}" rx="6" fill="#d9622b" opacity=".85"/>`;
+  }
+  $("bars").innerHTML = bars;
+  // death benefit line
+  const end = Math.min(ageNow, P.until);
+  let d = `M ${X(30)} ${Y(1)} L ${X(end)} ${Y(1)}`;
+  if (P.until < 100 && ageNow > P.until) d += ` L ${X(P.until)} ${Y(0)}`;
+  $("db").setAttribute("d", d); $("db").style.strokeDasharray = "none"; $("db").style.opacity = g > 0 ? 1 : 0;
+  // cash value area
+  let cv = `M ${X(30)} 880`;
+  for (let age = 30; age <= ageNow; age += 1) cv += ` L ${X(age)} ${Y(P.cv(age))}`;
+  cv += ` L ${X(ageNow)} 880 Z`;
+  $("cvA").setAttribute("d", cv); $("cvA").style.opacity = P.cv(60) > 0 && g > 0 ? 1 : 0;
+  const tag = $("endTag");
+  if (P.until < 100) { tag.textContent = "Coverage ends"; tag.setAttribute("x", X(50) + 14); tag.setAttribute("y", Y(.5)); tag.style.opacity = segO(t, P.a + 3, P.a + 3.6); }
+  else if (P === PLANS[1]) { tag.textContent = "Endows"; tag.setAttribute("fill", "#2f9e6e"); tag.setAttribute("x", X(100) - 120); tag.setAttribute("y", Y(1) - 22); tag.style.opacity = segO(t, P.a + 6.2, P.a + 6.8); }
+  else tag.style.opacity = 0;
+  if (P === PLANS[0]) tag.setAttribute("fill", "#d2483f");
+  // bullets
+  const ul = $("pts");
+  if (ul.dataset.p !== P.e) {
+    ul.dataset.p = P.e;
+    ul.innerHTML = P.pts.map(([c, i, s]) => `<li><span class="ic ${c}">${i}</span>${s}</li>`).join("");
+  }
+  ul.querySelectorAll("li").forEach((li, i) => pop(li, t, P.a + 2.5 + i * 2.6));
+  // fade chart between plans
+  const fadeIn = Math.min(seg(t, P.a, P.a + .5), 1 - seg(t, P.b - .5, P.b));
+  ["bars", "cvA", "db", "endTag", "pts", "cT", "cE"].forEach(id => { if (id !== "endTag") $(id).style.opacity = (id === "cvA" ? ($("cvA").style.opacity * fadeIn) : id === "db" ? (g > 0 ? fadeIn : 0) : fadeIn); });
+  sceneWin("s5", t, 66, DURATION, .9);
+  ["r0", "r1", "r2", "r3"].forEach((id, i) => pop(id, t, 66.8 + i * 1.2, 20));
+}
+</script></body></html>

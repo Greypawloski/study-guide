@@ -13,6 +13,7 @@
     quizzes: 0,
     days: [],         // ISO dates studied
     flagged: {},      // qid -> signed timestamp (+ saved, - unsaved)
+    watched: {},      // video slug -> timestamp watched
     boot: null,       // {start, examDate, tasks: {taskId: {best, last, date, manual, removed}}}
     bootTs: 0,        // last change to the plan
     resetAt: 0,
@@ -152,6 +153,15 @@
       touchDay();
       save();
     },
+    isWatched(slug) { return (load().watched || {})[slug] > 0; },
+    markWatched(slug) {
+      const s = load();
+      if (!s.watched) s.watched = {};
+      if (s.watched[slug] > 0) return;
+      s.watched[slug] = Date.now();
+      touchDay();
+      save();
+    },
     lessonDone(sid, i) { const v = load().lessons[sid + ":" + i]; return v === true || v > 0; },
 
     // Leitner spaced repetition: box 1 = daily ... box 5 = mastered
@@ -287,3 +297,18 @@
 
   window.Store = Store;
 })();
+
+/* Mark a video watched once 90% has played. */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("video[data-slug]").forEach(v => {
+    const slug = v.dataset.slug;
+    const tag = v.closest("figure") && v.closest("figure").querySelector(".watched-tag");
+    if (tag && Store.isWatched(slug)) tag.hidden = false;
+    v.addEventListener("timeupdate", () => {
+      if (v.duration && v.currentTime / v.duration >= .9 && !Store.isWatched(slug)) {
+        Store.markWatched(slug);
+        if (tag) tag.hidden = false;
+      }
+    });
+  });
+});

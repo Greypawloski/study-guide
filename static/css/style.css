@@ -462,3 +462,11 @@ input[type=date] { font: inherit; padding: 9px 12px; border: 1px solid var(--lin
 .lesson-video video { width: 100%; aspect-ratio: 16 / 9; display: block; border-radius: 14px; background: var(--navy); box-shadow: var(--shadow); }
 .lesson-video figcaption { font-size: .85rem; color: var(--muted); margin-top: 8px; }
 .vid-badge { font-size: .85em; }
+.featured-video { border-top: 5px solid var(--sun); }
+.vid-section { margin-top: 30px; }
+.vid-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 18px; }
+.vid-card { margin: 0; padding: 16px; }
+.vid-card .lesson-video { margin: 0 0 8px; }
+.watched-tag { color: var(--good); font-weight: 700; }
+@media (max-width: 640px) { .vid-grid { grid-template-columns: 1fr; } }
+.featured-video .lesson-video { max-width: 860px; }

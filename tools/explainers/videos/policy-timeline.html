@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .mk { position: absolute; width: 420px; opacity: 0; }
+  .mk .dot { width: 34px; height: 34px; border-radius: 50%; border: 6px solid #fff; box-shadow: 0 0 0 3px currentColor; margin-bottom: 18px; }
+  .mk .d { font-size: 56px; font-weight: 800; line-height: 1; }
+  .mk .h { font-size: 32px; font-weight: 800; margin-top: 10px; }
+  .mk .s { font-size: 24px; color: var(--ink2); margin-top: 6px; line-height: 1.35; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Policy Provisions · The Arizona Policy Timeline</small></div></div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 5 · Policy Provisions</p>
+  <h1 id="t2" style="margin-top:24px">The Policy Timeline</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Free look, grace period, reinstatement and incontestability, with Arizona's numbers</p></div></div>
+
+<div class="scene" id="tl">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow" id="tlE">Part 1</p><h2 id="tlT">From delivery to a missed premium</h2></div>
+  <svg class="abs" width="1920" height="1080" style="left:0; top:0"><path id="axis" class="ln" d="M 160 470 L 1760 470" stroke="#c8c0b2" stroke-width="8"/></svg>
+  <div class="mk" id="m1" style="left:160px; top:452px; color:var(--good)"><div class="dot" style="background:var(--good)"></div><p class="d">10 days</p><p class="h">Free look</p><p class="s">Return the new policy for a full refund (30 days on replacements)</p></div>
+  <div class="mk" id="m2" style="left:700px; top:452px; color:var(--sun)"><div class="dot" style="background:var(--sun)"></div><p class="d">30 days</p><p class="h">Grace period</p><p class="s">Premium late but still covered. A death now pays the benefit minus the premium owed.</p></div>
+  <div class="mk" id="m3" style="left:1240px; top:452px; color:var(--low)"><div class="dot" style="background:var(--low)"></div><p class="d">Lapse</p><p class="h">Grace runs out</p><p class="s">Automatic premium loan (if elected) or a nonforfeiture option kicks in</p></div>
+  <div class="mk" id="m4" style="left:160px; top:452px; color:var(--navy)"><div class="dot" style="background:var(--navy)"></div><p class="d">3 years</p><p class="h">Reinstatement window</p><p class="s">Evidence of insurability + back premiums with interest of no more than 6%. Not if surrendered for cash.</p></div>
+  <div class="mk" id="m5" style="left:700px; top:452px; color:var(--good)"><div class="dot" style="background:var(--good)"></div><p class="d">2 years</p><p class="h">Incontestable</p><p class="s">After 2 years in force, the insurer can't void it for misstatements on the application</p></div>
+  <div class="mk" id="m6" style="left:1240px; top:452px; color:var(--ink2)"><div class="dot" style="background:var(--ink2)"></div><p class="d">2 years</p><p class="h">Suicide exclusion ends</p><p class="s">Measured from issue or reinstatement</p></div>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">Recap</p><h2>Arizona numbers in order</h2></div>
+  <div class="abs tip" id="k1" style="left:160px; top:360px; width:1600px; font-size:44px; line-height:1.7">
+    <b>10</b> free look → <b>30</b> grace → <b>3-year</b> reinstatement at ≤ <b>6%</b> → <b>2-year</b> incontestable &amp; suicide</div>
+  <p class="abs body" id="k2" style="left:160px; top:640px; width:1600px; font-size:34px">Watch out: life <b>grace is 30 days</b>, while group <b>conversion is 31 days</b>. The exam likes to mix them up.</p>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 70;
+var CAPS = [
+  [8, 22.5, "Missing a due date doesn't end coverage right away: the <b>grace period</b> keeps it in force."],
+  [26, 49.5, "A lapsed policy can come back within <b>3 years</b>, and after <b>2 years</b> it can't be contested."],
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("tl", t, 6.5, 51);
+  draw("axis", t, 7, 8.5);
+  const part2 = t >= 24;
+  $("tlE").textContent = part2 ? "Part 2" : "Part 1";
+  $("tlT").textContent = part2 ? "After a lapse, and the 2-year marks" : "From delivery to a missed premium";
+  $("tlT").parentElement.style.opacity = part2 ? segO(t, 24, 24.6) : 1;
+  const out1 = 1 - seg(t, 23, 23.8);
+  [["m1", 8.5], ["m2", 12.5], ["m3", 17.5]].forEach(([id, a]) => { pop(id, t, a); $(id).style.opacity = $(id).style.opacity * out1; });
+  [["m4", 25], ["m5", 33], ["m6", 41]].forEach(([id, a]) => pop(id, t, a));
+  sceneWin("s4", t, 51, DURATION, .9); pop("k1", t, 51.8); pop("k2", t, 56);
+}
+</script></body></html>

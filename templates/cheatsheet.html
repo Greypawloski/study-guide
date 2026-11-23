@@ -7,6 +7,11 @@
   <div class="btn-row"><button class="btn sm" onclick="window.print()">Print</button><a class="btn sm ghost" href="{{ url_for('glossary') }}">Full glossary →</a></div>
 </div>
 
+<div class="card featured-video">
+  {% set v = {"slug": "arizona-numbers", "title": "Arizona numbers in 2 minutes", "length": "1:39"} %}
+  {% include "_video.html" %}
+</div>
+
 <div class="card">
   <h2>Arizona numbers to memorize</h2>
   <table class="facts numbers">

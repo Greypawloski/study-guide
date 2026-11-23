@@ -1,0 +1,98 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .own { width: 200px; height: 170px; border-radius: 26px; background: #fff; border: 3px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(20,33,61,.07); }
+  .own .e { font-size: 60px; } .own .n { font-size: 30px; font-weight: 800; }
+  .biz { width: 300px; height: 200px; border-radius: 26px; background: var(--navy); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .count { font-size: 120px; font-weight: 800; line-height: 1; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Life Insurance Basics · Buy-Sell Agreements</small></div></div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 3 · Business Uses</p>
+  <h1 id="t2" style="margin-top:24px">Buy-Sell<br>Agreements</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Cross-purchase vs. entity, and how many policies each needs</p></div></div>
+
+<div class="scene" id="s2">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">The problem</p><h2>An owner dies. Now what?</h2></div>
+  <div class="abs biz" id="b2" style="left:160px; top:380px"><div style="font-size:56px">🏢</div><div style="font-size:30px; font-weight:800">The business</div></div>
+  <ul class="abs bullets" style="left:620px; top:380px; width:1200px">
+    <li id="p1"><span class="ic bg-low">!</span>The owner's heirs inherit their share of the business</li>
+    <li id="p2"><span class="ic bg-navy">📝</span>A buy-sell agreement says the survivors will buy it</li>
+    <li id="p3"><span class="ic bg-good">$</span>Life insurance provides the cash to do it</li>
+  </ul>
+</div>
+
+<div class="scene" id="s3">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Plan 1</p><h2><span class="sun">Cross-purchase</span></h2><p class="body" style="margin-top:12px">Each owner buys a policy on <b>every other</b> owner</p></div>
+  <div class="abs" style="inset:0; transform:translateY(-80px)">
+  <svg class="abs" width="1920" height="1080" style="left:0; top:0">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d9622b"/></marker></defs>
+    <path id="x1" class="ln" d="M 560 470 C 680 400, 820 400, 940 460" stroke="#d9622b" stroke-width="7" marker-end="url(#ah)"/>
+    <path id="x2" class="ln" d="M 940 530 C 820 590, 680 590, 560 540" stroke="#d9622b" stroke-width="7" marker-end="url(#ah)"/>
+    <path id="x3" class="ln" d="M 1020 580 C 1020 660, 900 720, 830 760" stroke="#d9622b" stroke-width="7" marker-end="url(#ah)"/>
+    <path id="x4" class="ln" d="M 760 760 C 760 690, 900 640, 960 590" stroke="#d9622b" stroke-width="7" marker-end="url(#ah)"/>
+    <path id="x5" class="ln" d="M 470 580 C 480 680, 560 750, 660 790" stroke="#d9622b" stroke-width="7" marker-end="url(#ah)"/>
+    <path id="x6" class="ln" d="M 680 860 C 560 860, 430 760, 420 590" stroke="#d9622b" stroke-width="7" marker-end="url(#ah)"/>
+  </svg>
+  <div class="abs own" id="oA" style="left:360px; top:420px"><div class="e">👩‍💼</div><div class="n">Ana</div></div>
+  <div class="abs own" id="oB" style="left:940px; top:420px"><div class="e">👨‍💼</div><div class="n">Ben</div></div>
+  <div class="abs own" id="oC" style="left:650px; top:770px"><div class="e">🧑‍💼</div><div class="n">Cruz</div></div>
+  </div>
+  <div class="abs card" id="f3" style="left:1260px; top:400px; width:520px; height:400px; padding:44px">
+    <p class="body">3 owners × 2 others</p><p class="count sun num" id="cnt3">0</p><p class="body">policies</p>
+    <p class="body" id="f3b" style="margin-top:20px; font-size:28px; opacity:0">Formula: <b>n × (n − 1)</b><br>4 owners → <b class="sun">12 policies</b></p></div>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Plan 2</p><h2><span class="good">Entity</span> (stock redemption)</h2><p class="body" style="margin-top:12px">The <b>business</b> owns one policy on each owner</p></div>
+  <div class="abs" style="inset:0; transform:translateY(-70px)">
+  <svg class="abs" width="1920" height="1080" style="left:0; top:0">
+    <defs><marker id="ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f9e6e"/></marker></defs>
+    <path id="e1" class="ln" d="M 690 540 C 600 560, 520 640, 470 720" stroke="#2f9e6e" stroke-width="7" marker-end="url(#ag)"/>
+    <path id="e2" class="ln" d="M 750 640 L 750 740" stroke="#2f9e6e" stroke-width="7" marker-end="url(#ag)"/>
+    <path id="e3" class="ln" d="M 810 540 C 900 560, 980 640, 1030 720" stroke="#2f9e6e" stroke-width="7" marker-end="url(#ag)"/>
+  </svg>
+  <div class="abs biz" id="biz4" style="left:600px; top:400px"><div style="font-size:56px">🏢</div><div style="font-size:30px; font-weight:800">The business</div></div>
+  <div class="abs own" id="eA" style="left:330px; top:740px"><div class="e">👩‍💼</div><div class="n">Ana</div></div>
+  <div class="abs own" id="eB" style="left:650px; top:760px"><div class="e">👨‍💼</div><div class="n">Ben</div></div>
+  <div class="abs own" id="eC" style="left:970px; top:740px"><div class="e">🧑‍💼</div><div class="n">Cruz</div></div>
+  </div>
+  <div class="abs card" id="f4" style="left:1260px; top:400px; width:520px; height:400px; padding:44px">
+    <p class="body">One per owner</p><p class="count good num" id="cnt4">0</p><p class="body">policies</p>
+    <p class="body" id="f4b" style="margin-top:20px; font-size:28px; opacity:0">Business is <b>owner, payer and beneficiary</b>, then buys back the shares</p></div>
+</div>
+
+<div class="scene" id="s5">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">Recap</p><h2>Who owns the policies?</h2></div>
+  <div class="abs card" id="k1" style="left:160px; top:350px; width:780px; height:330px; padding:44px">
+    <h3 class="sun">Cross-purchase</h3><p class="body" style="margin-top:16px">The <b>owners</b> insure each other.<br>Policies needed: <b>n × (n − 1)</b></p></div>
+  <div class="abs card" id="k2" style="left:980px; top:350px; width:780px; height:330px; padding:44px">
+    <h3 class="good">Entity</h3><p class="body" style="margin-top:16px">The <b>business</b> insures each owner.<br>Policies needed: <b>n</b></p></div>
+  <div class="abs tip" id="k3" style="left:160px; top:730px; width:1600px"><span class="lbl">TAX:</span> Buy-sell premiums are <b>not deductible</b>; the death benefit is generally received <b>income-tax free</b>.</div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 70;
+var CAPS = [
+  [7.5, 17.5, "Without a plan, the surviving owners could end up in business with the <b>heirs</b>."],
+  [19, 34.5, "<b>Cross-purchase:</b> owners are owner and beneficiary of policies on each other."],
+  [36, 50.5, "<b>Entity plan:</b> fewer policies, because the business holds them all."],
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("s2", t, 6.5, 18.5); popS("b2", t, 7); pop("p1", t, 8.5); pop("p2", t, 11.5); pop("p3", t, 14.5);
+  sceneWin("s3", t, 18.5, 35.5);
+  popS("oA", t, 19); popS("oB", t, 19.3); popS("oC", t, 19.6);
+  let n = 0;
+  for (let i = 1; i <= 6; i++) { const a = 21 + (i - 1) * 1.4; draw("x" + i, t, a, a + .9); if (t >= a + .9) n++; }
+  $("cnt3").textContent = n; pop("f3", t, 20.5, 20); pop("f3b", t, 30.5, 10);
+  sceneWin("s4", t, 35.5, 51.5);
+  popS("biz4", t, 36); popS("eA", t, 36.4); popS("eB", t, 36.7); popS("eC", t, 37);
+  let m = 0;
+  for (let i = 1; i <= 3; i++) { const a = 38.5 + (i - 1) * 1.4; draw("e" + i, t, a, a + .9); if (t >= a + .9) m++; }
+  $("cnt4").textContent = m; pop("f4", t, 38, 20); pop("f4b", t, 44, 10);
+  sceneWin("s5", t, 51.5, DURATION, .9); pop("k1", t, 52.3, 40); pop("k2", t, 53.5, 40); pop("k3", t, 57);
+}
+</script></body></html>

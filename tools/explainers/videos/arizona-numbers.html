@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .grid { position: absolute; left: 160px; top: 300px; width: 1600px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .nc { background: #fff; border: 2px solid var(--line); border-radius: 26px; padding: 30px 34px; height: 250px; opacity: 0; box-shadow: 0 8px 30px rgba(20,33,61,.06); }
+  .nc .v { font-size: 74px; font-weight: 800; line-height: 1; }
+  .nc .k { font-size: 30px; font-weight: 800; margin-top: 14px; }
+  .nc .d { font-size: 22px; color: var(--ink2); margin-top: 6px; line-height: 1.35; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Exam-Day Review · Arizona Numbers</small></div></div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Exam-day review</p>
+  <h1 id="t2" style="margin-top:24px">Arizona Numbers<br>in 2 Minutes</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Every number you need to memorize, in one place</p></div></div>
+
+<div class="scene" id="g">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow" id="gE"></p><h2 id="gT"></h2></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="scene" id="s9">
+  <div class="abs" style="left:160px; top:330px; width:1600px"><p class="eyebrow">You've got this</p>
+  <h2 style="margin-top:20px">Review this the morning of your exam.</h2>
+  <p class="lead" style="margin-top:30px">The exam: 100 questions · 2 hours · 70% to pass</p></div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var GROUPS = [
+  { e: "1 of 4", t: "Licensing", c: "sun", cards: [
+    ["4", "exam attempts", "in 12 months, then wait 1 year"],
+    ["1 yr", "to apply", "for your license after passing"],
+    ["4 yrs", "license term", "ends last day of your birth month"],
+    ["48 hrs", "continuing ed", "per term, including 6 hours of ethics"],
+    ["30 days", "to report", "address changes and other-state actions or convictions"],
+    ["4 hrs", "annuity training", "before selling annuities"],
+  ]},
+  { e: "2 of 4", t: "Policy provisions", c: "navy", cards: [
+    ["10 days", "free look", "at least, on a life policy"],
+    ["30 days", "grace period", "or one month, not less than 30"],
+    ["3 yrs", "reinstatement", "with interest of no more than 6%"],
+    ["2 yrs", "incontestable", "after the policy is in force"],
+    ["2 yrs", "suicide clause", "from issue or reinstatement"],
+    ["31 days", "group conversion", "no evidence of insurability"],
+  ]},
+  { e: "3 of 4", t: "Replacement & annuities", c: "good", cards: [
+    ["30 days", "replacement free look", "on the new policy or annuity"],
+    ["5 days", "notify existing insurer", "business days, by the replacing insurer"],
+    ["5 yrs", "keep records", "replacing insurer's records"],
+    ["10 days", "annuity free look", "standard"],
+    ["30 days", "annuity free look", "if the owner is 65 or older"],
+    ["15 days", "annuity free look", "if no buyer's guide at application"],
+  ]},
+  { e: "4 of 4", t: "Federal & guaranty fund", c: "low", cards: [
+    ["59½", "penalty age", "10% penalty on early MEC and annuity gains"],
+    ["7 yrs", "7-pay test", "decides whether a policy is a MEC"],
+    ["$50K", "group term", "employer-paid coverage tax-free up to this"],
+    ["$300K", "guaranty fund", "life death benefit, per life"],
+    ["$100K", "guaranty fund", "life cash value, per life"],
+    ["$250K", "guaranty fund", "annuity present value"],
+  ]},
+];
+var PER = 21, START = 6.5;
+var DURATION = START + GROUPS.length * PER + 8;
+var CAPS = [];
+function scene(t) {
+  sceneWin("s1", t, 0, START); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  const gi = Math.floor((t - START) / PER);
+  const G = GROUPS[Math.max(0, Math.min(GROUPS.length - 1, gi))];
+  const a = START + Math.max(0, Math.min(GROUPS.length - 1, gi)) * PER;
+  sceneWin("g", t, START, START + GROUPS.length * PER);
+  const grid = $("grid");
+  if (grid.dataset.g !== G.t) {
+    grid.dataset.g = G.t;
+    grid.innerHTML = G.cards.map(([v, k, d]) => `<div class="nc"><p class="v ${G.c}" style="${G.c === "navy" ? "color:var(--navy)" : ""}">${v}</p><p class="k">${k}</p><p class="d">${d}</p></div>`).join("");
+    $("gE").textContent = G.e; $("gT").textContent = G.t;
+  }
+  const f = Math.min(seg(t, a, a + .5), 1 - seg(t, a + PER - .6, a + PER));
+  $("gE").parentElement.style.opacity = f;
+  grid.querySelectorAll(".nc").forEach((el, i) => { pop(el, t, a + .6 + i * 2.6, 24); el.style.opacity *= f; });
+  sceneWin("s9", t, START + GROUPS.length * PER, DURATION, .9);
+}
+</script></body></html>

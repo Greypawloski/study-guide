@@ -254,6 +254,7 @@ def merge(stored, incoming):
         "answers": _merge_answers(d(a, "answers"), d(b, "answers")),
         "lessons": _merge_toggles(d(a, "lessons"), d(b, "lessons")),
         "flagged": _merge_toggles(d(a, "flagged"), d(b, "flagged")),
+        "watched": _merge_toggles(d(a, "watched"), d(b, "watched")),
         "cards": cards,
         "cardDue": due,
         "exams": exams,

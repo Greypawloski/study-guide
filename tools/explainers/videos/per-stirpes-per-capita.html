@@ -1,0 +1,97 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .p { width: 230px; height: 150px; border-radius: 24px; background: #fff; border: 3px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(20,33,61,.07); }
+  .p .e { font-size: 54px; line-height: 1; }
+  .p .n { font-size: 28px; font-weight: 800; margin-top: 8px; }
+  .amt { font-size: 36px; font-weight: 800; color: #fff; background: var(--good); border-radius: 14px; padding: 6px 16px; opacity: 0; white-space: nowrap; }
+  .x { font-size: 120px; color: var(--low); font-weight: 800; opacity: 0; }
+  .zero { background: var(--muted); }
+  .modelbl { font-size: 44px; font-weight: 800; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Policy Provisions · Beneficiary Designations</small></div></div>
+<div class="abs note" id="note">Example family for illustration</div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 5 · Beneficiaries</p>
+  <h1 id="t2" style="margin-top:24px">Per Stirpes vs.<br>Per Capita</h1>
+  <p class="lead" id="t3" style="margin-top:34px">What happens when a beneficiary dies before the insured?</p></div></div>
+
+<div class="scene" id="tree">
+  <div class="abs" id="mode" style="left:160px; top:150px"><p class="eyebrow" id="modeE">The family</p><p class="modelbl" id="modeT">John names his 3 children</p></div>
+  <div class="abs card center" id="john" style="left:845px; top:170px; width:230px; height:150px"><div><div style="font-size:54px">👴</div><div style="font-size:28px; font-weight:800">John · insured</div></div></div>
+  <div class="abs" id="pot" style="left:1150px; top:205px; font-size:40px; font-weight:800; color:var(--good)">$300,000</div>
+  <svg class="abs" width="1920" height="1080" style="left:0; top:0">
+    <path id="l1" class="ln" d="M 960 320 C 960 380, 560 380, 560 440" stroke="#c8c0b2" stroke-width="6"/>
+    <path id="l2" class="ln" d="M 960 320 L 960 440" stroke="#c8c0b2" stroke-width="6"/>
+    <path id="l3" class="ln" d="M 960 320 C 960 380, 1360 380, 1360 440" stroke="#c8c0b2" stroke-width="6"/>
+    <path id="l4" class="ln" d="M 1360 590 C 1360 640, 1210 640, 1210 690" stroke="#c8c0b2" stroke-width="6"/>
+    <path id="l5" class="ln" d="M 1360 590 C 1360 640, 1510 640, 1510 690" stroke="#c8c0b2" stroke-width="6"/>
+  </svg>
+  <div class="abs p" id="ann" style="left:445px; top:440px"><div class="e">👩</div><div class="n">Ann</div></div>
+  <div class="abs p" id="ben" style="left:845px; top:440px"><div class="e">👨</div><div class="n">Ben</div></div>
+  <div class="abs p" id="cara" style="left:1245px; top:440px"><div class="e">👩‍🦰</div><div class="n">Cara</div></div>
+  <div class="abs x" id="carax" style="left:1310px; top:430px">✕</div>
+  <div class="abs p" id="dee" style="left:1095px; top:690px; width:230px; height:140px"><div class="e">👧</div><div class="n">Dee</div></div>
+  <div class="abs p" id="eli" style="left:1395px; top:690px; width:230px; height:140px"><div class="e">👦</div><div class="n">Eli</div></div>
+  <div class="abs amt" id="aAnn" style="left:470px; top:600px"></div>
+  <div class="abs amt" id="aBen" style="left:870px; top:600px"></div>
+  <div class="abs amt" id="aDee" style="left:1120px; top:842px"></div>
+  <div class="abs amt" id="aEli" style="left:1420px; top:842px"></div>
+  <div class="abs" id="rule" style="left:160px; top:600px; width:260px; font-size:30px; font-weight:700; color:var(--ink2); opacity:0"></div>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">Recap</p><h2>Know the difference</h2></div>
+  <div class="abs card" id="k1" style="left:160px; top:350px; width:780px; height:380px; padding:46px">
+    <h3>🌳 Per <span class="sun">stirpes</span></h3><p class="body" style="margin-top:14px">"By the bloodline"</p>
+    <p class="body" style="margin-top:20px">A deceased beneficiary's share <b class="sun">passes down to their children.</b></p></div>
+  <div class="abs card" id="k2" style="left:980px; top:350px; width:780px; height:380px; padding:46px">
+    <h3>👥 Per <span class="good">capita</span></h3><p class="body" style="margin-top:14px">"By the head"</p>
+    <p class="body" style="margin-top:20px">Split equally among the <b class="good">living named beneficiaries</b> only.</p></div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 66, NOTE_WIN = [6.5, 50];
+var CAPS = [
+  [8, 15.5, "John names his three children as beneficiaries: <b>$300,000</b> to share."],
+  [16.5, 20.5, "Then <b>Cara dies before John.</b> Who gets her share?"],
+  [22, 34.5, "<b>Per stirpes:</b> Cara's share passes down to her children."],
+  [37, 50.5, "<b>Per capita:</b> split equally among the living named beneficiaries."],
+];
+function amt(id, t, a, txt, zero) {
+  const el = $(id); el.textContent = txt; el.classList.toggle("zero", !!zero);
+  const p = segO(t, a, a + .5); el.style.opacity = p; el.style.transform = `scale(${.7 + .3 * p})`;
+}
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("tree", t, 6.5, 51);
+  popS("john", t, 7); pop("pot", t, 8, 10);
+  draw("l1", t, 8.3, 9.3); draw("l2", t, 8.5, 9.5); draw("l3", t, 8.7, 9.7);
+  popS("ann", t, 9.3); popS("ben", t, 9.6); popS("cara", t, 9.9);
+  draw("l4", t, 11.5, 12.3); draw("l5", t, 11.7, 12.5); popS("dee", t, 12.3); popS("eli", t, 12.6);
+  const dead = segO(t, 17, 17.6);
+  $("carax").style.opacity = dead; $("carax").style.transform = `scale(${1.6 - .6 * dead})`;
+  $("cara").style.opacity = t > 17 ? 1 - .55 * dead : $("cara").style.opacity;
+  // mode labels
+  const stirpes = t >= 21 && t < 35.8, capita = t >= 35.8;
+  $("modeE").textContent = stirpes ? "Option 1" : capita ? "Option 2" : "The family";
+  $("modeT").innerHTML = stirpes ? '<span class="sun">Per stirpes</span>: by the bloodline' : capita ? '<span class="good">Per capita</span>: by the head' : "John names his 3 children";
+  const mfade = t < 21 ? 1 : t < 35.8 ? segO(t, 21, 21.6) : segO(t, 35.8, 36.4);
+  $("mode").style.opacity = mfade;
+  // rule text
+  $("rule").innerHTML = stirpes ? "Each <b>branch</b> gets an equal share: $100,000 per child's line" : capita ? "Only the <b>living named</b> beneficiaries split it" : "";
+  $("rule").style.opacity = stirpes ? segO(t, 22.5, 23) : capita ? segO(t, 37.5, 38) : 0;
+  if (stirpes) {
+    amt("aAnn", t, 23.5, "$100,000"); amt("aBen", t, 24.5, "$100,000");
+    amt("aDee", t, 27.5, "$50,000"); amt("aEli", t, 28, "$50,000");
+  } else if (capita) {
+    amt("aAnn", t, 38.5, "$150,000"); amt("aBen", t, 39.2, "$150,000");
+    amt("aDee", t, 42, "$0", true); amt("aEli", t, 42.4, "$0", true);
+  } else ["aAnn", "aBen", "aDee", "aEli"].forEach(id => $(id).style.opacity = 0);
+  // fade amounts at the switch
+  if (t > 34.8 && t < 35.8) ["aAnn", "aBen", "aDee", "aEli", "rule"].forEach(id => $(id).style.opacity = 1 - seg(t, 34.8, 35.6));
+  sceneWin("s4", t, 51, DURATION, .9); pop("k1", t, 51.8, 40); pop("k2", t, 53.3, 40);
+}
+</script></body></html>

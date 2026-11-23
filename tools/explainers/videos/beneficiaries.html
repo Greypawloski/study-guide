@@ -1,0 +1,81 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .lv { position: absolute; width: 560px; height: 150px; border-radius: 26px; background: #fff; border: 3px solid var(--line); display: flex; align-items: center; gap: 24px; padding: 0 34px; box-shadow: 0 8px 30px rgba(20,33,61,.07); opacity: 0; }
+  .lv .e { font-size: 56px; } .lv .n { font-size: 34px; font-weight: 800; } .lv .s { font-size: 24px; color: var(--muted); font-weight: 600; }
+  .lv.dead { border-color: var(--low); }
+  .lv.win { border-color: var(--good); box-shadow: 0 0 0 8px var(--goodsoft); }
+  .coin { position: absolute; width: 90px; height: 90px; border-radius: 50%; background: var(--good); color: #fff; font-weight: 800; font-size: 40px; display: grid; place-items: center; opacity: 0; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Policy Provisions · Beneficiaries</small></div></div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 5 · Beneficiaries</p>
+  <h1 id="t2" style="margin-top:24px">Who Gets Paid?</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Primary, contingent, revocable, irrevocable, and the simultaneous death rule</p></div></div>
+
+<div class="scene" id="s2">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">The line of succession</p><h2>Who's next in line</h2></div>
+  <div class="lv" id="v1" style="left:160px; top:330px"><span class="e">🥇</span><div><p class="n">Primary</p><p class="s">First in line</p></div></div>
+  <div class="lv" id="v2" style="left:160px; top:510px"><span class="e">🥈</span><div><p class="n">Contingent</p><p class="s">Only if all primaries have died</p></div></div>
+  <div class="lv" id="v3" style="left:160px; top:690px"><span class="e">🏛️</span><div><p class="n">Insured's estate</p><p class="s">If no beneficiary survives</p></div></div>
+  <div class="abs" id="x1" style="left:735px; top:340px; font-size:110px; color:var(--low); font-weight:800; opacity:0">✕</div>
+  <div class="coin" id="coin">$</div>
+  <ul class="abs bullets" style="left:860px; top:360px; width:950px">
+    <li id="u1"><span class="ic bg-navy">1</span>The primary beneficiary is paid first</li>
+    <li id="u2"><span class="ic bg-low">✕</span>If every primary has died, the contingent takes over</li>
+    <li id="u3"><span class="ic bg-ink">!</span>No one left? Proceeds go to the estate (probate, creditors)</li>
+  </ul>
+</div>
+
+<div class="scene" id="s3">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Can the owner change it?</p><h2>Revocable vs. irrevocable</h2></div>
+  <div class="abs card" id="rv" style="left:160px; top:330px; width:780px; height:460px; padding:44px">
+    <p style="font-size:70px">🔓</p><h3 style="margin-top:8px">Revocable</h3>
+    <p class="body" style="margin-top:14px">The owner can <b class="good">change it any time</b>, no permission needed. Most designations are revocable.</p></div>
+  <div class="abs card" id="ir" style="left:980px; top:330px; width:780px; height:460px; padding:44px">
+    <p style="font-size:70px" id="lock">🔒</p><h3 style="margin-top:8px">Irrevocable</h3>
+    <p class="body" style="margin-top:14px">The owner needs the <b class="low">beneficiary's consent</b> to change them, take a loan, assign or surrender the policy.</p></div>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Common disaster</p><h2>Both die in the same accident</h2></div>
+  <div class="abs card center" id="c1" style="left:160px; top:330px; width:520px; height:330px"><div><p style="font-size:80px">👨</p><p class="st" style="font-size:32px; font-weight:800">Insured</p><p class="body" style="font-size:26px">presumed to have survived</p></div></div>
+  <div class="abs card center" id="c2" style="left:720px; top:330px; width:520px; height:330px"><div><p style="font-size:80px">👩</p><p class="st" style="font-size:32px; font-weight:800">Primary beneficiary</p><p class="body" style="font-size:26px">treated as dying first</p></div></div>
+  <div class="abs card center" id="c3" style="left:1280px; top:330px; width:480px; height:330px; border-color:var(--good)"><div><p style="font-size:80px">🧒</p><p class="st" style="font-size:32px; font-weight:800" >Contingent</p><p class="body good" style="font-size:26px; font-weight:800">gets the money</p></div></div>
+  <div class="abs tip" id="c4" style="left:160px; top:710px; width:1600px"><span class="lbl">UNIFORM SIMULTANEOUS DEATH ACT:</span> When you can't tell who died first, presume the <b>insured</b> survived.</div>
+</div>
+
+<div class="scene" id="s5">
+  <div class="abs" style="left:160px; top:200px"><p class="eyebrow">One more rule</p><h2>Minors can't collect directly</h2></div>
+  <div class="abs card" id="m1" style="left:160px; top:400px; width:1600px; padding:46px">
+    <p class="body" style="font-size:38px">Proceeds for a child go through a <b>trust</b>, a court-appointed <b>guardian</b>, or a <b>custodian</b> (UTMA). Naming a trust as beneficiary avoids delays.</p></div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 74;
+var CAPS = [
+  [8, 22.5, "Proceeds go to the <b>primary</b> beneficiary, then the <b>contingent</b>, then the <b>estate</b>."],
+  [24.5, 36.5, "An <b>irrevocable</b> beneficiary has vested rights, so the owner needs their OK."],
+  [39, 54.5, "Proceeds skip the primary and go to the <b>contingent</b> beneficiary."],
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("s2", t, 6.5, 23.5);
+  popX("v1", t, 7.5, -40); popX("v2", t, 8, -40); popX("v3", t, 8.5, -40);
+  pop("u1", t, 9); pop("u2", t, 13.5); pop("u3", t, 18.5);
+  // coin path: to primary, then (primary dead) to contingent
+  const c = $("coin"), dead = t >= 13;
+  c.style.opacity = segO(t, 9.5, 10) * (1 - seg(t, 22.5, 23));
+  const y = dead ? lerp(360, 540, seg(t, 14.2, 15.4)) : 360;
+  c.style.left = "745px"; c.style.top = y + "px";
+  const k = segO(t, 13, 13.6); $("x1").style.opacity = k; $("x1").style.transform = `scale(${1.5 - .5 * k})`;
+  $("v1").classList.toggle("dead", dead); $("v1").classList.toggle("win", !dead && t > 10);
+  $("v2").classList.toggle("win", t > 15.4);
+  sceneWin("s3", t, 23.5, 37.5); pop("rv", t, 24.3, 40); pop("ir", t, 28.5, 40);
+  $("lock").style.transform = `rotate(${Math.sin(clamp((t - 31) / .8) * Math.PI * 3) * 12}deg)`;
+  sceneWin("s4", t, 37.5, 55.5); popS("c1", t, 38.5); popS("c2", t, 40.5); popS("c3", t, 43.5); pop("c4", t, 46.5);
+  sceneWin("s5", t, 55.5, DURATION, .9); pop("m1", t, 56.5, 40);
+}
+</script></body></html>

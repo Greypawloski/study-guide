@@ -16,6 +16,7 @@ from content.bootcamp import BOOTCAMP
 from content.flashcards import FLASHCARDS
 from content.lessons import ARIZONA_NUMBERS, EXAM_INFO, SECTION_BY_ID, SECTIONS
 from content.questions import QUESTIONS
+from content.videos import VIDEOS, VIDEOS_BY_LESSON
 
 app = Flask(__name__)
 app.config.update(
@@ -52,6 +53,7 @@ def inject_globals():
         "bootcamp": BOOTCAMP,
         "user": g.get("user"),
         "server_progress": g.get("server_progress"),
+        "lesson_videos": lambda sid, i: VIDEOS_BY_LESSON.get((sid, i), []),
     }
 
 
@@ -221,6 +223,17 @@ def exam_start():
 @app.route("/review")
 def review():
     return render_template("review.html", questions=QUESTIONS)
+
+
+@app.route("/videos")
+def videos():
+    groups = []
+    for s in SECTIONS:
+        vids = [v for v in VIDEOS if v["lesson"] and v["lesson"][0] == s["id"]]
+        if vids:
+            groups.append((s, vids))
+    extra = [v for v in VIDEOS if not v["lesson"]]
+    return render_template("videos.html", groups=groups, extra=extra, total=len(VIDEOS))
 
 
 @app.route("/cheatsheet")

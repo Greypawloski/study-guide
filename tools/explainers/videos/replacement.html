@@ -1,0 +1,70 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .step { display: flex; gap: 30px; align-items: flex-start; width: 1600px; opacity: 0; }
+  .sn { width: 76px; height: 76px; border-radius: 22px; background: var(--navy); color: #fff; font-size: 36px; font-weight: 800; display: grid; place-items: center; flex-shrink: 0; }
+  .st { font-size: 38px; font-weight: 800; }
+  .sd { font-size: 28px; color: var(--ink2); margin-top: 6px; line-height: 1.35; }
+  .who { font-size: 20px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--sun); }
+  .big { font-size: 120px; font-weight: 800; line-height: 1; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Life Insurance Basics · Replacement in Arizona</small></div></div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 3 · Producer Responsibilities</p>
+  <h1 id="t2" style="margin-top:24px">Replacing a Policy<br>in Arizona</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Who does what, and the deadlines to know</p></div></div>
+
+<div class="scene" id="s2">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">What counts</p><h2>What is a replacement?</h2></div>
+  <div class="abs card" id="w1" style="left:160px; top:360px; width:1600px; padding:46px">
+    <p class="body" style="font-size:36px">Buying a <b>new</b> policy or annuity where an <b>existing</b> one is lapsed, surrendered, converted, borrowed against, reduced or otherwise changed as part of the deal.</p></div>
+  <div class="abs tip" id="w2" style="left:160px; top:640px; width:1600px"><span class="lbl">WHY IT'S REGULATED:</span> Replacing can cost the client new surrender charges, a new contestable period and higher premiums at an older age.</div>
+</div>
+
+<div class="scene" id="s3">
+  <div class="abs" style="left:160px; top:140px"><p class="eyebrow">Step by step</p><h2>The producer's job</h2></div>
+  <div class="abs" style="left:160px; top:330px">
+    <div class="step" id="p1" style="margin-bottom:44px"><div class="sn">1</div><div><p class="who">Producer</p><p class="st">Ask about existing coverage</p><p class="sd">Applicant and producer sign a statement saying whether a replacement is involved.</p></div></div>
+    <div class="step" id="p2" style="margin-bottom:44px"><div class="sn">2</div><div><p class="who">Producer</p><p class="st">Present and read the replacement notice</p><p class="sd">No later than when the application is taken. Applicant and producer both sign it.</p></div></div>
+    <div class="step" id="p3"><div class="sn">3</div><div><p class="who">Producer</p><p class="st">Leave copies, then submit them</p><p class="sd">Applicant keeps the signed notice and all sales materials used. Copies go to the insurer.</p></div></div>
+  </div>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:140px"><p class="eyebrow">Step by step</p><h2>The insurers' jobs</h2></div>
+  <div class="abs card" id="q1" style="left:160px; top:330px; width:760px; height:470px; padding:44px">
+    <p class="who">Replacing insurer</p><p class="big sun num" id="n5">0</p><p class="st">business days</p>
+    <p class="sd" style="margin-top:16px">to notify the existing insurer. It keeps replacement records for at least <b>5 years</b>.</p></div>
+  <div class="abs card" id="q2" style="left:1000px; top:330px; width:760px; height:470px; padding:44px">
+    <p class="who">Existing insurer</p><p style="font-size:84px; line-height:1; margin:14px 0 6px">📄</p><p class="st">Policy facts on request</p>
+    <p class="sd" style="margin-top:16px">Tells the owner they can get information about the existing policy, and provides it within <b>5 business days</b> of a request.</p></div>
+</div>
+
+<div class="scene" id="s5">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">The safety net</p><h2>The new policy's free look</h2></div>
+  <div class="abs card center" id="f1" style="left:160px; top:340px; width:640px; height:460px"><div><p class="big good num" id="n30">0</p><p class="st">days</p><p class="sd">full refund on a replacement</p></div></div>
+  <div class="abs" id="f2" style="left:880px; top:400px; width:900px">
+    <p class="body" style="font-size:38px">Compare: a normal Arizona life policy gets at least a <b>10-day</b> free look.</p>
+    <p class="body" style="font-size:38px; margin-top:36px">Misrepresenting a policy to get someone to replace it is <b class="low">twisting</b>, an unfair trade practice.</p></div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 74;
+var CAPS = [
+  [7.5, 18.5, "Replacement isn't illegal, but it's <b>closely regulated</b> to protect the client."],
+  [20, 37.5, "The producer reads the notice <b>at or before</b> application, and <b>both</b> sign it."],
+  [39.5, 52.5, "The replacing insurer notifies the existing insurer within <b>5 business days</b>."],
+  [54.5, 72, "Replacements get a <b>30-day</b> free look instead of the usual 10."],
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("s2", t, 6.5, 19.5); pop("w1", t, 7.3, 40); pop("w2", t, 11.5);
+  sceneWin("s3", t, 19.5, 38.5); popX("p1", t, 20.5); popX("p2", t, 25.5); popX("p3", t, 31.5);
+  sceneWin("s4", t, 38.5, 53.5); pop("q1", t, 39.3, 40); pop("q2", t, 45.5, 40);
+  $("n5").textContent = Math.round(5 * seg(t, 40, 41.5));
+  sceneWin("s5", t, 53.5, DURATION, .9); popS("f1", t, 54.3); pop("f2", t, 58);
+  $("n30").textContent = Math.round(30 * seg(t, 54.6, 56.4));
+}
+</script></body></html>

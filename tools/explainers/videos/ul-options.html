@@ -1,0 +1,74 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>.lbl2 { font-size: 26px; font-weight: 800; font-family: Inter; }</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Life Insurance Policies · Universal Life Death Benefit Options</small></div></div>
+<div class="abs note" id="note">Example numbers for illustration</div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 4 · Universal Life</p>
+  <h1 id="t2" style="margin-top:24px">Option A vs.<br>Option B</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Level vs. increasing death benefit, and why it matters</p></div></div>
+
+<div class="scene" id="ch">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow" id="cE"></p><h2 id="cT"></h2></div>
+  <svg class="abs" width="1920" height="1080" style="left:0; top:0">
+    <line x1="240" y1="860" x2="1180" y2="860" stroke="#c8c0b2" stroke-width="4"/>
+    <line x1="240" y1="330" x2="240" y2="860" stroke="#c8c0b2" stroke-width="4"/>
+    <text x="240" y="900" font-size="24" fill="#7a8394" font-family="Inter" text-anchor="middle">Year 1</text>
+    <text x="1180" y="900" font-size="24" fill="#7a8394" font-family="Inter" text-anchor="middle">Year 30</text>
+    <path id="nar" d="" fill="rgba(217,98,43,.13)"/>
+    <path id="cv" d="" fill="rgba(47,158,110,.3)" stroke="#2f9e6e" stroke-width="6"/>
+    <path id="dbl" d="" fill="none" stroke="#14213d" stroke-width="9" stroke-linecap="round"/>
+    <text id="dbT" class="lbl2" fill="#14213d" x="0" y="0"></text>
+    <text id="cvT" class="lbl2" fill="#2f9e6e" x="0" y="0">Cash value</text>
+    <text id="narT" class="lbl2" fill="#d9622b" x="0" y="0">Insurer's risk (net amount at risk)</text>
+  </svg>
+  <ul class="abs bullets" id="pts" style="left:1260px; top:360px; width:620px"></ul>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">Recap</p><h2>A = Level · B = Bigger</h2></div>
+  <div class="abs card" id="k1" style="left:160px; top:360px; width:780px; height:340px; padding:44px">
+    <h3>Option <span class="sun">A</span> (Option 1)</h3><p class="body" style="margin-top:16px"><b>Level</b> death benefit. Cash value is <b>part of</b> the face amount. Lower cost.</p></div>
+  <div class="abs card" id="k2" style="left:980px; top:360px; width:780px; height:340px; padding:44px">
+    <h3>Option <span class="good">B</span> (Option 2)</h3><p class="body" style="margin-top:16px"><b>Increasing</b> death benefit = face amount <b>plus</b> cash value. Higher cost.</p></div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 64, NOTE_WIN = [6.5, 50];
+var CAPS = [
+  [8, 27.5, "<b>Option A:</b> the death benefit stays level. As cash value grows, the insurer's risk shrinks."],
+  [29.5, 49.5, "<b>Option B:</b> beneficiaries get the face amount <b>plus</b> the cash value."],
+];
+const X = y => 240 + (y - 1) / 29 * 940, Y = v => 860 - v / 400000 * 520;
+const cvAt = y => 160000 * Math.pow((y - 1) / 29, 1.5);
+const MODES = [
+  { a: 6.5, b: 28.5, e: "Option A (Option 1)", t: "<span class='sun'>Level</span> death benefit", db: y => 250000, lab: "Death benefit: $250,000",
+    pts: [["bg-navy", "=", "Death benefit stays $250,000"], ["bg-good", "↑", "Cash value grows inside it"], ["bg-sun", "↓", "Insurer's risk shrinks, so it costs less"]] },
+  { a: 28.5, b: 50.5, e: "Option B (Option 2)", t: "<span class='good'>Increasing</span> death benefit", db: y => 250000 + cvAt(y), lab: "Face + cash value",
+    pts: [["bg-navy", "+", "Death benefit = $250,000 + cash value"], ["bg-sun", "=", "Insurer's risk stays $250,000"], ["bg-low", "$", "Costs more than Option A"]] },
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("ch", t, 6.5, 51);
+  const M = t < 28.5 ? MODES[0] : MODES[1];
+  $("cE").textContent = M.e; $("cT").innerHTML = M.t;
+  const g = seg(t, M.a + 1.5, M.a + 9);
+  const yEnd = 1 + 29 * g;
+  let db = `M ${X(1)} ${Y(M.db(1))}`, cv = `M ${X(1)} 860`, nar = `M ${X(1)} ${Y(M.db(1))}`;
+  for (let y = 1; y <= yEnd + .001; y += .25) { db += ` L ${X(y)} ${Y(M.db(y))}`; cv += ` L ${X(y)} ${Y(cvAt(y))}`; nar += ` L ${X(y)} ${Y(M.db(y))}`; }
+  for (let y = yEnd; y >= 1; y -= .25) nar += ` L ${X(y)} ${Y(cvAt(y))}`;
+  cv += ` L ${X(yEnd)} 860 Z`; nar += " Z";
+  $("dbl").setAttribute("d", db); $("cv").setAttribute("d", cv); $("nar").setAttribute("d", nar);
+  const f = Math.min(seg(t, M.a, M.a + .5), 1 - seg(t, M.b - .5, M.b));
+  ["dbl", "cv", "nar", "cE", "cT", "pts"].forEach(id => $(id).style.opacity = f * (g > 0 || ["cE", "cT", "pts"].includes(id) ? 1 : 0));
+  const dt = $("dbT"); dt.textContent = M.lab; dt.setAttribute("x", X(1) + 20); dt.setAttribute("y", Y(M.db(1)) - 22); dt.style.opacity = f * segO(t, M.a + 2, M.a + 2.6);
+  $("cvT").setAttribute("x", X(24)); $("cvT").setAttribute("y", 830); $("cvT").style.opacity = f * segO(t, M.a + 8, M.a + 8.6);
+  const nt = $("narT"); nt.setAttribute("x", X(3)); nt.setAttribute("y", Y(M.db(3)) + 70); nt.style.opacity = f * segO(t, M.a + 9.5, M.a + 10.1);
+  const ul = $("pts");
+  if (ul.dataset.m !== M.e) { ul.dataset.m = M.e; ul.innerHTML = M.pts.map(([c, i, s]) => `<li><span class="ic ${c}">${i}</span>${s}</li>`).join(""); }
+  ul.querySelectorAll("li").forEach((li, i) => pop(li, t, M.a + 3 + i * 4));
+  sceneWin("s4", t, 51, DURATION, .9); pop("k1", t, 51.8, 40); pop("k2", t, 53.2, 40);
+}
+</script></body></html>

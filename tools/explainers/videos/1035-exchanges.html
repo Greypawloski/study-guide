@@ -1,0 +1,60 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .ex { position: absolute; display: flex; align-items: center; gap: 28px; width: 1300px; height: 110px; padding: 0 40px; border-radius: 26px; background: #fff; border: 3px solid var(--line); opacity: 0; }
+  .ex .k { font-size: 36px; font-weight: 800; width: 330px; }
+  .ex .ar { font-size: 44px; color: var(--muted); }
+  .ex .res { margin-left: auto; font-size: 34px; font-weight: 800; display: flex; align-items: center; gap: 12px; opacity: 0; }
+  .ex.no { border-color: var(--low); background: var(--lowsoft); }
+  .ex.yes .res { color: var(--good); } .ex.no .res { color: var(--low); }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Federal Tax · Section 1035 Exchanges</small></div></div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 7 · Federal Tax</p>
+  <h1 id="t2" style="margin-top:24px">1035 Exchanges</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Swapping one contract for another without paying tax on the gain</p></div></div>
+
+<div class="scene" id="s2">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Allowed or not?</p><h2>Which swaps are tax-free</h2></div>
+  <div class="ex yes" id="e1" style="left:160px; top:310px"><span class="k">🛡️ Life insurance</span><span class="ar">→</span><span class="k">🛡️ Life insurance</span><span class="res">✓ Tax-free</span></div>
+  <div class="ex yes" id="e2" style="left:160px; top:440px"><span class="k">🛡️ Life insurance</span><span class="ar">→</span><span class="k">💰 Annuity</span><span class="res">✓ Tax-free</span></div>
+  <div class="ex yes" id="e3" style="left:160px; top:570px"><span class="k">💰 Annuity</span><span class="ar">→</span><span class="k">💰 Annuity</span><span class="res">✓ Tax-free</span></div>
+  <div class="ex no" id="e4" style="left:160px; top:700px"><span class="k">💰 Annuity</span><span class="ar">→</span><span class="k">🛡️ Life insurance</span><span class="res">✕ Not allowed</span></div>
+  <div class="abs" id="side" style="left:1520px; top:330px; width:330px; font-size:28px; color:var(--ink2); font-weight:600; line-height:1.4; opacity:0">Life or annuity → a <b>qualified long-term care</b> policy also qualifies.</div>
+</div>
+
+<div class="scene" id="s3">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">The fine print</p><h2>Rules for a clean exchange</h2></div>
+  <ul class="abs bullets" style="left:160px; top:380px; width:1600px">
+    <li id="b1"><span class="ic bg-navy">=</span>Same owner, and the same insured or annuitant</li>
+    <li id="b2"><span class="ic bg-low">$</span>Any cash you receive ("boot") is taxable</li>
+    <li id="b3"><span class="ic bg-sun">!</span>A 1035 exchange is still a replacement, so replacement rules apply</li>
+  </ul>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:250px"><p class="eyebrow">Memory trick</p><h2>You can move <span class="good">toward</span> an annuity,<br>never <span class="low">away</span> from it.</h2></div>
+  <div class="abs tip" id="k1" style="left:160px; top:600px; width:1600px"><span class="lbl">WHY:</span> Going from an annuity to life insurance would turn taxable annuity gains into a tax-free death benefit, so the IRS doesn't allow it.</div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 60;
+var CAPS = [
+  [8, 26.5, "Three swaps are tax-free. Going from an <b>annuity to life insurance</b> is not."],
+  [29, 41.5, "Keep the <b>same owner and insured</b>, and don't take cash out."],
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("s2", t, 6.5, 28);
+  [["e1", 8], ["e2", 11.5], ["e3", 15], ["e4", 18.5]].forEach(([id, a]) => {
+    popX(id, t, a, -40);
+    const r = $(id).querySelector(".res"), p = segO(t, a + 1.5, a + 2);
+    r.style.opacity = p; r.style.transform = `scale(${.6 + .4 * p})`;
+  });
+  pop("side", t, 23);
+  sceneWin("s3", t, 28, 43); pop("b1", t, 29); pop("b2", t, 32.5); pop("b3", t, 36.5);
+  sceneWin("s4", t, 43, DURATION, .9); pop("k1", t, 47);
+}
+</script></body></html>

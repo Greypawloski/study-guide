@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Videos{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Video lessons</h1>
+  <p class="lead">{{ total }} short animated explainers for the most-tested, most-confusing topics. Each one is also at the top of its lesson.</p>
+  <p class="muted" id="watch-count"></p>
+</div>
+
+{% for v in extra %}
+<div class="card featured-video">
+  <p class="eyebrow">Watch the morning of your exam</p>
+  {% include "_video.html" %}
+  <p class="muted">{{ v.blurb }}</p>
+</div>
+{% endfor %}
+
+{% for s, vids in groups %}
+<section class="vid-section">
+  <h2>{{ s.icon }} {{ s.num }}. {{ s.title }}</h2>
+  <div class="vid-grid">
+    {% for v in vids %}
+    <div class="card vid-card">
+      {% include "_video.html" %}
+      <p class="muted small">{{ v.blurb }} <a href="{{ url_for('lesson', sid=s.id) }}#l{{ v.lesson[1] }}">Go to lesson →</a></p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}
+{% block scripts %}
+<script>
+const n = document.querySelectorAll("video[data-slug]").length;
+const w = Array.from(document.querySelectorAll("video[data-slug]")).filter(v => Store.isWatched(v.dataset.slug)).length;
+document.getElementById("watch-count").textContent = w + " of " + n + " watched";
+</script>
+{% endblock %}

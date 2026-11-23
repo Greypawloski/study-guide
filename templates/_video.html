@@ -1,0 +1,7 @@
+<figure class="lesson-video" data-slug="{{ v.slug }}">
+  <video controls playsinline preload="metadata" data-slug="{{ v.slug }}"
+         poster="{{ url_for('static', filename='videos/' ~ v.slug ~ '.jpg') }}">
+    <source src="{{ url_for('static', filename='videos/' ~ v.slug ~ '.mp4') }}" type="video/mp4">
+  </video>
+  <figcaption><span class="vid-title">🎬 {{ v.title }}</span> · {{ v.length }}<span class="watched-tag" hidden> · ✓ Watched</span></figcaption>
+</figure>

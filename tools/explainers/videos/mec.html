@@ -1,0 +1,90 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .yr { position: absolute; bottom: 260px; width: 110px; border-radius: 12px 12px 0 0; height: 0; }
+  .yl { position: absolute; top: 830px; width: 110px; text-align: center; font-size: 24px; color: var(--muted); font-weight: 600; }
+  .lm { position: absolute; z-index: 3; width: 130px; border-top: 6px dashed var(--low); opacity: 0; }
+  .stamp { font-size: 80px; font-weight: 800; color: var(--low); border: 10px solid var(--low); border-radius: 24px; padding: 6px 34px; background: rgba(255,255,255,.92); }
+  .calc p { font-size: 34px; margin-bottom: 14px; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Federal Tax · Modified Endowment Contracts</small></div></div>
+<div class="abs note" id="note">Example numbers for illustration</div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 7 · Federal Tax</p>
+  <h1 id="t2" style="margin-top:24px">MECs and the<br>7-Pay Test</h1>
+  <p class="lead" id="t3" style="margin-top:34px">What happens when a life policy is funded too fast</p></div></div>
+
+<div class="scene" id="s2">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow" id="cE">The 7-pay test</p><h2 id="cT">Premiums in the first 7 years</h2></div>
+  <div id="lims"></div>
+  <div class="abs" id="limT" style="left:1240px; top:270px; width:300px; font-size:28px; font-weight:800; color:var(--low); opacity:0">- - 7-pay limit<br><span style="font-size:22px; color:var(--ink2); font-weight:600">rises each year</span></div>
+  <div class="yr bg-good" id="g1" style="left:200px"></div><div class="yr bg-good" id="g2" style="left:350px"></div><div class="yr bg-good" id="g3" style="left:500px"></div>
+  <div class="yr bg-good" id="g4" style="left:650px"></div><div class="yr bg-good" id="g5" style="left:800px"></div><div class="yr bg-good" id="g6" style="left:950px"></div><div class="yr bg-good" id="g7" style="left:1100px"></div>
+  <div class="yl" style="left:200px">Yr 1</div><div class="yl" style="left:350px">Yr 2</div><div class="yl" style="left:500px">Yr 3</div><div class="yl" style="left:650px">Yr 4</div><div class="yl" style="left:800px">Yr 5</div><div class="yl" style="left:950px">Yr 6</div><div class="yl" style="left:1100px">Yr 7</div>
+  <div class="abs" id="ok" style="left:1380px; top:400px; width:460px; font-size:34px; font-weight:800; color:var(--good); opacity:0">✓ Under the limit:<br>a normal life policy</div>
+  <div class="abs stamp" id="stamp" style="left:1330px; top:560px; opacity:0">MEC</div>
+  <div class="abs" id="bad" style="left:1380px; top:400px; width:460px; font-size:34px; font-weight:800; color:var(--low); opacity:0">✕ Paid in too fast</div>
+</div>
+
+<div class="scene" id="s3">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Once a MEC, always a MEC</p><h2>What changes, and what doesn't</h2></div>
+  <div class="abs card" id="k1" style="left:160px; top:330px; width:780px; height:460px; padding:44px; border-color:var(--good)">
+    <h3 class="good">✓ Still the same</h3>
+    <p class="body" style="margin-top:18px">The <b>death benefit</b> is still generally income-tax free.</p>
+    <p class="body" style="margin-top:14px">Cash value still grows <b>tax-deferred</b>.</p></div>
+  <div class="abs card" id="k2" style="left:980px; top:330px; width:780px; height:460px; padding:44px; border-color:var(--low)">
+    <h3 class="low">✕ Living benefits get taxed</h3>
+    <p class="body" style="margin-top:18px">Loans and withdrawals come out <b>gains first (LIFO)</b>, taxed as income.</p>
+    <p class="body" style="margin-top:14px">Plus a <b>10% penalty</b> before age <b>59½</b>.</p></div>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Example</p><h2>A 45-year-old borrows from a MEC</h2></div>
+  <div class="abs card calc" id="x1" style="left:160px; top:330px; width:1000px; padding:46px">
+    <p id="l1">Gain in the policy: <b>$15,000</b></p>
+    <p id="l2">Loan taken: <b>$10,000</b></p>
+    <p id="l3">Taxable as ordinary income: <b class="low">$10,000</b> <span class="muted">(gains come out first)</span></p>
+    <p id="l4">10% penalty (under 59½): <b class="low">$1,000</b></p></div>
+  <div class="abs tip" id="x2" style="left:1200px; top:330px; width:560px; font-size:32px">Same loan from a <b>non-MEC</b> policy? <b>No tax</b> while the policy stays in force.</div>
+  <p class="abs body" id="x3" style="left:160px; top:760px; width:1600px; font-size:32px">Exam clue: <b>single premium whole life</b> is usually a MEC.</p>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 70, NOTE_WIN = [6.5, 56];
+var CAPS = [
+  [8, 15.5, "Total premiums paid so far can't top what <b>7 level annual premiums</b> would have paid by then."],
+  [17, 26.5, "Pay in faster than the limit allows, even once, and the policy becomes a <b>MEC</b>."],
+  [28.5, 40.5, "A MEC is taxed like an annuity when you take money out <b>while living</b>."],
+];
+const U = 520 / 7, BOTTOM = 820;
+const NORMAL = [.9, 1.8, 2.7, 3.6, 4.5, 5.4, 6.3], OVER = [3, 3, 3, 3, 3, 3, 3];   // cumulative, in 7-pay premiums
+let built = false;
+function scene(t) {
+  if (!built) {
+    built = true;
+    $("lims").innerHTML = [0,1,2,3,4,5,6].map(i => `<div class="lm" id="m${i}" style="left:${190 + i * 150}px; top:${BOTTOM - (i + 1) * U - 3}px"></div>`).join("");
+  }
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("s2", t, 6.5, 28);
+  const over = t >= 16.5;
+  $("cT").textContent = over ? "Too much, too soon" : "Total premiums paid by each year";
+  for (let i = 0; i < 7; i++) $("m" + i).style.opacity = segO(t, 8 + i * .15, 8.5 + i * .15);
+  $("limT").style.opacity = segO(t, 8.5, 9);
+  for (let i = 0; i < 7; i++) {
+    const el = $("g" + (i + 1));
+    const cum = over ? OVER[i] : NORMAL[i];
+    const p = over ? seg(t, 17.5 + i * .3, 18.1 + i * .3) : seg(t, 9 + i * .5, 9.6 + i * .5);
+    el.style.height = (cum * U * p) + "px";
+    el.className = "yr " + (over && cum > i + 1 ? "bg-low" : "bg-good");
+  }
+  pop("ok", t, 13); $("ok").style.opacity *= 1 - seg(t, 16, 16.5);
+  pop("bad", t, 19.5);
+  const s = segO(t, 20.5, 21.1); $("stamp").style.opacity = s; $("stamp").style.transform = `rotate(-10deg) scale(${1.6 - .6 * s})`;
+  sceneWin("s3", t, 28, 42); pop("k1", t, 28.8, 40); pop("k2", t, 32.5, 40);
+  sceneWin("s4", t, 42, DURATION, .9);
+  pop("x1", t, 42.8, 30); pop("l1", t, 43.5, 10); pop("l2", t, 45.5, 10); pop("l3", t, 48, 10); pop("l4", t, 51.5, 10);
+  pop("x2", t, 55); pop("x3", t, 60);
+}
+</script></body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../lib.css">
+<style>
+  .dep { position: absolute; width: 140px; height: 46px; border-radius: 10px; background: var(--sun); color: #fff; font-size: 24px; font-weight: 800; display: grid; place-items: center; opacity: 0; }
+  .pay { position: absolute; width: 120px; height: 56px; border-radius: 12px; background: var(--good); color: #fff; font-size: 24px; font-weight: 800; display: grid; place-items: center; opacity: 0; }
+  .pool { position: absolute; left: 760px; width: 400px; border-radius: 0 0 30px 30px; background: linear-gradient(180deg, #4fb98a, var(--good)); bottom: 230px; height: 0; }
+  .jar { position: absolute; left: 740px; top: 330px; width: 440px; height: 540px; border: 10px solid var(--navy); border-top: 0; border-radius: 0 0 44px 44px; }
+  .phase { font-size: 44px; font-weight: 800; }
+  .rank { display: flex; align-items: flex-end; gap: 46px; height: 360px; }
+  .rcol { width: 330px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .rbar { width: 170px; border-radius: 18px 18px 0 0; height: 0; }
+  .rlbl { font-size: 28px; font-weight: 800; text-align: center; margin-top: 14px; height: 76px; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>Annuities · How an Annuity Works</small></div></div>
+
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Section 6 · Annuities</p>
+  <h1 id="t2" style="margin-top:24px">How an Annuity<br>Works</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Pay in, grow tax-deferred, then turn it into income you can't outlive</p></div></div>
+
+<div class="scene" id="s2">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow" id="pE">Phase 1</p><p class="phase" id="pT">Accumulation period (pay-in)</p></div>
+  <div class="jar"></div><div class="pool" id="pool"></div>
+  <div class="dep" id="d1" style="left:890px">Premium</div><div class="dep" id="d2" style="left:890px">Premium</div>
+  <div class="dep" id="d3" style="left:890px">Premium</div><div class="dep" id="d4" style="left:890px">Premium</div>
+  <div class="abs" id="grow" style="left:1210px; top:520px; font-size:34px; font-weight:800; color:var(--good); opacity:0">↑ grows tax-deferred</div>
+  <div class="abs" id="switch" style="left:770px; top:250px; width:380px; text-align:center; font-size:30px; font-weight:800; color:#fff; background:var(--navy); border-radius:16px; padding:14px; opacity:0">🔒 Annuitize</div>
+  <div class="pay" id="y1" style="left:1200px; top:780px">$</div><div class="pay" id="y2" style="left:1200px; top:780px">$</div><div class="pay" id="y3" style="left:1200px; top:780px">$</div>
+  <ul class="abs bullets" id="acc" style="left:160px; top:380px; width:560px">
+    <li id="a1"><span class="ic bg-sun">$</span>Single or flexible premiums</li>
+    <li id="a2"><span class="ic bg-good">↑</span>Earnings grow tax-deferred</li>
+    <li id="a3"><span class="ic bg-low">!</span>Early withdrawals may hit surrender charges</li>
+  </ul>
+  <ul class="abs bullets" id="pay" style="left:160px; top:380px; width:560px">
+    <li id="b1"><span class="ic bg-navy">🔒</span>Annuitizing is usually irrevocable</li>
+    <li id="b2"><span class="ic bg-good">$</span>Value becomes regular income</li>
+    <li id="b3"><span class="ic bg-sun">∞</span>Can be guaranteed for life</li>
+  </ul>
+  <div class="abs card" id="imm" style="left:1260px; top:300px; width:520px; padding:36px; opacity:0">
+    <p class="st" style="font-size:30px; font-weight:800">Immediate vs. deferred</p>
+    <p class="body" style="font-size:26px; margin-top:10px"><b>Immediate:</b> one premium, income starts within <b>1 year</b>.<br><b>Deferred:</b> income starts later.</p></div>
+</div>
+
+<div class="scene" id="s3">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Payout options</p><h2>Monthly income, ranked</h2></div>
+  <div class="abs rank" style="left:180px; top:360px">
+    <div class="rcol" id="r1"><div class="rbar bg-sun" id="rb1"></div><div class="rlbl">Life only</div></div>
+    <div class="rcol" id="r2"><div class="rbar bg-navy" id="rb2"></div><div class="rlbl">Life with period certain</div></div>
+    <div class="rcol" id="r3"><div class="rbar bg-ink" id="rb3"></div><div class="rlbl">Refund life</div></div>
+    <div class="rcol" id="r4"><div class="rbar bg-good" id="rb4"></div><div class="rlbl">Joint and survivor</div></div>
+  </div>
+  <div class="abs" id="hi" style="left:1660px; top:380px; font-size:28px; font-weight:800; color:var(--sun); width:220px">⬆ Highest</div>
+  <div class="abs" id="lo" style="left:1660px; top:620px; font-size:28px; font-weight:800; color:var(--good); width:220px">⬇ Lowest</div>
+</div>
+
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:170px"><p class="eyebrow">Arizona</p><h2>Annuity free look</h2></div>
+  <div class="abs card center" id="z1" style="left:160px; top:350px; width:500px; height:360px"><div><p style="font-size:110px; font-weight:800" class="sun">10</p><p class="st" style="font-size:32px; font-weight:800">days, standard</p></div></div>
+  <div class="abs card center" id="z2" style="left:710px; top:350px; width:500px; height:360px"><div><p style="font-size:110px; font-weight:800" class="good">30</p><p class="st" style="font-size:32px; font-weight:800">days if 65 or older</p></div></div>
+  <div class="abs card center" id="z3" style="left:1260px; top:350px; width:500px; height:360px"><div><p style="font-size:110px; font-weight:800; color:var(--navy)">15</p><p class="st" style="font-size:32px; font-weight:800">days if no buyer's guide<br>at application</p></div></div>
+  <div class="abs tip" id="z4" style="left:160px; top:760px; width:1600px"><span class="lbl">REMEMBER:</span> Life insurance protects against dying <b>too soon</b>. Annuities protect against living <b>too long</b>.</div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 78;
+var CAPS = [
+  [8, 22.5, "During <b>accumulation</b>, premiums go in and earnings grow <b>tax-deferred</b>."],
+  [24.5, 36.5, "At <b>annuitization</b>, the value turns into a stream of income payments."],
+  [39, 53.5, "Just like settlement options: <b>more guarantees = smaller payments</b>."],
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+  sceneWin("s2", t, 6.5, 38);
+  const pay = t >= 23.5;
+  $("pE").textContent = pay ? "Phase 2" : "Phase 1";
+  $("pT").innerHTML = pay ? "Annuity period (payout)" : "Accumulation period (pay-in)";
+  ["d1", "d2", "d3", "d4"].forEach((id, i) => {
+    const a = 8.5 + i * 2.2, p = seg(t, a, a + 1.2);
+    $(id).style.opacity = p > 0 && p < 1 ? 1 : 0;
+    $(id).style.top = (200 + p * 520) + "px";
+  });
+  let h = 0;
+  for (let i = 0; i < 4; i++) h += 70 * seg(t, 9.7 + i * 2.2, 10.2 + i * 2.2);
+  h += 110 * seg(t, 17.5, 22);            // tax-deferred growth
+  h -= 260 * seg(t, 27.5, 36);            // payouts drain it
+  $("pool").style.height = Math.max(0, h) + "px";
+  pop("grow", t, 17.5, 10); $("grow").style.opacity *= 1 - seg(t, 23, 23.5);
+  popS("switch", t, 24);
+  ["y1", "y2", "y3"].forEach((id, i) => {
+    const a = 27.5 + i * 2.8, p = seg(t, a, a + 1.6);
+    $(id).style.opacity = p > 0 && p < 1 ? 1 : 0;
+    $(id).style.transform = `translateX(${p * 420}px)`;
+  });
+  const accOut = 1 - seg(t, 23, 23.5);
+  [["a1", 9], ["a2", 13], ["a3", 17]].forEach(([id, a]) => { pop(id, t, a); $(id).style.opacity *= accOut; });
+  [["b1", 24.5], ["b2", 27.5], ["b3", 31]].forEach(([id, a]) => pop(id, t, a));
+  pop("imm", t, 13.5, 20); $("imm").style.opacity *= 1 - seg(t, 23, 23.5);
+  sceneWin("s3", t, 38, 54.5);
+  [[1, 250, 40], [2, 205, 42.5], [3, 180, 45], [4, 140, 47.5]].forEach(([i, hh, a]) => {
+    pop("r" + i, t, a - .2, 20); $("rb" + i).style.height = (hh * seg(t, a, a + 1.2)) + "px";
+  });
+  pop("hi", t, 41, 10); pop("lo", t, 49, 10);
+  sceneWin("s4", t, 54.5, DURATION, .9); popS("z1", t, 55.3); popS("z2", t, 57.5); popS("z3", t, 60); pop("z4", t, 64);
+}
+</script></body></html>

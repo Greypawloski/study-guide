@@ -102,6 +102,7 @@ DAYS = [
             {"type": "quiz", "title": "Lightning round: 25 random questions", "sections": [], "n": 25, "minutes": 15},
             {"type": "read", "title": "Read the exam-day tips", "minutes": 10, "href": "/tips"},
             {"type": "read", "title": "Final pass through the Arizona cheat sheet", "minutes": 15, "href": "/cheatsheet"},
+            {"type": "read", "title": "Watch 'Arizona numbers in 2 minutes'", "minutes": 2, "href": "/videos"},
         ],
     },
 ]
