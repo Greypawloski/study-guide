@@ -3,3 +3,5 @@ __pycache__/
 .venv/
 .DS_Store
 data/
+tools/explainers/out/
+tools/explainers/audio_placeholder/

@@ -151,19 +151,34 @@
 <div class="abs progress" id="prog"></div>
 
 <script>
-const DURATION = 82;
+/* Timing cues. Defaults reproduce the original silent video exactly.
+   When narrated, tools/sync.py injects window.TIMELINE with cue times
+   taken from the narration's word timestamps. */
+const DEFAULT_CUES = {
+  title: 0, cashvalue: 7, "cashvalue.grow_start": 9, "cashvalue.grow_end": 17, "cashvalue.law": 10,
+  stop: 20.5, "stop.stamp": 20.5, "stop.branches": 23,
+  cash: 26.5, "cash.fly": 28.5, "cash.drain": 31.2, "cash.tax": 35,
+  rpu: 39.5, "rpu.shrink": 42, "rpu.same": 45.8, "rpu.paid": 48.8, "rpu.life": 45.5,
+  eti: 53.5, "eti.same": 55.5, "eti.term": 56.5, "eti.lasts": 59.6, "eti.years": 60, "eti.auto": 62.2,
+  recap: 67.5, "recap.k1": 68.3, "recap.k2": 69.3, "recap.k3": 70.3, "recap.tip": 73,
+  end: 82,
+};
+const TL = window.TIMELINE || null;
+const C = Object.assign({}, DEFAULT_CUES, TL ? TL.cues : {});
+const DURATION = TL ? TL.duration : 82;
+const NARRATED = !!TL;
 const $ = id => document.getElementById(id);
 const clamp = x => Math.max(0, Math.min(1, x));
 const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 const easeOut = x => 1 - Math.pow(1 - x, 3);
 const seg = (t, a, b) => ease(clamp((t - a) / (b - a)));
 const segO = (t, a, b) => easeOut(clamp((t - a) / (b - a)));
-// visible between a and b with fades of length f
 const win = (t, a, b, f = .6) => Math.min(seg(t, a, a + f), 1 - seg(t, b - f, b));
 const money = n => "$" + Math.round(n).toLocaleString("en-US");
 function pop(el, t, a, dy = 30) { const p = segO(t, a, a + .6); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; }
 
-const CAPS = [
+// On-screen captions are used for the silent version; narrated videos use subtitles instead.
+const CAPS = NARRATED ? [] : [
   [8.5, 19.5, "Every premium adds to the policy's <b>cash value</b>."],
   [20.5, 25.8, "If premiums stop, the owner picks one of <b>three nonforfeiture options</b>."],
   [27, 38.5, "<b>Cash surrender:</b> take the money and walk away."],
@@ -171,77 +186,79 @@ const CAPS = [
   [54, 66.5, "<b>Extended term:</b> keep the full amount, but only for a limited time."],
 ];
 
-// stroke-dash setup for branches
 ["b1", "b2", "b3"].forEach(id => { const p = $(id), L = p.getTotalLength(); p.style.strokeDasharray = L; p.dataset.len = L; });
 
 window.render = function (t) {
   $("prog").style.width = (t / DURATION * 100) + "%";
-  const chrome = 1 - seg(t, 80.5, 82);
+  const chrome = 1 - seg(t, DURATION - 1.5, DURATION);
   $("brand").style.opacity = chrome;
-  $("note").style.opacity = win(t, 8, 67) * chrome;
+  $("note").style.opacity = win(t, C.cashvalue + 1, C.recap) * chrome;
 
-  // S1
-  $("s1").style.opacity = win(t, 0, 7);
-  pop($("s1e"), t, .3); pop($("s1h"), t, .7, 40); pop($("s1p"), t, 1.6);
+  // S1 title
+  $("s1").style.opacity = win(t, C.title, C.cashvalue);
+  pop($("s1e"), t, C.title + .3); pop($("s1h"), t, C.title + .7, 40); pop($("s1p"), t, C.title + 1.6);
 
-  // S2 / S3
-  $("s2").style.opacity = win(t, 7, 26.5);
-  pop($("policy"), t, 7.3, 40);
-  const g = seg(t, 9, 17);
+  // S2 / S3 policy, then premiums stop
+  $("s2").style.opacity = win(t, C.cashvalue, C.cash);
+  pop($("policy"), t, C.cashvalue + .3, 40);
+  const g = seg(t, C["cashvalue.grow_start"], Math.max(C["cashvalue.grow_start"] + 2, C["cashvalue.grow_end"]));
   $("cv").textContent = money(20000 * g);
   $("cvbar").style.width = (g * 100) + "%";
   $("years").textContent = g > 0 ? "· year " + Math.max(1, Math.round(g * 15)) : "";
-  const textIn = segO(t, 10, 11) * (1 - seg(t, 20, 20.8));
-  $("s2text").style.opacity = textIn; $("s2text").style.transform = `translateX(${(1 - segO(t, 10, 11)) * 40}px)`;
-  const st = segO(t, 20.5, 21.1);
-  $("stamp").style.opacity = st * (1 - seg(t, 22.6, 23.2));
+  const tx = C["cashvalue.law"];
+  const textIn = segO(t, tx, tx + 1) * (1 - seg(t, C["stop.stamp"] - .5, C["stop.stamp"] + .3));
+  $("s2text").style.opacity = textIn; $("s2text").style.transform = `translateX(${(1 - segO(t, tx, tx + 1)) * 40}px)`;
+  const st = segO(t, C["stop.stamp"], C["stop.stamp"] + .6);
+  $("stamp").style.opacity = st * (1 - seg(t, C["stop.branches"] - .4, C["stop.branches"] + .2));
   $("stamp").style.transform = `rotate(-12deg) scale(${1.6 - .6 * st})`;
+  const br = C["stop.branches"];
   ["b1", "b2", "b3"].forEach((id, i) => {
-    const p = $(id), L = +p.dataset.len, d = seg(t, 23 + i * .35, 24.2 + i * .35);
+    const p = $(id), L = +p.dataset.len, d = seg(t, br + i * .35, br + 1.2 + i * .35);
     p.style.strokeDashoffset = L * (1 - d); p.style.opacity = d > 0 ? 1 : 0;
   });
-  ["o1", "o2", "o3"].forEach((id, i) => { const el = $(id), p = segO(t, 24 + i * .35, 24.7 + i * .35); el.style.opacity = p; el.style.transform = `translateX(${(1 - p) * 40}px)`; });
+  ["o1", "o2", "o3"].forEach((id, i) => { const el = $(id), p = segO(t, br + 1 + i * .35, br + 1.7 + i * .35); el.style.opacity = p; el.style.transform = `translateX(${(1 - p) * 40}px)`; });
 
   // S4 cash surrender
-  $("s4").style.opacity = win(t, 26.5, 39.5);
-  const fly = seg(t, 28.5, 30.5);
-  $("c4cash").style.opacity = segO(t, 28, 28.5) * (1 - seg(t, 30.6, 31));
+  $("s4").style.opacity = win(t, C.cash, C.rpu);
+  const fa = C["cash.fly"], fly = seg(t, fa, fa + 2);
+  $("c4cash").style.opacity = segO(t, fa - .5, fa) * (1 - seg(t, fa + 2.1, fa + 2.5));
   $("c4cash").style.transform = `translate(${fly * 560}px, ${fly * 20}px) scale(${1 - fly * .3})`;
-  $("c4you").style.opacity = segO(t, 27.6, 28.2);
-  $("c4you").style.transform = `scale(${1 + .15 * Math.sin(clamp((t - 30.4) / .5) * Math.PI)})`;
-  const drain = seg(t, 31.2, 33);
+  $("c4you").style.opacity = segO(t, fa - .9, fa - .3);
+  $("c4you").style.transform = `scale(${1 + .15 * Math.sin(clamp((t - fa - 1.9) / .5) * Math.PI)})`;
+  const da = C["cash.drain"], drain = seg(t, da, da + 1.8);
   $("c4cov").textContent = money(100000 * (1 - drain));
   $("c4bar").style.width = ((1 - drain) * 100) + "%";
   $("c4cov").style.color = drain > .99 ? "var(--low)" : "var(--navy)";
-  pop($("c4end"), t, 33.1, 10);
-  pop($("c4b1"), t, 30.6); pop($("c4b2"), t, 33.3); pop($("c4b3"), t, 35);
+  pop($("c4end"), t, da + 1.9, 10);
+  pop($("c4b1"), t, fa + 2.1); pop($("c4b2"), t, da + 2.1); pop($("c4b3"), t, C["cash.tax"]);
 
   // S5 reduced paid-up
-  $("s5").style.opacity = win(t, 39.5, 53.5);
-  pop($("r5shield"), t, 40, 40);
-  const shrink = seg(t, 42, 44.5);
+  $("s5").style.opacity = win(t, C.rpu, C.eti);
+  pop($("r5shield"), t, C.rpu + .5, 40);
+  const sa = C["rpu.shrink"], shrink = seg(t, sa, sa + 2.5);
   $("r5amt").textContent = money(100000 - 65000 * shrink);
   $("r5shield").style.transform = `scale(${1 - .3 * shrink})`;
-  $("r5shield").style.opacity = segO(t, 40, 40.6);
-  $("r5bar").style.width = (seg(t, 45.5, 48.5) * 100) + "%";
-  pop($("r5life"), t, 48.6, 10);
-  pop($("r5b1"), t, 42.6); pop($("r5b2"), t, 45.8); pop($("r5b3"), t, 48.8);
+  $("r5shield").style.opacity = segO(t, C.rpu + .5, C.rpu + 1.1);
+  const la = C["rpu.life"];
+  $("r5bar").style.width = (seg(t, la, la + 3) * 100) + "%";
+  pop($("r5life"), t, la + 3.1, 10);
+  pop($("r5b1"), t, sa + .6); pop($("r5b2"), t, C["rpu.same"]); pop($("r5b3"), t, C["rpu.paid"]);
 
   // S6 extended term
-  $("s6").style.opacity = win(t, 53.5, 67.5);
-  pop($("e6same"), t, 55.5, 10);
-  const run = seg(t, 56.5, 60);
+  $("s6").style.opacity = win(t, C.eti, C.recap);
+  pop($("e6same"), t, C["eti.same"], 10);
+  const ta = C["eti.term"], te = Math.max(ta + 1.5, C["eti.years"]), run = seg(t, ta, te);
   $("e6bar").style.width = (run * 46) + "%";
-  pop($("e6time"), t, 56.8, 10);
+  pop($("e6time"), t, ta + .3, 10);
   $("e6yrs").textContent = Math.round(run * 18);
-  $("e6end").style.opacity = segO(t, 60, 60.6);
-  pop($("e6b1"), t, 55.6); pop($("e6b2"), t, 57.4); pop($("e6b3"), t, 59.6); pop($("e6b4"), t, 62.2);
+  $("e6end").style.opacity = segO(t, te, te + .6);
+  pop($("e6b1"), t, C["eti.same"] + .1); pop($("e6b2"), t, ta + .9); pop($("e6b3"), t, C["eti.lasts"]); pop($("e6b4"), t, C["eti.auto"]);
 
   // S7 recap
-  $("s7").style.opacity = win(t, 67.5, 82, .9);
-  pop($("k1"), t, 68.3, 40); pop($("k2"), t, 69.3, 40); pop($("k3"), t, 70.3, 40); pop($("k4"), t, 73, 30);
+  $("s7").style.opacity = win(t, C.recap, DURATION, .9);
+  pop($("k1"), t, C["recap.k1"], 40); pop($("k2"), t, C["recap.k2"], 40); pop($("k3"), t, C["recap.k3"], 40); pop($("k4"), t, C["recap.tip"], 30);
 
-  // Captions
+  // Captions (silent version only)
   const c = CAPS.find(([a, b]) => t >= a - .4 && t <= b + .4);
   const cap = $("cap");
   if (c) { cap.innerHTML = c[2]; cap.style.opacity = win(t, c[0] - .4, c[1] + .4, .4); }

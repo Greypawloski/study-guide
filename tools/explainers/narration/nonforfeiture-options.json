@@ -1,0 +1,70 @@
+{
+  "slug": "nonforfeiture-options",
+  "title": "Nonforfeiture options",
+  "lesson": "Section 5, Lesson 5.4 (Nonforfeiture options, loans and dividends)",
+  "status": "approved",
+  "segments": [
+    {
+      "id": "title",
+      "text": "Nonforfeiture options. Here's what happens to a policy's cash value when the owner stops paying premiums.",
+      "cues": {}
+    },
+    {
+      "id": "cashvalue",
+      "text": "Permanent insurance, like whole life, charges a level premium. In the early years, that premium is more than the cost of the coverage, and the extra builds cash value. In this example, a one-hundred-thousand-dollar policy has built twenty thousand dollars of cash value after fifteen years. That value belongs to the policyowner, and Arizona's nonforfeiture law says it can't simply be forfeited when premiums stop.",
+      "cues": {
+        "grow_start": "extra builds cash value",
+        "grow_end": "after fifteen years",
+        "law": "Arizona's nonforfeiture law"
+      }
+    },
+    {
+      "id": "stop",
+      "text": "So when the premiums stop, the owner has three choices, called nonforfeiture options.",
+      "cues": {
+        "stamp": "premiums stop",
+        "branches": "three choices"
+      }
+    },
+    {
+      "id": "cash",
+      "text": "Option one is cash surrender. The owner takes the cash value, here twenty thousand dollars, and the coverage ends completely. One tax point the exam likes: if the cash received is more than the premiums paid, that gain is taxable as ordinary income.",
+      "cues": {
+        "fly": "takes the cash value",
+        "drain": "the coverage ends",
+        "tax": "that gain is taxable"
+      }
+    },
+    {
+      "id": "rpu",
+      "text": "Option two is reduced paid-up insurance. The cash value is used to buy a smaller policy, here about thirty-five thousand dollars. It's the same type of permanent insurance, and it's fully paid up, so no more premiums are ever due. And it lasts for the insured's whole life.",
+      "cues": {
+        "shrink": "smaller policy",
+        "same": "same type of permanent",
+        "paid": "fully paid up",
+        "life": "And it lasts"
+      }
+    },
+    {
+      "id": "eti",
+      "text": "Option three is extended term insurance. The owner keeps the full one-hundred-thousand-dollar face amount, but the cash value buys term coverage instead of permanent coverage. It lasts only as long as that money can buy, in this example about eighteen years, and then it expires. If the owner doesn't pick an option, extended term is usually the one that applies automatically.",
+      "cues": {
+        "same": "keeps the full",
+        "term": "term coverage",
+        "lasts": "lasts only as long",
+        "years": "eighteen years",
+        "auto": "doesn't pick"
+      }
+    },
+    {
+      "id": "recap",
+      "text": "Here's an easy way to keep them straight. Cash surrender: take the cash, and the coverage is gone. Reduced paid-up: less coverage, but for life. Extended term: the same amount of coverage, for a limited time. And for the exam, remember: when the owner doesn't choose, the insurer usually applies extended term.",
+      "cues": {
+        "k1": "Cash surrender:",
+        "k2": "Reduced paid-up:",
+        "k3": "Extended term:",
+        "tip": "for the exam"
+      }
+    }
+  ]
+}
