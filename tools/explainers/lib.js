@@ -56,7 +56,8 @@ function draw(el, t, a, b) {
    talking, and the final second before the next anchor (scene fades, set-up moves) plays just
    before the next cue. If the narration is faster than the original, that stretch speeds up. */
 const TL = window.TIMELINE || null;
-const LEAD_IN = 1.0;
+const LEAD_IN = 1.0;   // the last second before each cue always plays at normal speed
+const MAX_STRETCH = 2.5;
 function warp(t) {
   const A = TL.anchors;
   if (t <= A[0][0]) return A[0][1];
@@ -65,10 +66,14 @@ function warp(t) {
     if (t > n1) continue;
     const dn = n1 - n0, dO = o1 - o0;
     if (dn <= dO || dO <= LEAD_IN) return o0 + (t - n0) * (dO / Math.max(dn, 1e-6));
-    const k = t - n0;
-    if (k <= dO - LEAD_IN) return o0 + k;          // play
-    if (t >= n1 - LEAD_IN) return o1 - (n1 - t);    // lead-in to the next cue
-    return o1 - LEAD_IN;                            // hold
+    // Narration is longer than the animation: play it slower (up to MAX_STRETCH),
+    // hold any remaining time on a settled frame, then lead into the next cue.
+    const playOrig = dO - LEAD_IN;
+    const k = Math.min(MAX_STRETCH, (dn - LEAD_IN) / playOrig);
+    const playNarr = playOrig * k;
+    if (t - n0 <= playNarr) return o0 + (t - n0) / k;
+    if (t >= n1 - LEAD_IN) return o1 - (n1 - t);
+    return o1 - LEAD_IN;
   }
   return A[A.length - 1][1] + (t - A[A.length - 1][0]);
 }

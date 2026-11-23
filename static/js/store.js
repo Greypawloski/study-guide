@@ -312,3 +312,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+/* Subtitles toggle and playback speed (works the same on iPhone, Android and desktop). */
+document.addEventListener("DOMContentLoaded", () => {
+  const SPEEDS = [1, 1.25, 1.5, 1.75, 0.75];
+  let ccOn = false, speed = 1;
+  try { ccOn = localStorage.getItem("azlife_cc") === "1"; speed = parseFloat(localStorage.getItem("azlife_speed")) || 1; } catch (e) {}
+  const videos = () => document.querySelectorAll("video[data-slug]");
+  function apply() {
+    videos().forEach(v => {
+      v.playbackRate = speed;
+      v.defaultPlaybackRate = speed;
+      if (v.textTracks && v.textTracks[0]) v.textTracks[0].mode = ccOn ? "showing" : "hidden";
+    });
+    document.querySelectorAll("[data-cc]").forEach(b => b.setAttribute("aria-pressed", ccOn ? "true" : "false"));
+    document.querySelectorAll("[data-speed]").forEach(b => b.textContent = speed + "×");
+  }
+  document.querySelectorAll("[data-cc]").forEach(b => b.addEventListener("click", () => {
+    ccOn = !ccOn; try { localStorage.setItem("azlife_cc", ccOn ? "1" : "0"); } catch (e) {} apply();
+  }));
+  document.querySelectorAll("[data-speed]").forEach(b => b.addEventListener("click", () => {
+    speed = SPEEDS[(SPEEDS.indexOf(speed) + 1) % SPEEDS.length]; try { localStorage.setItem("azlife_speed", speed); } catch (e) {} apply();
+  }));
+  videos().forEach(v => v.addEventListener("loadedmetadata", apply));
+  apply();
+});

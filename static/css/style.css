@@ -470,3 +470,7 @@ input[type=date] { font: inherit; padding: 9px 12px; border: 1px solid var(--lin
 .watched-tag { color: var(--good); font-weight: 700; }
 @media (max-width: 640px) { .vid-grid { grid-template-columns: 1fr; } }
 .featured-video .lesson-video { max-width: 860px; }
+.lesson-video figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.vid-tools { margin-left: auto; display: inline-flex; gap: 6px; }
+.vid-btn { font: inherit; font-size: .78rem; font-weight: 700; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--ink-2); cursor: pointer; min-width: 44px; }
+.vid-btn[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
