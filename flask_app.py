@@ -7,6 +7,7 @@ import random
 
 from flask import Flask, abort, render_template, request
 
+from content.bootcamp import BOOTCAMP
 from content.flashcards import FLASHCARDS
 from content.lessons import ARIZONA_NUMBERS, EXAM_INFO, SECTION_BY_ID, SECTIONS
 from content.questions import QUESTIONS
@@ -24,6 +25,7 @@ SECTION_META = [
 ]
 
 QMETA = [{"id": q["id"], "section": q["section"]} for q in QUESTIONS]
+CMETA = [{"id": c["id"], "section": c["section"]} for c in FLASHCARDS]
 
 
 @app.context_processor
@@ -33,6 +35,8 @@ def inject_globals():
         "section_meta": SECTION_META,
         "nav": request.endpoint,
         "qmeta": QMETA,
+        "cmeta": CMETA,
+        "bootcamp": BOOTCAMP,
     }
 
 
@@ -44,6 +48,11 @@ def home():
         total_cards=len(FLASHCARDS),
         total_lessons=sum(len(s["lessons"]) for s in SECTIONS),
     )
+
+
+@app.route("/bootcamp")
+def bootcamp_page():
+    return render_template("bootcamp.html")
 
 
 @app.route("/study")
@@ -59,7 +68,13 @@ def lesson(sid):
     idx = SECTIONS.index(section)
     prev_s = SECTIONS[idx - 1] if idx > 0 else None
     next_s = SECTIONS[idx + 1] if idx < len(SECTIONS) - 1 else None
-    return render_template("lesson.html", s=section, prev_s=prev_s, next_s=next_s)
+    checks = {}
+    for q in QUESTIONS:
+        if q["section"] == sid and "lesson" in q:
+            checks.setdefault(q["lesson"], []).append(q)
+    return render_template(
+        "lesson.html", s=section, prev_s=prev_s, next_s=next_s, checks=checks
+    )
 
 
 @app.route("/flashcards")

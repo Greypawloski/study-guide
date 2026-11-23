@@ -55,7 +55,14 @@
     }
   }
 
+  const TASK = params.get("task");
+  const TARGET = parseInt(params.get("target") || "0", 10);
+
   if (!set.length) {
+    if (TASK) {
+      Store.recordTask(TASK, 100);
+      $("question-card").innerHTML = '<h2>Nothing to review 👏</h2><p class="muted">You have no missed questions right now, so this task is complete.</p><a class="btn primary" href="/bootcamp">Back to my plan →</a>';
+    } else
     $("question-card").innerHTML = '<h2>No questions match</h2><p class="muted">There are no questions for that filter yet. For example, "Missed" only shows questions you\'ve answered wrong.</p><a class="btn primary" href="/practice">Back to practice</a>';
     $("quiz-label").textContent = label;
     return;
@@ -181,6 +188,19 @@
     });
     if (PAGE === "exam") Store.addExam({ date: new Date().toISOString(), score: pct, correct: right, total: items.length, seconds: used, bySection });
     else { const s = Store.get(); s.quizzes = (s.quizzes || 0) + 1; Store.save(); }
+    let taskBanner = "";
+    if (TASK) {
+      Store.recordTask(TASK, pct);
+      const ok = pct >= TARGET;
+      const nx = Bootcamp.nextTask();
+      taskBanner = '<div class="task-banner card ' + (ok ? "ok" : "bad") + '"><div><strong>' +
+        (ok ? "✓ Plan task complete" : "Not there yet: you need " + TARGET + "% to check this off") + "</strong><p>" +
+        (ok ? (nx ? "Up next: " + Store.esc(nx.task.title) + "." : "You've finished the whole plan!") :
+          "Read the explanations below for every miss, then retake it. New questions are drawn each time.") + "</p></div>" +
+        (ok && nx ? '<a class="btn primary" href="' + Bootcamp.href(nx.task) + '">' + Bootcamp.verb[nx.task.type] + " →</a>" :
+          ok ? '<a class="btn primary" href="/bootcamp">My plan →</a>' : '<a class="btn primary" href="' + location.pathname + location.search + '">Retake now</a>') +
+        "</div>";
+    }
 
     $("question-card").hidden = true;
     $("qnav").hidden = true;
@@ -197,7 +217,7 @@
     }).join("");
     const wrongCount = items.length - right;
 
-    $("results").innerHTML =
+    $("results").innerHTML = taskBanner +
       '<div class="result-hero card ' + (pass ? "pass" : "fail") + '">' +
         '<div class="ring big" style="--p:' + pct + '"><div class="ring-inner"><strong>' + pct + '%</strong><span>' + right + "/" + items.length + "</span></div></div>" +
         "<div><h1>" + (PAGE === "daily" ? (pct ? "Nice work!" : "Good to know for next time.") : pass ? "Passing score! 🎉" : "Not passing yet") + "</h1>" +

@@ -332,3 +332,98 @@ table.numbers td:first-child { width: 45%; }
   .card { box-shadow: none; break-inside: avoid; }
   body { background: #fff; }
 }
+
+/* ---------- Mission (dashboard) ---------- */
+.mission { display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px; align-items: center; border-top: 5px solid var(--sun); }
+.mission h2 { font-size: 1.6rem; margin-bottom: 6px; }
+.mission .bar { margin: 14px 0 6px; }
+.mission-next { background: var(--sun-soft); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.mission-next p { margin: 0; }
+.m-task { font-size: 1rem; }
+.mission.cta { background: var(--navy); color: #fff; border-top-color: var(--sun-2); }
+.mission.cta h2 { color: #fff; }
+.mission.cta .mission-next { background: transparent; align-items: flex-end; }
+
+/* ---------- Bootcamp ---------- */
+.boot-hero { padding: 40px; border-top: 5px solid var(--sun); }
+.boot-points { padding-left: 1.2em; margin: 18px 0; }
+.boot-points li { margin-bottom: 8px; }
+.boot-form { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+.boot-form label { display: flex; flex-direction: column; gap: 4px; font-size: .85rem; font-weight: 600; color: var(--ink-2); }
+input[type=date] { font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.boot-head { display: flex; justify-content: space-between; gap: 24px; align-items: center; margin-bottom: 18px; }
+.boot-stats { display: flex; gap: 18px; align-items: center; margin: 0; min-width: 360px; }
+.boot-stats .ring { width: 120px; height: 120px; }
+.boot-stats .ring-inner strong { font-size: 1.7rem; }
+.boot-dates p { margin: 0 0 6px; }
+.boot-dates label { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; }
+.countdown strong { font-family: "Fraunces", serif; font-size: 1.6rem; color: var(--sun); }
+.timeline { display: flex; gap: 6px; margin: 8px 0 20px; }
+.tl { flex: 1; text-align: center; text-decoration: none; color: var(--muted); position: relative; }
+.tl span { display: grid; place-items: center; width: 38px; height: 38px; margin: 0 auto 4px; border-radius: 50%; background: #efeae1; font-weight: 700; color: var(--ink-2); }
+.tl small { font-size: .75rem; }
+.tl.done span { background: var(--good); color: #fff; }
+.tl.now span { background: var(--sun); color: #fff; box-shadow: 0 0 0 4px var(--sun-soft); }
+.tl.now small { color: var(--sun); font-weight: 700; }
+.day { padding: 0; overflow: hidden; }
+.day summary { list-style: none; display: flex; gap: 16px; align-items: center; padding: 18px 22px; cursor: pointer; }
+.day summary::-webkit-details-marker { display: none; }
+.day-num { width: 44px; height: 44px; border-radius: 12px; background: var(--navy); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0; }
+.day.complete .day-num { background: var(--good); }
+.day-info { flex: 1; }
+.day-info h2 { margin: 0; font-size: 1.2rem; }
+.day-info p { margin: 2px 0 0; color: var(--muted); font-size: .9rem; }
+.day-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.day-meta small { color: var(--muted); font-size: .78rem; }
+.day-goal { margin: 0 22px 10px; padding: 10px 14px; background: var(--sun-soft); border-radius: 10px; font-size: .92rem; }
+.tasks { list-style: none; margin: 0; padding: 0 22px 18px; }
+.task { display: flex; gap: 14px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+.task-check { width: 34px; height: 34px; border-radius: 50%; background: #f2ede4; display: grid; place-items: center; flex-shrink: 0; }
+.task.done .task-check { background: var(--good); color: #fff; font-weight: 700; }
+.task.done strong { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(0,0,0,.25); }
+.task.next { background: linear-gradient(90deg, var(--sun-soft), transparent); margin: 0 -22px; padding: 12px 22px; }
+.task-body { flex: 1; display: flex; flex-direction: column; }
+.task-body small { color: var(--muted); font-size: .82rem; }
+.task-act { display: flex; gap: 10px; align-items: center; }
+.tick { font-size: .82rem; color: var(--muted); display: flex; gap: 4px; align-items: center; }
+.ready-check { border-top: 5px solid var(--navy); }
+.ready-list { list-style: none; padding: 0; }
+.ready-list li { padding: 6px 0; color: var(--ink-2); }
+.ready-list li.ok { color: var(--good); font-weight: 600; }
+
+/* ---------- Task banner (quiz / flashcards) ---------- */
+.task-banner { display: flex; justify-content: space-between; gap: 16px; align-items: center; border-left: 5px solid var(--navy); }
+.task-banner p { margin: 4px 0 0; color: var(--ink-2); }
+.task-banner.ok { border-left-color: var(--good); background: var(--good-soft); }
+.task-banner.bad { border-left-color: var(--low); background: var(--low-soft); }
+
+/* ---------- Lesson checkpoints ---------- */
+.checkpoint { margin-top: 22px; background: #f8f5ef; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.cp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.cp-q { margin-bottom: 16px; }
+.cp-q p { font-weight: 600; margin-bottom: 8px; }
+.choice.sm { padding: 9px 12px; font-size: .93rem; width: 100%; margin-bottom: 6px; }
+.cp-ex { margin-top: 6px; font-size: .9rem; }
+.cp-result { padding: 10px 14px; border-radius: 10px; font-weight: 600; }
+.cp-result.ok { background: var(--good-soft); color: var(--good); }
+.cp-result.bad { background: var(--low-soft); color: var(--low); }
+
+@media (max-width: 860px) {
+  .mission { grid-template-columns: 1fr; }
+  .mission.cta .mission-next { align-items: flex-start; }
+  .boot-head { flex-direction: column; align-items: stretch; }
+  .boot-stats { min-width: 0; }
+}
+@media (max-width: 640px) {
+  .boot-hero { padding: 24px; }
+  .task { flex-wrap: wrap; }
+  .task-act { width: 100%; padding-left: 48px; }
+  .task.next { margin: 0 -18px; padding: 12px 18px; }
+  .day summary { padding: 16px; gap: 12px; }
+  .day-meta small { display: none; }
+  .tasks { padding: 0 16px 14px; }
+  .day-goal { margin: 0 16px 10px; }
+  .timeline { gap: 2px; }
+  .tl span { width: 32px; height: 32px; }
+  .task-banner { flex-direction: column; align-items: flex-start; }
+}

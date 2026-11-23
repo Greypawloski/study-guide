@@ -778,6 +778,8 @@ _RAW = [
      "Federal tax law generally treats them like death benefits."),
 ]
 
+from content.checks import CHECKS
+
 QUESTIONS = [
     {
         "id": i + 1,
@@ -789,3 +791,19 @@ QUESTIONS = [
     }
     for i, (sec, q, choices, explain) in enumerate(_RAW)
 ]
+
+# Lesson checkpoint questions join the bank, tagged with their lesson.
+# IDs start at 1001 so adding bank questions never shifts saved progress.
+_next = 1001
+for (sec, lesson_idx), items in CHECKS.items():
+    for q, choices, explain in items:
+        QUESTIONS.append({
+            "id": _next,
+            "section": sec,
+            "lesson": lesson_idx,
+            "q": q,
+            "choices": choices,
+            "answer": 0,
+            "explain": explain,
+        })
+        _next += 1

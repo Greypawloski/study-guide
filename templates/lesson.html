@@ -30,8 +30,9 @@
     <article class="lesson card" id="l{{ loop.index0 }}">
       <h2><span class="lesson-num">{{ s.num }}.{{ loop.index }}</span> {{ l.title }}</h2>
       <div class="prose">{{ l.html | safe }}</div>
+      <div class="checkpoint" data-i="{{ loop.index0 }}"></div>
       <label class="done-toggle">
-        <input type="checkbox" data-i="{{ loop.index0 }}"> I've studied this lesson
+        <input type="checkbox" data-i="{{ loop.index0 }}"> Mark this lesson as studied
       </label>
     </article>
     {% endfor %}
@@ -42,6 +43,8 @@
         {% for f in s.key_facts %}<li>{{ f }}</li>{% endfor %}
       </ul>
     </article>
+
+    <div class="task-banner card ok" id="section-done" hidden></div>
 
     <div class="cta-card card">
       <h3>Check your understanding</h3>
@@ -64,6 +67,7 @@
 (function () {
   const SID = {{ s.id | tojson }};
   const N = {{ s.lessons | length }};
+  const CHECKS = {{ checks | tojson }};
   function refresh() {
     let done = 0;
     for (let i = 0; i < N; i++) {
@@ -76,9 +80,60 @@
     }
     document.getElementById("lesson-progress").style.width = (done / N * 100) + "%";
     document.getElementById("lesson-progress-text").textContent = done + " of " + N + " lessons done";
+    const ban = document.getElementById("section-done");
+    if (done === N) {
+      const nx = Bootcamp.started() ? Bootcamp.nextTask() : null;
+      ban.hidden = false;
+      ban.innerHTML = "<div><strong>✓ Section complete</strong><p>" + (nx ? "Up next in your plan: " + Store.esc(nx.task.title) + "." : "Lock it in with the section quiz.") + "</p></div>" +
+        '<a class="btn primary" href="' + (nx ? Bootcamp.href(nx.task) : "/quiz?sections=" + SID + "&n=15&mode=practice") + '">' + (nx ? Bootcamp.verb[nx.task.type] : "Take the quiz") + " →</a>";
+    } else ban.hidden = true;
   }
   document.querySelectorAll(".done-toggle input").forEach(cb => {
     cb.addEventListener("change", () => { Store.markLesson(SID, +cb.dataset.i, cb.checked); refresh(); });
+  });
+  // Lesson checkpoints: answer every question; pass = at most one miss.
+  document.querySelectorAll(".checkpoint").forEach(box => {
+    const i = box.dataset.i;
+    const qs = CHECKS[i] || [];
+    if (!qs.length) return;
+    function draw() {
+      let answered = 0, right = 0;
+      box.innerHTML = '<div class="cp-head"><strong>✍️ Checkpoint</strong><span class="muted small">Answer these to complete the lesson</span></div>' +
+        qs.map((q, qi) => {
+          const order = Store.shuffle(q.choices.map((_, k) => k));
+          return '<div class="cp-q" data-qi="' + qi + '"><p>' + (qi + 1) + ". " + Store.esc(q.q) + "</p>" +
+            order.map(k => '<button class="choice sm" data-k="' + k + '">' + Store.esc(q.choices[k]) + "</button>").join("") +
+            '<div class="cp-ex" hidden></div></div>';
+        }).join("") + '<div class="cp-result" hidden></div>';
+      box.querySelectorAll(".cp-q").forEach(el => {
+        const q = qs[+el.dataset.qi];
+        el.querySelectorAll("button").forEach(b => b.onclick = () => {
+          const k = +b.dataset.k, ok = k === q.answer;
+          el.querySelectorAll("button").forEach(x => {
+            x.disabled = true;
+            if (+x.dataset.k === q.answer) x.classList.add("correct");
+            else if (x === b) x.classList.add("wrong");
+          });
+          Store.recordAnswer(q.id, ok);
+          const ex = el.querySelector(".cp-ex");
+          ex.hidden = false;
+          ex.className = "cp-ex explain " + (ok ? "ok" : "bad");
+          ex.innerHTML = "<strong>" + (ok ? "Correct." : "Not quite.") + "</strong> " + Store.esc(q.explain);
+          answered++; if (ok) right++;
+          if (answered === qs.length) {
+            const pass = right >= qs.length - 1;
+            const r = box.querySelector(".cp-result");
+            r.hidden = false;
+            r.className = "cp-result " + (pass ? "ok" : "bad");
+            r.innerHTML = pass ? "✓ Checkpoint passed (" + right + "/" + qs.length + "). Lesson complete." :
+              right + "/" + qs.length + ". Re-read the lesson above, then <button class='btn sm'>try again</button>";
+            if (pass) { Store.markLesson(SID, +i, true); refresh(); }
+            else r.querySelector("button").onclick = draw;
+          }
+        });
+      });
+    }
+    draw();
   });
   refresh();
 })();

@@ -19,12 +19,12 @@
       <button class="menu-btn" aria-label="Menu" onclick="document.body.classList.toggle('menu-open')">☰</button>
       <nav class="mainnav">
         <a href="{{ url_for('home') }}" class="{{ 'on' if nav == 'home' }}">Dashboard</a>
+        <a href="{{ url_for('bootcamp_page') }}" class="{{ 'on' if nav == 'bootcamp_page' }}">7-Day Plan</a>
         <a href="{{ url_for('study') }}" class="{{ 'on' if nav in ('study','lesson') }}">Study</a>
         <a href="{{ url_for('flashcards') }}" class="{{ 'on' if nav == 'flashcards' }}">Flashcards</a>
         <a href="{{ url_for('practice') }}" class="{{ 'on' if nav in ('practice','quiz') }}">Practice</a>
         <a href="{{ url_for('exam_intro') }}" class="{{ 'on' if nav in ('exam_intro','exam_start') }}">Mock Exam</a>
         <a href="{{ url_for('review') }}" class="{{ 'on' if nav == 'review' }}">Review</a>
-        <a href="{{ url_for('cheatsheet') }}" class="{{ 'on' if nav == 'cheatsheet' }}">Cheat Sheet</a>
         <a href="{{ url_for('progress') }}" class="{{ 'on' if nav == 'progress' }}">Progress</a>
       </nav>
     </div>
@@ -47,8 +47,9 @@
     </div>
   </footer>
 
-  <script>window.SECTIONS = {{ section_meta | tojson }};</script>
+  <script>window.SECTIONS = {{ section_meta | tojson }}; window.BOOTCAMP = {{ bootcamp | tojson }}; window.CMETA = {{ cmeta | tojson }};</script>
   <script src="{{ url_for('static', filename='js/store.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootcamp.js') }}"></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

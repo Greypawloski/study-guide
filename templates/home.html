@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
+<section class="mission card" id="mission" hidden>
+  <div class="mission-left">
+    <p class="eyebrow" id="m-eyebrow">Today's mission</p>
+    <h2 id="m-title"></h2>
+    <p class="muted" id="m-goal"></p>
+    <div class="bar"><span class="bar-fill good" id="m-bar" style="width:0%"></span></div>
+    <p class="small muted" id="m-progress"></p>
+  </div>
+  <div class="mission-next">
+    <p class="small muted">Up next</p>
+    <p class="m-task" id="m-task"></p>
+    <a class="btn primary big" id="m-go" href="/bootcamp">Go →</a>
+    <a class="small" href="/bootcamp">See the full plan</a>
+  </div>
+</section>
+
+<section class="mission card cta" id="boot-cta" hidden>
+  <div class="mission-left">
+    <p class="eyebrow">New · Guided program</p>
+    <h2>Take the 7-Day Pass Plan</h2>
+    <p>A day-by-day program with timed tasks, quizzes you must pass at 80%, and two full mock exams. Tasks check themselves off as you finish them.</p>
+  </div>
+  <div class="mission-next"><a class="btn primary big" href="/bootcamp">Start the plan →</a></div>
+</section>
+
 <section class="hero">
   <div class="hero-copy">
     <p class="eyebrow">Arizona Life Insurance Producer · Series {{ exam.series }}</p>
@@ -68,6 +93,29 @@
 <script>window.QMETA = {{ qmeta | tojson }}; window.CARD_COUNT = {{ total_cards }};</script>
 <script>
 (function () {
+  if (Bootcamp.started()) {
+    const m = document.getElementById("mission");
+    m.hidden = false;
+    const d = Bootcamp.currentDay(), p = Bootcamp.dayProgress(d), nx = Bootcamp.nextTask(), all = Bootcamp.overall();
+    const dte = Bootcamp.daysToExam();
+    document.getElementById("m-eyebrow").textContent = "Today's mission · Day " + d.day + " of 7" + (dte !== null && dte >= 0 ? " · " + dte + " days to exam" : "");
+    document.getElementById("m-title").textContent = all.done === all.total ? "Plan complete. Stay sharp 🎉" : d.title + ": " + d.focus;
+    document.getElementById("m-goal").textContent = d.goal;
+    document.getElementById("m-bar").style.width = (p.done / p.total * 100) + "%";
+    document.getElementById("m-progress").textContent = p.done + " of " + p.total + " tasks done today · " + all.pct + "% of the whole plan";
+    if (nx) {
+      document.getElementById("m-task").innerHTML = Bootcamp.icon[nx.task.type] + " <strong>" + Store.esc(nx.task.title) + "</strong><br><small class='muted'>about " + nx.task.minutes + " min · " + Store.esc(Bootcamp.status(nx.task).detail) + "</small>";
+      const go = document.getElementById("m-go");
+      go.href = Bootcamp.href(nx.task);
+      go.textContent = Bootcamp.verb[nx.task.type] + " →";
+    } else {
+      document.getElementById("m-task").textContent = "Take another mock exam or review flashcards.";
+      document.getElementById("m-go").href = "/exam/start";
+    }
+  } else {
+    document.getElementById("boot-cta").hidden = false;
+  }
+
   const r = Store.readiness(QMETA);
   const s = Store.get();
   document.getElementById("ready-score").textContent = r.score;

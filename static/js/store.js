@@ -11,6 +11,7 @@
     quizzes: 0,
     days: [],         // ISO dates studied
     flagged: {},      // qid -> true (saved for later)
+    boot: null,       // {start: ISO date, examDate: "YYYY-MM-DD"|null, tasks: {taskId: {best, last, date, manual}}}
   });
 
   let mem = null;
@@ -86,6 +87,29 @@
       touchDay();
       save();
     },
+
+    /* --- Bootcamp --- */
+    startBoot(examDate) {
+      const s = load();
+      s.boot = { start: today(), examDate: examDate || null, tasks: (s.boot && s.boot.tasks) || {} };
+      save();
+    },
+    setExamDate(d) { const s = load(); if (!s.boot) Store.startBoot(d); else { s.boot.examDate = d || null; save(); } },
+    resetBoot() { const s = load(); s.boot = null; save(); },
+    recordTask(id, score, manual) {
+      const s = load();
+      if (!s.boot) s.boot = { start: today(), examDate: null, tasks: {} };
+      const t = s.boot.tasks[id] || { best: null };
+      if (manual === false) { delete s.boot.tasks[id]; save(); return; }
+      t.last = score;
+      t.best = score === null || score === undefined ? t.best : Math.max(t.best ?? -1, score);
+      t.date = Date.now();
+      if (manual) t.manual = true;
+      s.boot.tasks[id] = t;
+      touchDay();
+      save();
+    },
+    today,
 
     /* --- Stats --- */
     sectionStats(questions) {

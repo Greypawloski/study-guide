@@ -25,6 +25,8 @@
   <button class="btn sm" id="fc-shuffle">Shuffle</button>
 </div>
 
+<div class="task-banner card" id="fc-task" hidden></div>
+
 <div class="mastery card" id="mastery">
   <div class="mastery-bar" id="mastery-bar"></div>
   <div class="mastery-legend">
@@ -58,13 +60,38 @@
   const secSel = document.getElementById("fc-section");
   const filSel = document.getElementById("fc-filter");
   const rev = document.getElementById("fc-reverse");
-  if (params.get("section")) { secSel.value = params.get("section"); filSel.value = "all"; }
+  let multi = null;  // several sections from a plan task
+  const ps = (params.get("section") || "").split(",").filter(Boolean);
+  if (ps.length === 1) secSel.value = ps[0];
+  if (ps.length > 1) {
+    multi = ps;
+    const o = document.createElement("option");
+    o.value = "multi"; o.textContent = ps.map(Store.sectionTitle).join(" + ");
+    secSel.prepend(o); secSel.value = "multi";
+  }
+  if (ps.length) filSel.value = params.get("filter") || "all";
+  const TASK = params.get("task");
+  const inSec = c => secSel.value === "all" || (secSel.value === "multi" ? multi.includes(c.section) : c.section === secSel.value);
   const card = document.getElementById("card");
   let deck = [], pos = 0, flipped = false;
 
+  function taskCheck() {
+    if (!TASK) return;
+    const f = Bootcamp.findTask(TASK);
+    if (!f) return;
+    const st = Bootcamp.status(f.task);
+    const el = document.getElementById("fc-task");
+    el.hidden = false;
+    const nx = Bootcamp.nextTask();
+    el.className = "task-banner card " + (st.done ? "ok" : "");
+    el.innerHTML = "<div><strong>" + (st.done ? "✓ Plan task complete" : "📋 " + Store.esc(f.task.title)) + "</strong><p>" +
+      (st.done ? (nx ? "Up next: " + Store.esc(nx.task.title) : "Plan complete!") : "Go through every card once. " + st.detail + ".") + "</p></div>" +
+      (st.done && nx ? '<a class="btn primary" href="' + Bootcamp.href(nx.task) + '">' + Bootcamp.verb[nx.task.type] + " →</a>" : "");
+  }
+
   function build() {
     const s = Store.get(), now = Date.now();
-    deck = CARDS.filter(c => secSel.value === "all" || c.section === secSel.value).filter(c => {
+    deck = CARDS.filter(inSec).filter(c => {
       const box = s.cards[c.id];
       if (filSel.value === "due") return !s.cardDue[c.id] || s.cardDue[c.id] <= now;
       if (filSel.value === "new") return !box;
@@ -104,7 +131,8 @@
   }
   function mastery() {
     const s = Store.get();
-    const pool = CARDS.filter(c => secSel.value === "all" || c.section === secSel.value);
+    taskCheck();
+    const pool = CARDS.filter(inSec);
     const counts = [0, 0, 0, 0];
     pool.forEach(c => {
       const b = s.cards[c.id] || 0;

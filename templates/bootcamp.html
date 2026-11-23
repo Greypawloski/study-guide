@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}7-Day Pass Plan{% endblock %}
+{% block content %}
+<div id="boot-start" class="boot-hero card" hidden>
+  <p class="eyebrow">The 7-Day Pass Plan</p>
+  <h1>Seven focused days. One goal: pass on your first try.</h1>
+  <p class="lead">Each day has a clear set of tasks: lessons, quizzes you have to pass at 80%, flashcards, and two full mock exams. Tasks tick themselves off as you finish them, so you always know what's next.</p>
+  <ul class="boot-points">
+    <li><strong>About 3 hours a day.</strong> Every task shows its time estimate.</li>
+    <li><strong>Pass gates.</strong> Quizzes only count once you score 80%+, comfortably above the 70% you need.</li>
+    <li><strong>Built-in review.</strong> Earlier topics come back daily so you don't forget them.</li>
+    <li><strong>Exam simulation.</strong> Days 6 and 7 are full 100-question, 2-hour mock exams.</li>
+  </ul>
+  <div class="boot-form">
+    <label>Your exam date (optional)<input type="date" id="exam-date-new"></label>
+    <button class="btn primary big" id="start-boot">Start Day 1 →</button>
+  </div>
+</div>
+
+<div id="boot-main" hidden>
+  <div class="boot-head">
+    <div>
+      <p class="eyebrow">The 7-Day Pass Plan</p>
+      <h1 id="boot-title">Day 1</h1>
+      <p class="lead" id="boot-sub"></p>
+    </div>
+    <div class="boot-stats card">
+      <div class="ring" id="boot-ring" style="--p:0"><div class="ring-inner"><strong id="boot-pct">0%</strong><span>Plan done</span></div></div>
+      <div class="boot-dates">
+        <p id="boot-countdown" class="countdown"></p>
+        <label class="small muted">Exam date <input type="date" id="exam-date"></label>
+        <p class="small muted" id="boot-pace"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+  <div id="days"></div>
+
+  <div class="card ready-check" id="ready-check"></div>
+
+  <div class="card danger-zone">
+    <p class="muted small">Want to start the plan over? This clears your plan progress (quiz scores and mock exams stay).</p>
+    <button class="btn sm ghost" id="restart-boot">Restart the 7-day plan</button>
+    <span id="restart-confirm" hidden> Sure? <button class="btn sm miss" id="restart-yes">Yes, restart</button></span>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.QMETA = {{ qmeta | tojson }};</script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  if (!Bootcamp.started()) {
+    $("boot-start").hidden = false;
+    $("start-boot").onclick = () => { Store.startBoot($("exam-date-new").value); location.reload(); };
+    return;
+  }
+  $("boot-main").hidden = false;
+
+  const cur = Bootcamp.currentDay();
+  const all = Bootcamp.overall();
+  const next = Bootcamp.nextTask();
+  $("boot-title").textContent = all.done === all.total ? "Plan complete 🎉" : "Day " + cur.day + ": " + cur.title;
+  $("boot-sub").textContent = all.done === all.total ? "You've finished every task. Keep your edge with mock exams and flashcards until test day." : cur.goal;
+  $("boot-ring").style.setProperty("--p", all.pct);
+  $("boot-pct").textContent = all.pct + "%";
+
+  const b = Store.get().boot;
+  $("exam-date").value = b.examDate || "";
+  $("exam-date").onchange = e => { Store.setExamDate(e.target.value); location.reload(); };
+  const dte = Bootcamp.daysToExam();
+  $("boot-countdown").innerHTML = dte === null ? "Set your exam date to see a countdown." :
+    dte > 0 ? "<strong>" + dte + "</strong> day" + (dte === 1 ? "" : "s") + " until your exam" : dte === 0 ? "<strong>Exam day!</strong> You've got this." : "Exam date has passed. Update it if you rescheduled.";
+  const cal = Bootcamp.calendarDay();
+  const behind = Math.min(7, cal) - cur.day;
+  $("boot-pace").textContent = all.done === all.total ? "" : behind > 0 ? "Calendar day " + cal + ". You're " + behind + " day" + (behind > 1 ? "s" : "") + " behind. Double up to catch up." :
+    behind < 0 ? "You're ahead of schedule. Nice." : "You're on schedule.";
+
+  // Timeline
+  $("timeline").innerHTML = BOOTCAMP.map(d => {
+    const p = Bootcamp.dayProgress(d);
+    const cls = p.complete ? "done" : d.day === cur.day ? "now" : "";
+    return '<a href="#day' + d.day + '" class="tl ' + cls + '"><span>' + (p.complete ? "✓" : d.day) + "</span><small>Day " + d.day + "</small></a>";
+  }).join("");
+
+  // Day cards
+  $("days").innerHTML = BOOTCAMP.map(d => {
+    const p = Bootcamp.dayProgress(d);
+    const open = d.day === cur.day;
+    const tasks = d.tasks.map(t => {
+      const st = Bootcamp.status(t);
+      const isNext = next && next.task.id === t.id;
+      const manual = t.type === "read" ? '<label class="tick"><input type="checkbox" data-read="' + t.id + '" ' + (st.done ? "checked" : "") + "> done</label>" : "";
+      return '<li class="task ' + (st.done ? "done " : "") + (isNext ? "next" : "") + '">' +
+        '<span class="task-check">' + (st.done ? "✓" : Bootcamp.icon[t.type]) + "</span>" +
+        '<div class="task-body"><strong>' + Store.esc(t.title) + '</strong><small>' + t.minutes + " min · " + Store.esc(st.detail) + "</small></div>" +
+        '<div class="task-act">' + manual + '<a class="btn sm ' + (isNext ? "primary" : st.done ? "ghost" : "") + '" href="' + Bootcamp.href(t) + '">' +
+        (st.done ? (t.type === "quiz" || t.type === "mock" ? "Retake" : "Open") : st.tried ? "Try again" : Bootcamp.verb[t.type]) + "</a></div></li>";
+    }).join("");
+    return '<details class="day card ' + (p.complete ? "complete" : "") + '" id="day' + d.day + '" ' + (open ? "open" : "") + ">" +
+      '<summary><div class="day-num">' + (p.complete ? "✓" : d.day) + '</div><div class="day-info"><h2>Day ' + d.day + ": " + d.title + "</h2><p>" + d.focus + "</p></div>" +
+      '<div class="day-meta"><span class="pill">' + p.done + "/" + p.total + " tasks</span><small>" + (p.complete ? "Complete" : "~" + Math.round(p.minutesLeft / 6) / 10 + " hrs left") + "</small></div></summary>" +
+      '<p class="day-goal">🎯 ' + d.goal + '</p><ol class="tasks">' + tasks + "</ol></details>";
+  }).join("");
+
+  document.querySelectorAll("input[data-read]").forEach(cb => cb.onchange = () => {
+    Store.recordTask(cb.dataset.read, null, cb.checked ? true : false);
+    location.reload();
+  });
+
+  // Readiness check
+  const exams = Store.get().exams;
+  const r = Store.readiness(QMETA);
+  const passes = exams.filter(e => e.score >= 80).length;
+  const checks = [
+    [all.pct >= 70, "Finish most of the 7-day plan (" + all.pct + "% done)"],
+    [passes >= 2, "Score 80%+ on two mock exams (" + passes + " so far)"],
+    [r.score >= 80, "Readiness score of 80+ (yours: " + r.score + ")"],
+  ];
+  const ready = checks.every(c => c[0]);
+  $("ready-check").innerHTML = "<h2>" + (ready ? "✅ You're ready to schedule your exam" : "Exam readiness checklist") + "</h2>" +
+    '<ul class="ready-list">' + checks.map(c => '<li class="' + (c[0] ? "ok" : "") + '">' + (c[0] ? "✓" : "○") + " " + c[1] + "</li>").join("") + "</ul>" +
+    (ready ? "<p>Book your exam with PSI while it's fresh. Review the cheat sheet the night before.</p>" : '<p class="muted">Hit all three and you have a strong chance of passing on your first attempt.</p>');
+
+  $("restart-boot").onclick = () => $("restart-confirm").hidden = false;
+  $("restart-yes").onclick = () => { Store.resetBoot(); location.reload(); };
+})();
+</script>
+{% endblock %}
