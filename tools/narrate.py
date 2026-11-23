@@ -138,6 +138,8 @@ def cmd_use_voice(choice):
         want = choice.strip().lower()
         named = [v for v in voices if (v.get("name") or "").lower() == want
                  or (v.get("name") or "").lower().split(" - ")[0].strip() == want]
+        if not named:   # fall back to any part of the name, e.g. "smooth"
+            named = [v for v in voices if want in (v.get("name") or "").lower()]
         if len(named) > 1:
             sys.exit("More than one voice has that name: " + ", ".join(f"{v['name']} ({v['voice_id']})" for v in named))
         match = named[0] if named else None
