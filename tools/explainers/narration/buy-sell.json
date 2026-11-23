@@ -1,0 +1,91 @@
+{
+  "slug": "buy-sell",
+  "title": "Buy-sell agreements",
+  "lesson": "Section 3, Lesson 3.2",
+  "status": "draft",
+  "original_duration": 70,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Buy-sell agreements. How life insurance keeps a business running smoothly when an owner dies.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "problem",
+      "text": "When a business owner dies, their share of the business usually passes to their heirs. Without a plan, the surviving owners could end up running the company with a spouse or child who never worked there. A buy-sell agreement solves that. It's a legal agreement that the surviving owners will buy the deceased owner's share, and life insurance provides the money to do it.",
+      "at": 6.5,
+      "cues": [
+        [
+          8.5,
+          "passes to their heirs"
+        ],
+        [
+          11.5,
+          "A buy-sell agreement"
+        ],
+        [
+          14.5,
+          "life insurance provides the money"
+        ]
+      ]
+    },
+    {
+      "id": "cross",
+      "text": "In a cross-purchase plan, each owner buys a policy on every other owner, and is the owner and beneficiary of those policies. With three owners, that's six policies. The formula is n times n minus one, so four owners would need twelve policies.",
+      "at": 18.5,
+      "cues": [
+        [
+          19,
+          "each owner buys"
+        ],
+        [
+          21,
+          "every other owner"
+        ],
+        [
+          30.5,
+          "The formula"
+        ]
+      ]
+    },
+    {
+      "id": "entity",
+      "text": "In an entity plan, also called a stock redemption plan, the business itself buys one policy on each owner. Three owners, three policies. The business is the owner, the premium payer and the beneficiary, and it uses the death benefit to buy back the deceased owner's shares.",
+      "at": 35.5,
+      "cues": [
+        [
+          36,
+          "the business itself"
+        ],
+        [
+          38.5,
+          "one policy on each owner"
+        ],
+        [
+          44,
+          "The business is the owner"
+        ]
+      ]
+    },
+    {
+      "id": "recap",
+      "text": "To recap: in a cross-purchase plan, the owners insure each other. In an entity plan, the business insures each owner. Either way, the premiums aren't tax-deductible, and the death benefit is generally received income-tax free.",
+      "at": 51.5,
+      "cues": [
+        [
+          52.3,
+          "cross-purchase plan"
+        ],
+        [
+          53.5,
+          "entity plan"
+        ],
+        [
+          57,
+          "Either way"
+        ]
+      ]
+    }
+  ]
+}

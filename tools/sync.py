@@ -68,24 +68,41 @@ def phrase_time(seg, meta, phrase):
 
 def build_timeline(doc, cfg, adir):
     gap, tail = cfg.get("gap_seconds", .45), cfg.get("scene_tail_seconds", .6)
-    t, cues, segs = LEAD, {}, []
+    t, cues, segs, anchors = LEAD, {}, [], []
     for s in doc["segments"]:
         meta = json.loads((adir / f"{s['id']}.json").read_text())
         mp3 = adir / f"{s['id']}.mp3"
         d = duration(mp3)
         start = t
-        cues[s["id"]] = round(start - 0.25 if start > LEAD else 0, 3)   # scene arrives just before the first word
+        scene_t = round(start - 0.25 if start > LEAD else 0, 3)   # scene arrives just before the first word
+        cues[s["id"]] = scene_t
         last = start
-        for name, phrase in s.get("cues", {}).items():
-            ct = start + phrase_time(s, meta, phrase)
-            cues[f"{s['id']}.{name}"] = round(ct, 3)
-            last = max(last, ct)
+        if "at" in s:
+            # Template videos: anchor narrated time to the original silent timeline.
+            anchors.append([scene_t, s["at"]])
+            for orig, phrase in s.get("cues", []):
+                ct = start + phrase_time(s, meta, phrase)
+                anchors.append([round(ct, 3), orig])
+                last = max(last, ct)
+        else:
+            for name, phrase in s.get("cues", {}).items():
+                ct = start + phrase_time(s, meta, phrase)
+                cues[f"{s['id']}.{name}"] = round(ct, 3)
+                last = max(last, ct)
         end = max(start + d + tail, last + HOLD_AFTER_CUE)
         segs.append({"id": s["id"], "start": start, "audio": str(mp3), "duration": d, "meta": meta, "text": s["text"]})
         t = end + gap
     total = round(t + 1.5, 3)
     cues["end"] = total
-    return {"duration": total, "cues": cues}, segs
+    tl = {"duration": total, "cues": cues}
+    if anchors:
+        orig_end = doc["original_duration"]
+        anchors.append([total, orig_end])
+        for (n0, o0), (n1, o1) in zip(anchors, anchors[1:]):
+            if not (n1 > n0 and o1 > o0):
+                sys.exit(f"Cue order problem near narrated {n1}s / original {o1}s in {doc['slug']}.")
+        tl["anchors"] = anchors
+    return tl, segs
 
 
 def write_vtt(segs, path, max_len=84):

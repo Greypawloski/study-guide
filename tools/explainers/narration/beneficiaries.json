@@ -1,0 +1,87 @@
+{
+  "slug": "beneficiaries",
+  "title": "Who gets paid? Beneficiary rules",
+  "lesson": "Section 5, Lesson 5.2",
+  "status": "draft",
+  "original_duration": 74,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Who gets paid? Beneficiary rules: primary and contingent, revocable and irrevocable, and what happens when the insured and the beneficiary die together.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "order",
+      "text": "Beneficiaries are paid in order. The primary beneficiary is first in line to receive the proceeds. If every primary beneficiary has died, the contingent, or secondary, beneficiary receives the money instead. And if no named beneficiary survives the insured, the proceeds go to the insured's estate, where they can be delayed by probate and exposed to creditors.",
+      "at": 6.5,
+      "cues": [
+        [
+          7.5,
+          "Beneficiaries are paid in order"
+        ],
+        [
+          9,
+          "The primary beneficiary"
+        ],
+        [
+          13,
+          "If every primary"
+        ],
+        [
+          18.5,
+          "if no named beneficiary"
+        ]
+      ]
+    },
+    {
+      "id": "revocable",
+      "text": "Can the owner change the beneficiary? With a revocable designation, yes. The owner can change it at any time, without anyone's permission. But an irrevocable beneficiary has vested rights. The owner needs that beneficiary's consent to change the designation, take a policy loan, assign the policy or surrender it.",
+      "at": 23.5,
+      "cues": [
+        [
+          24.3,
+          "With a revocable designation"
+        ],
+        [
+          28.5,
+          "But an irrevocable beneficiary"
+        ]
+      ]
+    },
+    {
+      "id": "common",
+      "text": "Now, what if the insured and the primary beneficiary die in the same accident, and no one can tell who died first? The law presumes the insured survived the beneficiary. So the primary is treated as dying first, and the proceeds go to the contingent beneficiary, or to the insured's estate if there isn't one. This rule comes from the Uniform Simultaneous Death Act.",
+      "at": 37.5,
+      "cues": [
+        [
+          38.5,
+          "The law presumes"
+        ],
+        [
+          40.5,
+          "the primary is treated"
+        ],
+        [
+          43.5,
+          "go to the contingent"
+        ],
+        [
+          46.5,
+          "Uniform Simultaneous Death Act"
+        ]
+      ]
+    },
+    {
+      "id": "minors",
+      "text": "One more rule: minors can't receive life insurance proceeds directly. The money has to go through a trust, a court-appointed guardian, or a custodian under the Uniform Transfers to Minors Act. Naming a trust as the beneficiary helps avoid delays.",
+      "at": 55.5,
+      "cues": [
+        [
+          56.5,
+          "minors can't receive"
+        ]
+      ]
+    }
+  ]
+}

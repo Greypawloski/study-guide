@@ -1,0 +1,107 @@
+{
+  "slug": "annuity-phases",
+  "title": "How an annuity works",
+  "lesson": "Section 6, Lesson 6.1",
+  "status": "draft",
+  "original_duration": 78,
+  "segments": [
+    {
+      "id": "title",
+      "text": "How an annuity works. Life insurance protects against dying too soon. An annuity protects against the opposite risk: living too long and running out of money.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "acc",
+      "text": "Every annuity has two phases. The first is the accumulation period. The owner pays in premiums, either as a single lump sum or as flexible payments over time, and the earnings grow tax-deferred. An immediate annuity skips ahead: it's bought with one premium, and income begins within one year. A deferred annuity starts paying later. And withdrawing money early from a deferred annuity can trigger surrender charges.",
+      "at": 6.5,
+      "cues": [
+        [
+          9,
+          "either as a single"
+        ],
+        [
+          13,
+          "the earnings grow"
+        ],
+        [
+          13.6,
+          "An immediate annuity"
+        ],
+        [
+          17,
+          "withdrawing money early"
+        ]
+      ]
+    },
+    {
+      "id": "payout",
+      "text": "The second phase is the annuity period, also called the payout period. When the owner annuitizes, which is usually irrevocable, the accumulated value is converted into a stream of regular income payments, and those payments can be guaranteed for life.",
+      "at": 23.5,
+      "cues": [
+        [
+          24,
+          "When the owner annuitizes"
+        ],
+        [
+          27.5,
+          "converted into a stream"
+        ],
+        [
+          31,
+          "guaranteed for life"
+        ]
+      ]
+    },
+    {
+      "id": "options",
+      "text": "Payout options rank the same way as life insurance settlement options. Life only pays the most each month, but stops at death. Life with period certain guarantees payments for a set number of years. A refund life annuity guarantees that at least the premium paid comes back. And joint and survivor, which pays until the last of two annuitants dies, pays the least. More guarantees mean smaller payments.",
+      "at": 38,
+      "cues": [
+        [
+          40,
+          "Life only pays"
+        ],
+        [
+          42.5,
+          "Life with period certain"
+        ],
+        [
+          45,
+          "A refund life annuity"
+        ],
+        [
+          47.5,
+          "joint and survivor"
+        ],
+        [
+          49,
+          "pays the least"
+        ]
+      ]
+    },
+    {
+      "id": "arizona",
+      "text": "In Arizona, an annuity's free look is ten days, or thirty days if the owner is sixty-five or older. And if the buyer's guide and disclosure document weren't provided at or before the application, the free look is at least fifteen days. Remember: life insurance protects against dying too soon. Annuities protect against living too long.",
+      "at": 54.5,
+      "cues": [
+        [
+          55.3,
+          "free look is ten days"
+        ],
+        [
+          57.5,
+          "thirty days if"
+        ],
+        [
+          60,
+          "at least fifteen days"
+        ],
+        [
+          64,
+          "Remember"
+        ]
+      ]
+    }
+  ]
+}

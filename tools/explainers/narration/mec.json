@@ -1,0 +1,95 @@
+{
+  "slug": "mec",
+  "title": "MECs and the 7-pay test",
+  "lesson": "Section 7, Lesson 7.2",
+  "status": "draft",
+  "original_duration": 70,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Modified endowment contracts and the seven-pay test. What happens when a life insurance policy is funded too quickly.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "test",
+      "text": "Federal tax law limits how fast a life insurance policy can be funded. It's called the seven-pay test. During the first seven years, the total premiums paid can't exceed what would have been paid by that point if the policy were paid up with seven level annual premiums. Stay under that limit, and the policy is taxed as normal life insurance.",
+      "at": 6.5,
+      "cues": [
+        [
+          8,
+          "the seven-pay test"
+        ],
+        [
+          9,
+          "During the first seven years"
+        ],
+        [
+          13,
+          "Stay under that limit"
+        ]
+      ]
+    },
+    {
+      "id": "over",
+      "text": "But pay in too much, too soon, and the policy becomes a modified endowment contract, or MEC. And once a policy is a MEC, it stays a MEC permanently.",
+      "at": 16.5,
+      "cues": [
+        [
+          17.5,
+          "pay in too much"
+        ],
+        [
+          20.5,
+          "a modified endowment contract"
+        ]
+      ]
+    },
+    {
+      "id": "changes",
+      "text": "So what changes? Some things stay the same. The death benefit is still generally income-tax free, and the cash value still grows tax-deferred. What changes is money taken out while the insured is living. Loans and withdrawals come out gains first, which is called last in, first out, and they're taxed as ordinary income. Before age fifty-nine and a half, there's generally a ten percent penalty on top.",
+      "at": 28,
+      "cues": [
+        [
+          28.8,
+          "Some things stay the same"
+        ],
+        [
+          32.5,
+          "What changes"
+        ]
+      ]
+    },
+    {
+      "id": "example",
+      "text": "Here's an example. A forty-five-year-old has fifteen thousand dollars of gain in a MEC, and takes a ten-thousand-dollar loan. Because gains come out first, the full ten thousand is taxable as ordinary income, plus a ten percent penalty of one thousand dollars. The same loan from a policy that isn't a MEC wouldn't be taxed while the policy stays in force. And an exam clue: single premium whole life is usually a MEC.",
+      "at": 42,
+      "cues": [
+        [
+          43.5,
+          "fifteen thousand dollars of gain"
+        ],
+        [
+          45.5,
+          "ten-thousand-dollar loan"
+        ],
+        [
+          48,
+          "the full ten thousand"
+        ],
+        [
+          51.5,
+          "a ten percent penalty"
+        ],
+        [
+          55,
+          "The same loan"
+        ],
+        [
+          60,
+          "an exam clue"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "policy-timeline",
+  "title": "The Arizona policy timeline",
+  "lesson": "Section 5, Lesson 5.1",
+  "status": "draft",
+  "original_duration": 70,
+  "segments": [
+    {
+      "id": "title",
+      "text": "The policy timeline. Here are the key provisions in the order you'd meet them, with Arizona's numbers.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "part1",
+      "text": "It starts at delivery. Every Arizona life policy gives the owner a free look of at least ten days to return it for a full refund. On a replacement, it's thirty days. Next, if a premium is late, the thirty-day grace period keeps the coverage in force. If the insured dies during the grace period, the insurer pays the death benefit, minus the overdue premium. And if the grace period runs out without payment, the policy lapses. If the owner elected an automatic premium loan, the cash value pays the premium instead, or a nonforfeiture option takes over.",
+      "at": 6.5,
+      "cues": [
+        [
+          7,
+          "It starts at delivery"
+        ],
+        [
+          8.5,
+          "a free look of at least ten days"
+        ],
+        [
+          12.5,
+          "the thirty-day grace period"
+        ],
+        [
+          17.5,
+          "the policy lapses"
+        ]
+      ]
+    },
+    {
+      "id": "part2",
+      "text": "After a lapse, the owner can reinstate the policy within three years, as long as it wasn't surrendered for cash. They'll need to show evidence of insurability and pay the overdue premiums, with interest of no more than six percent a year. Then there are the two-year marks. Once a policy has been in force for two years during the insured's lifetime, it becomes incontestable: the insurer can't void it because of misstatements on the application. And the suicide exclusion also lasts two years, measured from issue or reinstatement.",
+      "at": 24,
+      "cues": [
+        [
+          25,
+          "reinstate the policy within three years"
+        ],
+        [
+          33,
+          "Once a policy has been in force"
+        ],
+        [
+          41,
+          "the suicide exclusion"
+        ]
+      ]
+    },
+    {
+      "id": "recap",
+      "text": "So in order: a ten-day free look, a thirty-day grace period, three years to reinstate at no more than six percent interest, and two years until the policy is incontestable and the suicide exclusion ends. One trap to watch for: the grace period on a life policy is thirty days, but the conversion period on group life is thirty-one days.",
+      "at": 51,
+      "cues": [
+        [
+          51.8,
+          "So in order"
+        ],
+        [
+          56,
+          "One trap"
+        ]
+      ]
+    }
+  ]
+}

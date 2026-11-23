@@ -1,0 +1,145 @@
+{
+  "slug": "arizona-numbers",
+  "title": "Arizona numbers in 2 minutes",
+  "lesson": "Cheat sheet",
+  "status": "draft",
+  "original_duration": 98.5,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Arizona numbers in two minutes. These are the numbers that show up again and again on the exam.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "licensing",
+      "text": "Licensing. You get four exam attempts in a twelve-month period, then you wait a year. After you pass, apply for your license within one year. Your license lasts four years and expires on the last day of your birth month. Each term, you need forty-eight hours of continuing education, including six hours of ethics. Report a change of address, or an action against you in another state, within thirty days. And complete four hours of annuity training before you sell annuities.",
+      "at": 6.5,
+      "cues": [
+        [
+          7.1,
+          "four exam attempts"
+        ],
+        [
+          9.7,
+          "apply for your license"
+        ],
+        [
+          12.3,
+          "lasts four years"
+        ],
+        [
+          14.9,
+          "forty-eight hours"
+        ],
+        [
+          17.5,
+          "Report a change"
+        ],
+        [
+          20.1,
+          "four hours of annuity"
+        ]
+      ]
+    },
+    {
+      "id": "provisions",
+      "text": "Policy provisions. A life policy's free look is at least ten days. The grace period is thirty days. You can reinstate within three years, with interest of no more than six percent. A policy becomes incontestable after two years, and the suicide exclusion lasts two years. And group life can be converted to an individual policy within thirty-one days, with no evidence of insurability.",
+      "at": 27.5,
+      "cues": [
+        [
+          28.1,
+          "free look is at least ten"
+        ],
+        [
+          30.7,
+          "The grace period"
+        ],
+        [
+          33.3,
+          "reinstate within three"
+        ],
+        [
+          35.9,
+          "incontestable after two"
+        ],
+        [
+          38.5,
+          "the suicide exclusion"
+        ],
+        [
+          41.1,
+          "group life can be converted"
+        ]
+      ]
+    },
+    {
+      "id": "replacement",
+      "text": "Replacement and annuities. A replacement policy gets a thirty-day free look. The replacing insurer must notify the existing insurer within five business days, and keep its records for five years. An annuity's free look is ten days, thirty days if the owner is sixty-five or older, and fifteen days if no buyer's guide was provided at application.",
+      "at": 48.5,
+      "cues": [
+        [
+          49.1,
+          "thirty-day free look"
+        ],
+        [
+          51.7,
+          "within five business days"
+        ],
+        [
+          54.3,
+          "keep its records"
+        ],
+        [
+          56.9,
+          "annuity's free look is ten"
+        ],
+        [
+          59.5,
+          "thirty days if the owner"
+        ],
+        [
+          62.1,
+          "fifteen days"
+        ]
+      ]
+    },
+    {
+      "id": "federal",
+      "text": "Federal rules and the guaranty fund. Before age fifty-nine and a half, a ten percent penalty generally applies to taxable gains taken early from a MEC or an annuity. The seven-pay test decides whether a policy is a MEC. Employer-paid group term life is tax-free up to fifty thousand dollars of coverage. And Arizona's guaranty fund covers up to three hundred thousand dollars in life insurance death benefits, one hundred thousand in cash value, and two hundred fifty thousand in annuity value.",
+      "at": 69.5,
+      "cues": [
+        [
+          70.1,
+          "fifty-nine and a half"
+        ],
+        [
+          72.7,
+          "The seven-pay test"
+        ],
+        [
+          75.3,
+          "fifty thousand"
+        ],
+        [
+          77.9,
+          "three hundred thousand"
+        ],
+        [
+          80.5,
+          "one hundred thousand in cash"
+        ],
+        [
+          83.1,
+          "two hundred fifty thousand"
+        ]
+      ]
+    },
+    {
+      "id": "outro",
+      "text": "Review these the morning of your exam. One hundred questions, two hours, and seventy percent to pass. You've got this.",
+      "at": 90.5,
+      "cues": []
+    }
+  ]
+}

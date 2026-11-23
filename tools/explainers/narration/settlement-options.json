@@ -1,0 +1,122 @@
+{
+  "slug": "settlement-options",
+  "title": "Settlement options",
+  "lesson": "Section 5, Lesson 5.3",
+  "status": "draft",
+  "original_duration": 74,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Settlement options. When a life insurance policy pays a death claim, the settlement option decides how that money actually reaches the beneficiary.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "lump",
+      "text": "The policyowner can choose a settlement option in advance, or leave the choice to the beneficiary at claim time. The default is a lump sum: the entire death benefit, paid all at once. And a lump-sum death benefit is generally received free of income tax.",
+      "at": 6.5,
+      "cues": [
+        [
+          9,
+          "The default is a lump sum"
+        ],
+        [
+          10.3,
+          "paid all at once"
+        ]
+      ]
+    },
+    {
+      "id": "interest",
+      "text": "With the interest only option, the insurer keeps the principal and pays the beneficiary just the interest it earns. Here's the exam point: the death benefit itself is tax-free, but that interest is taxable. Later, the principal goes to a secondary beneficiary.",
+      "at": 16.5,
+      "cues": [
+        [
+          18.5,
+          "pays the beneficiary just"
+        ],
+        [
+          21,
+          "that interest is taxable"
+        ],
+        [
+          23.5,
+          "the principal goes to a secondary"
+        ]
+      ]
+    },
+    {
+      "id": "fixed",
+      "text": "Next, the pair the exam loves to mix up. Under the fixed period option, you choose how long the payments last, say ten years, and the insurer calculates how much each payment will be. Under the fixed amount option, you choose the size of each payment, say two thousand dollars a month, and payments continue until the principal and interest run out. So whichever one you lock in, the other is calculated.",
+      "at": 27.5,
+      "cues": [
+        [
+          28,
+          "Under the fixed period option"
+        ],
+        [
+          30,
+          "say ten years"
+        ],
+        [
+          31.5,
+          "the insurer calculates how much"
+        ],
+        [
+          34.5,
+          "Under the fixed amount option"
+        ],
+        [
+          36.5,
+          "say two thousand dollars"
+        ],
+        [
+          38,
+          "payments continue until"
+        ]
+      ]
+    },
+    {
+      "id": "life",
+      "text": "Life income options pay for the rest of the beneficiary's life. Life only pays the largest amount, but payments stop at death. Life with period certain guarantees payments for a minimum number of years, even if the payee dies early. Life with refund returns any unpaid principal to a secondary beneficiary. And joint and survivor keeps paying until the second of two people dies, so it pays the smallest amount.",
+      "at": 44.5,
+      "cues": [
+        [
+          46,
+          "Life only pays"
+        ],
+        [
+          48.5,
+          "Life with period certain"
+        ],
+        [
+          51,
+          "Life with refund"
+        ],
+        [
+          53.5,
+          "joint and survivor"
+        ],
+        [
+          55,
+          "pays the smallest amount"
+        ]
+      ]
+    },
+    {
+      "id": "recap",
+      "text": "So remember the trade-off: the more the insurer guarantees, the smaller each payment. And for fixed period versus fixed amount, whatever you lock in, the other is calculated.",
+      "at": 62.5,
+      "cues": [
+        [
+          63.3,
+          "the more the insurer guarantees"
+        ],
+        [
+          66.5,
+          "fixed period versus fixed amount"
+        ]
+      ]
+    }
+  ]
+}

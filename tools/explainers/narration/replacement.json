@@ -1,0 +1,83 @@
+{
+  "slug": "replacement",
+  "title": "Replacing a policy in Arizona",
+  "lesson": "Section 3, Lesson 3.4",
+  "status": "draft",
+  "original_duration": 74,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Replacing a policy in Arizona. Who does what, and the deadlines you need to know.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "what",
+      "text": "A replacement happens when someone buys a new life insurance policy or annuity, and as part of that, an existing policy is lapsed, surrendered, converted, borrowed against, reduced or otherwise changed. Replacement isn't illegal, but it's closely regulated, because the client can lose value: new surrender charges, a new contestable period, and higher premiums at an older age.",
+      "at": 6.5,
+      "cues": [
+        [
+          7.3,
+          "A replacement happens"
+        ],
+        [
+          11.5,
+          "closely regulated"
+        ]
+      ]
+    },
+    {
+      "id": "producer",
+      "text": "Here's the producer's job in Arizona. First, the producer submits a statement, signed by the applicant and the producer, saying whether the applicant has existing coverage. Second, if a replacement is involved, the producer must present and read the replacement notice no later than when the application is taken, and both the applicant and the producer sign it. Third, the producer leaves the applicant a copy of the signed notice and any sales materials used, and submits copies to the insurer.",
+      "at": 19.5,
+      "cues": [
+        [
+          20.5,
+          "First, the producer"
+        ],
+        [
+          25.5,
+          "Second, if a replacement"
+        ],
+        [
+          31.5,
+          "Third, the producer"
+        ]
+      ]
+    },
+    {
+      "id": "insurers",
+      "text": "Now the insurers. The replacing insurer must notify the existing insurer within five business days, and keep its replacement records for at least five years. The existing insurer must let the owner know they can get information about the existing policy, and provide it within five business days of a request.",
+      "at": 38.5,
+      "cues": [
+        [
+          39.3,
+          "The replacing insurer"
+        ],
+        [
+          40,
+          "within five business days"
+        ],
+        [
+          45.5,
+          "The existing insurer"
+        ]
+      ]
+    },
+    {
+      "id": "freelook",
+      "text": "And the consumer's safety net: a replacement policy comes with a thirty-day free look for a full refund, compared with at least ten days on a regular Arizona life policy. Finally, remember that using misrepresentation to persuade someone to replace a policy with another insurer is twisting, an unfair trade practice.",
+      "at": 53.5,
+      "cues": [
+        [
+          54.3,
+          "thirty-day free look"
+        ],
+        [
+          58,
+          "compared with at least ten days"
+        ]
+      ]
+    }
+  ]
+}

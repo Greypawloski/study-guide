@@ -1,0 +1,80 @@
+{
+  "slug": "ul-options",
+  "title": "Universal life: Option A vs. Option B",
+  "lesson": "Section 4, Lesson 4.3",
+  "status": "draft",
+  "original_duration": 64,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Universal life death benefit options. Option A versus Option B, and why the choice changes the cost.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "a",
+      "text": "Option A, also called Option one, is a level death benefit. In this example, it stays at two hundred fifty thousand dollars for the life of the policy. As the cash value grows, it grows inside that face amount, so it's part of what the beneficiary receives, not extra. That means the insurer's actual risk, called the net amount at risk, shrinks over time. And less risk for the insurer means Option A costs less.",
+      "at": 6.5,
+      "cues": [
+        [
+          8,
+          "is a level death benefit"
+        ],
+        [
+          9.5,
+          "stays at two hundred fifty"
+        ],
+        [
+          13.5,
+          "As the cash value grows"
+        ],
+        [
+          16,
+          "the net amount at risk"
+        ],
+        [
+          17.5,
+          "Option A costs less"
+        ]
+      ]
+    },
+    {
+      "id": "b",
+      "text": "Option B, also called Option two, is an increasing death benefit. The beneficiary receives the face amount plus the cash value. So the insurer's risk stays at the full two hundred fifty thousand dollars, no matter how much cash value builds up. Because the insurer carries more risk, Option B costs more than Option A.",
+      "at": 28.5,
+      "cues": [
+        [
+          30,
+          "is an increasing death benefit"
+        ],
+        [
+          31.5,
+          "face amount plus the cash value"
+        ],
+        [
+          35.5,
+          "the insurer's risk stays"
+        ],
+        [
+          39.5,
+          "Option B costs more"
+        ]
+      ]
+    },
+    {
+      "id": "recap",
+      "text": "An easy way to remember it: A is level, and B is bigger.",
+      "at": 51,
+      "cues": [
+        [
+          51.8,
+          "A is level"
+        ],
+        [
+          53.2,
+          "B is bigger"
+        ]
+      ]
+    }
+  ]
+}

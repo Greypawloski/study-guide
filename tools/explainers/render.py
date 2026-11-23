@@ -8,7 +8,7 @@ async def main(src, out, timeline=None):
         if timeline:  # narrated version: cue times come from the narration
             await pg.add_init_script("window.TIMELINE = " + open(timeline).read() + ";")
         await pg.goto("file://" + src)
-        dur = await pg.evaluate("DURATION")
+        dur = await pg.evaluate("window.TIMELINE ? TIMELINE.duration : DURATION")
         n = int(dur * FPS)
         ff = subprocess.Popen(["ffmpeg","-y","-loglevel","error","-f","image2pipe","-framerate",str(FPS),"-c:v","mjpeg","-i","-",
                                "-c:v","libx264","-preset","veryfast","-crf","20","-pix_fmt","yuv420p","-movflags","+faststart", out], stdin=subprocess.PIPE)

@@ -1,0 +1,106 @@
+{
+  "slug": "per-stirpes-per-capita",
+  "title": "Per stirpes vs. per capita",
+  "lesson": "Section 5, Lesson 5.2",
+  "status": "draft",
+  "original_duration": 66,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Per stirpes versus per capita. These two beneficiary designations only matter when a beneficiary dies before the insured, and the exam loves to test the difference.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "family",
+      "text": "Here's John. He's insured for three hundred thousand dollars, and he names his three children as beneficiaries: Ann, Ben and Cara. Cara has two children of her own, Dee and Eli.",
+      "at": 6.5,
+      "cues": [
+        [
+          7,
+          "Here's John"
+        ],
+        [
+          8,
+          "three hundred thousand"
+        ],
+        [
+          9.3,
+          "Ann, Ben and Cara"
+        ],
+        [
+          12.3,
+          "Dee and Eli"
+        ]
+      ]
+    },
+    {
+      "id": "dies",
+      "text": "Now, Cara dies before John does. When John later dies, what happens to Cara's share?",
+      "at": 16.5,
+      "cues": [
+        [
+          17,
+          "Cara dies before John"
+        ]
+      ]
+    },
+    {
+      "id": "stirpes",
+      "text": "If John chose per stirpes, which means by the bloodline, each branch of the family gets an equal share. Ann gets one hundred thousand, Ben gets one hundred thousand, and Cara's one hundred thousand passes down to her children. Dee and Eli each receive fifty thousand.",
+      "at": 21,
+      "cues": [
+        [
+          22.5,
+          "each branch"
+        ],
+        [
+          23.5,
+          "Ann gets"
+        ],
+        [
+          24.5,
+          "Ben gets"
+        ],
+        [
+          27.5,
+          "Dee and Eli each"
+        ]
+      ]
+    },
+    {
+      "id": "capita",
+      "text": "If John chose per capita, which means by the head, the money is split equally among the named beneficiaries who are still living. That's just Ann and Ben, so they each get one hundred fifty thousand dollars, and Cara's children receive nothing.",
+      "at": 35.8,
+      "cues": [
+        [
+          37.5,
+          "split equally among"
+        ],
+        [
+          38.5,
+          "Ann and Ben"
+        ],
+        [
+          42,
+          "Cara's children receive nothing"
+        ]
+      ]
+    },
+    {
+      "id": "recap",
+      "text": "So, per stirpes passes a deceased beneficiary's share down to their descendants. Per capita splits everything among the surviving named beneficiaries.",
+      "at": 51,
+      "cues": [
+        [
+          51.8,
+          "per stirpes passes"
+        ],
+        [
+          53.3,
+          "Per capita splits"
+        ]
+      ]
+    }
+  ]
+}

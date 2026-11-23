@@ -1,0 +1,115 @@
+{
+  "slug": "policy-types",
+  "title": "Term vs. whole life vs. universal life",
+  "lesson": "Section 4, Lesson 4.1",
+  "status": "draft",
+  "original_duration": 82,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Term, whole life and universal life. Let's compare how the premium, the coverage and the cash value behave over a lifetime.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "term",
+      "text": "Term insurance is pure protection for a set period of time, here twenty years. It pays only if the insured dies during the term. It has no cash value, and when the term ends, the coverage ends. Because it's pure protection, term gives the most coverage per premium dollar. And renewing later costs more, because the premium is based on the insured's older age.",
+      "at": 6.5,
+      "cues": [
+        [
+          7.7,
+          "Term insurance is pure protection"
+        ],
+        [
+          9,
+          "for a set period"
+        ],
+        [
+          11.6,
+          "It has no cash value"
+        ],
+        [
+          14.2,
+          "the most coverage per premium dollar"
+        ],
+        [
+          16.8,
+          "renewing later costs more"
+        ]
+      ]
+    },
+    {
+      "id": "whole",
+      "text": "Whole life covers the insured for their entire life, with a level premium that never changes. It builds guaranteed cash value that grows tax-deferred. And at age one hundred, or one twenty-one under newer mortality tables, the cash value equals the face amount. The policy endows, and the face amount is paid to the owner.",
+      "at": 23.5,
+      "cues": [
+        [
+          24.7,
+          "Whole life covers"
+        ],
+        [
+          26,
+          "entire life"
+        ],
+        [
+          28.6,
+          "a level premium"
+        ],
+        [
+          31.2,
+          "guaranteed cash value"
+        ],
+        [
+          33.8,
+          "at age one hundred"
+        ]
+      ]
+    },
+    {
+      "id": "ul",
+      "text": "Universal life is also permanent insurance, but it's flexible. The owner can pay more, pay less, or even skip premiums, as long as the cash value can cover the monthly charges. The cash value earns a current interest rate, with a guaranteed minimum. The owner can adjust the death benefit, choosing a level or an increasing option. But if the cash value runs too low to cover the charges, the policy lapses.",
+      "at": 43.5,
+      "cues": [
+        [
+          44.7,
+          "Universal life is also"
+        ],
+        [
+          46,
+          "pay more, pay less"
+        ],
+        [
+          48.6,
+          "current interest rate"
+        ],
+        [
+          51.2,
+          "adjust the death benefit"
+        ],
+        [
+          53.8,
+          "runs too low"
+        ]
+      ]
+    },
+    {
+      "id": "recap",
+      "text": "Side by side: term covers a set period, with the lowest premium and no cash value. Whole life lasts for life, with a fixed premium and guaranteed cash value. Universal life lasts for life if it's funded, with flexible premiums and cash value that earns a current rate with a guaranteed minimum.",
+      "at": 66,
+      "cues": [
+        [
+          68,
+          "term covers"
+        ],
+        [
+          69.2,
+          "Whole life lasts"
+        ],
+        [
+          70.4,
+          "Universal life lasts"
+        ]
+      ]
+    }
+  ]
+}

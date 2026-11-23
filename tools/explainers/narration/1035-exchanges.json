@@ -1,0 +1,72 @@
+{
+  "slug": "1035-exchanges",
+  "title": "1035 exchanges",
+  "lesson": "Section 7, Lesson 7.3",
+  "status": "draft",
+  "original_duration": 60,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Ten thirty-five exchanges. Section ten thirty-five of the tax code lets an owner swap one contract for another without paying tax on the gain.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "which",
+      "text": "Here's what's allowed. Life insurance for another life insurance policy: tax-free. Life insurance for an annuity: tax-free. One annuity for another annuity: tax-free. But an annuity for a life insurance policy is not allowed. Life insurance or an annuity can also be exchanged for a qualified long-term care policy.",
+      "at": 6.5,
+      "cues": [
+        [
+          8,
+          "Life insurance for another"
+        ],
+        [
+          11.5,
+          "Life insurance for an annuity"
+        ],
+        [
+          15,
+          "One annuity for another"
+        ],
+        [
+          18.5,
+          "But an annuity for a life"
+        ],
+        [
+          23,
+          "qualified long-term care"
+        ]
+      ]
+    },
+    {
+      "id": "rules",
+      "text": "For a clean exchange, keep the same owner, and the same insured or annuitant. If the owner receives any cash in the exchange, called boot, that cash is taxable. And remember that a ten thirty-five exchange is still a replacement, so all the replacement rules apply.",
+      "at": 28,
+      "cues": [
+        [
+          29,
+          "keep the same owner"
+        ],
+        [
+          32.5,
+          "receives any cash"
+        ],
+        [
+          36.5,
+          "still a replacement"
+        ]
+      ]
+    },
+    {
+      "id": "trick",
+      "text": "Here's the memory trick: you can move toward an annuity, but never away from it. Going from an annuity to life insurance would turn taxable annuity gains into a tax-free death benefit, so it isn't allowed.",
+      "at": 43,
+      "cues": [
+        [
+          47,
+          "Going from an annuity"
+        ]
+      ]
+    }
+  ]
+}
