@@ -30,7 +30,7 @@
 <div class="mastery card" id="mastery">
   <div class="mastery-bar" id="mastery-bar"></div>
   <div class="mastery-legend">
-    <span><i class="b0"></i>New</span><span><i class="b1"></i>Learning</span><span><i class="b3"></i>Reviewing</span><span><i class="b5"></i>Mastered</span>
+    <span><i class="b0"></i>New</span><span><i class="b1"></i>Still learning</span><span><i class="bk"></i>Knew it</span><span><i class="b5"></i>Mastered (knew it 3+ times)</span>
   </div>
 </div>
 
@@ -136,9 +136,9 @@
     const counts = [0, 0, 0, 0];
     pool.forEach(c => {
       const b = s.cards[c.id] || 0;
-      counts[b === 0 ? 0 : b <= 2 ? 1 : b <= 4 ? 2 : 3]++;
+      counts[b === 0 ? 0 : b === 1 ? 1 : b <= 4 ? 2 : 3]++;
     });
-    const cls = ["b0", "b1", "b3", "b5"];
+    const cls = ["b0", "b1", "bk", "b5"];
     document.getElementById("mastery-bar").innerHTML = counts.map((n, i) =>
       n ? '<span class="' + cls[i] + '" style="flex:' + n + '" title="' + n + '">' + n + "</span>" : "").join("");
   }

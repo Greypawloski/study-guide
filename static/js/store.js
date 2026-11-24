@@ -164,11 +164,12 @@
     },
     lessonDone(sid, i) { const v = load().lessons[sid + ":" + i]; return v === true || v > 0; },
 
-    // Leitner spaced repetition: box 1 = daily ... box 5 = mastered
+    // Leitner spaced repetition. Box 1 = missed (review tomorrow), 2-4 = known,
+    // 5 = mastered. A new card you know right away starts at box 3.
     gradeCard(id, knew) {
       const s = load();
-      const box = s.cards[id] || 1;
-      const nb = knew ? Math.min(5, box + 1) : 1;
+      const box = s.cards[id] || 0;
+      const nb = !knew ? 1 : box === 0 ? 3 : Math.min(5, box + 1);
       const days = [0, 0, 1, 3, 7, 14][nb];
       s.cards[id] = nb;
       s.cardDue[id] = Date.now() + days * 86400000;

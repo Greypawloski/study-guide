@@ -178,7 +178,7 @@ select, .search { font: inherit; padding: 9px 12px; border: 1px solid var(--line
 .mastery-bar span { display: grid; place-items: center; min-width: 22px; }
 .mastery-legend { display: flex; gap: 16px; margin-top: 8px; font-size: .8rem; color: var(--muted); flex-wrap: wrap; }
 .mastery-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; }
-.b0 { background: #b8bfcc; } .b1 { background: var(--low); } .b3 { background: var(--ok); } .b5 { background: var(--good); }
+.b0 { background: #b8bfcc; } .b1 { background: var(--low); } .b3 { background: var(--ok); } .bk { background: #7cc9a2; } .b5 { background: var(--good); }
 .fc-stage { max-width: 680px; margin: 0 auto; }
 .fc-count { text-align: center; color: var(--muted); font-size: .9rem; }
 .flashcard { perspective: 1400px; height: 300px; cursor: pointer; outline: none; margin-bottom: 18px; }
