@@ -1,0 +1,158 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../lib.css">
+<style>
+  .box { position: absolute; border-radius: 26px; background: #fff; border: 3px solid var(--line); box-shadow: 0 8px 30px rgba(20,33,61,.07); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; opacity: 0; }
+  .box .e { font-size: 60px; line-height: 1; }
+  .box .n { font-size: 30px; font-weight: 800; margin-top: 10px; }
+  .box .s { font-size: 22px; color: var(--ink2); margin-top: 6px; }
+  .navyb { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .navyb .s { color: rgba(255,255,255,.75); }
+  .tag { position: absolute; font-size: 26px; font-weight: 800; color: #fff; padding: 8px 18px; border-radius: 12px; opacity: 0; white-space: nowrap; }
+  .flow { position: absolute; width: 300px; height: 120px; border-radius: 22px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 28px; font-weight: 800; opacity: 0; }
+  .coin { position: absolute; width: 64px; height: 64px; border-radius: 50%; background: var(--good); color: #fff; font-size: 30px; font-weight: 800; display: grid; place-items: center; opacity: 0; }
+</style></head><body>
+<div class="abs brand" id="brand"><div class="mark">AZ</div><div>Life Exam Prep<small>General Insurance · Mutual Insurance Companies</small></div></div>
+
+<!-- 1 title -->
+<div class="scene" id="s1"><div class="abs" style="left:160px; top:330px; width:1600px">
+  <p class="eyebrow" id="t1">Types of insurers</p>
+  <h1 id="t2" style="margin-top:24px">Mutual Insurance<br>Companies</h1>
+  <p class="lead" id="t3" style="margin-top:34px">Owned by the people they insure</p></div></div>
+
+<!-- 2 ownership: stock vs mutual -->
+<div class="scene" id="s2">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Who owns the company?</p><h2>Stock vs. mutual</h2></div>
+  <div class="abs card" id="st" style="left:160px; top:320px; width:780px; height:520px; padding:44px">
+    <h3>📈 Stock company</h3>
+    <p class="body" style="margin-top:16px">Owned by <b>stockholders</b> (shareholders).</p>
+    <p class="body" style="margin-top:12px">Customers buy policies, but don't own the company.</p>
+  </div>
+  <div class="abs card" id="mu" style="left:980px; top:320px; width:780px; height:520px; padding:44px; border-color:var(--good)">
+    <h3>🤝 <span class="good">Mutual</span> company</h3>
+    <p class="body" style="margin-top:16px"><b>No stockholders.</b> Owned by its <b>policy owners</b>.</p>
+    <p class="body" style="margin-top:12px">Every policy owner is both a <b>customer</b> and an <b>owner</b>.</p>
+    <p class="body" id="mu3" style="margin-top:12px; font-size:26px; opacity:0">Both types are organized and incorporated under <b>state law</b>.</p>
+  </div>
+</div>
+
+<!-- 3 governance -->
+<div class="scene" id="s3">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Who runs it?</p><h2>Control flows from the policy owners</h2></div>
+  <svg class="abs" width="1920" height="1080" style="left:0;top:0">
+    <path id="g1" class="ln" d="M 560 560 L 790 560" stroke="#d9622b" stroke-width="8"/>
+    <path id="g2" class="ln" d="M 1130 560 L 1360 560" stroke="#d9622b" stroke-width="8"/>
+  </svg>
+  <div class="box" id="po" style="left:160px; top:440px; width:380px; height:240px"><div class="e">👥</div><div class="n">Policy owners</div><div class="s">vote for…</div></div>
+  <div class="box navyb" id="bd" style="left:780px; top:440px; width:360px; height:240px"><div class="e">🏛️</div><div class="n">Board of directors</div><div class="s">elects or appoints…</div></div>
+  <div class="box" id="of" style="left:1370px; top:440px; width:380px; height:240px"><div class="e">💼</div><div class="n">Officers</div><div class="s">who run the company</div></div>
+  <div class="abs" id="g3l" style="left:610px; top:505px; font-size:24px; font-weight:800; color:var(--sun); opacity:0">vote</div>
+  <div class="abs" id="g4l" style="left:1160px; top:505px; font-size:24px; font-weight:800; color:var(--sun); opacity:0">appoint</div>
+</div>
+
+<!-- 4 money flow -->
+<div class="scene" id="s4">
+  <div class="abs" style="left:160px; top:140px"><p class="eyebrow">Where the money goes</p><h2>From premiums to the divisible surplus</h2></div>
+  <div class="flow bg-navy" id="f1" style="left:160px; top:440px; color:#fff">💵 Premiums<br>collected</div>
+  <svg class="abs" width="1920" height="1080" style="left:0;top:0">
+    <path id="fa" class="ln" d="M 470 500 L 600 500" stroke="#c8c0b2" stroke-width="8"/>
+    <path id="fb" class="ln" d="M 1010 500 L 1140 500" stroke="#c8c0b2" stroke-width="8"/>
+    <path id="fc" class="ln" d="M 1450 500 L 1580 500" stroke="#2f9e6e" stroke-width="8"/>
+  </svg>
+  <div class="abs card" id="f2" style="left:610px; top:330px; width:390px; height:340px; padding:30px; opacity:0">
+    <p style="font-size:26px; font-weight:800">First, set aside:</p>
+    <p class="body" style="font-size:26px; margin-top:12px" id="d1">− Claims</p>
+    <p class="body" style="font-size:26px" id="d2">− Operating expenses</p>
+    <p class="body" style="font-size:26px" id="d3">− Reserves</p>
+    <p class="body" style="font-size:26px" id="d4">− General business needs</p>
+  </div>
+  <div class="flow bg-good" id="f3" style="left:1150px; top:440px; color:#fff">Divisible<br>surplus</div>
+  <div class="box" id="f4" style="left:1590px; top:400px; width:240px; height:200px; border-color:var(--good)"><div class="e">👥</div><div class="n" style="font-size:24px">Policy owners</div></div>
+  <div class="coin" id="cn1" style="left:1460px; top:468px">$</div>
+  <div class="coin" id="cn2" style="left:1460px; top:468px">$</div>
+  <div class="abs" id="f5" style="left:1150px; top:610px; width:690px; font-size:28px; font-weight:700; color:var(--good); opacity:0">Paid out as <b>policy dividends</b>, typically once a year</div>
+  <div class="abs card" id="f6" style="left:160px; top:740px; width:1600px; padding:26px 36px; opacity:0">
+    <p class="body" style="font-size:28px">📈 A <b>stock</b> company pays its profits to <b>shareholders</b> as <b>stock dividends</b>. A <b>mutual</b> returns its surplus to <b>policy owners</b> as <b>policy dividends</b>.</p></div>
+</div>
+
+<!-- 5 dividend facts -->
+<div class="scene" id="s5">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Exam facts</p><h2>Policy dividends</h2></div>
+  <ul class="abs bullets" style="left:160px; top:340px; width:1600px">
+    <li id="p1"><span class="ic bg-navy">↩</span>A partial refund of premium, after claims, expenses and reserves</li>
+    <li id="p2"><span class="ic bg-low">✕</span>Never guaranteed</li>
+    <li id="p3"><span class="ic bg-good">$</span>Not taxable, because they're a return of premium</li>
+    <li id="p4"><span class="ic bg-sun">P</span><span>Policies that pay them are <b>participating ("par")</b> policies</span></li>
+  </ul>
+</div>
+
+<!-- 6 conversions -->
+<div class="scene" id="s6">
+  <div class="abs" style="left:160px; top:150px"><p class="eyebrow">Changing type</p><h2>Mutualization & demutualization</h2></div>
+  <div class="box" id="cs" style="left:200px; top:380px; width:420px; height:240px"><div class="e">📈</div><div class="n">Stock company</div></div>
+  <div class="box" id="cm" style="left:1300px; top:380px; width:420px; height:240px; border-color:var(--good)"><div class="e">🤝</div><div class="n">Mutual company</div></div>
+  <svg class="abs" width="1920" height="1080" style="left:0;top:0">
+    <defs>
+      <marker id="ma" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f9e6e"/></marker>
+      <marker id="mb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d9622b"/></marker>
+    </defs>
+    <path id="m1" class="ln" d="M 640 450 L 1270 450" stroke="#2f9e6e" stroke-width="8" marker-end="url(#ma)"/>
+    <path id="m2" class="ln" d="M 1280 560 L 650 560" stroke="#d9622b" stroke-width="8" marker-end="url(#mb)"/>
+  </svg>
+  <div class="abs" id="ml1" style="left:790px; top:385px; width:340px; text-align:center; font-size:30px; font-weight:800; color:var(--good); opacity:0">Mutualization</div>
+  <div class="abs" id="ml2" style="left:790px; top:580px; width:340px; text-align:center; font-size:30px; font-weight:800; color:var(--sun); opacity:0">Demutualization</div>
+  <div class="abs card" id="dm" style="left:160px; top:700px; width:1600px; padding:28px 40px; opacity:0">
+    <p class="body" style="font-size:30px"><b class="sun">Demutualization:</b> policyholders receive <b>shares of stock</b> in proportion to their gross premiums. It's often done to <b>raise money</b> by selling stock.</p></div>
+</div>
+
+<!-- 7 mixed plan + recap -->
+<div class="scene" id="s7">
+  <div class="abs" style="left:160px; top:140px"><p class="eyebrow">One more term</p><h2>Mixed plan</h2></div>
+  <div class="abs card" id="x1" style="left:160px; top:300px; width:1600px; padding:36px 44px">
+    <p class="body" style="font-size:34px">An insurer that issues <b>both</b> participating <b>and</b> nonparticipating policies uses a <b class="sun">mixed plan</b>.</p></div>
+  <div class="abs tip" id="x2" style="left:160px; top:520px; width:1600px; line-height:1.6">
+    <span class="lbl">RECAP:</span> Mutual = owned by <b>policy owners</b> · they elect the <b>board</b> · surplus returns as <b>policy dividends</b> · dividends are <b>not guaranteed</b> and <b>not taxable</b> · <b>participating</b> policies</div>
+</div>
+
+<div class="abs caption" id="cap"></div><div class="abs progress" id="prog"></div>
+<script src="../lib.js"></script>
+<script>
+var DURATION = 98;
+var CAPS = [
+  [7, 21.5, "In a mutual, buying a policy makes you a <b>part owner</b> of the company."],
+  [23, 33.5, "Policy owners vote for the <b>board</b>, which picks the <b>officers</b>."],
+  [35, 55.5, "Money left after claims, expenses and reserves is the <b>divisible surplus</b>."],
+  [57.5, 67.5, "Policy dividends are <b>not guaranteed</b> and <b>not taxable</b>."],
+  [69.5, 83.5, "Stock → mutual is <b>mutualization</b>. Mutual → stock is <b>demutualization</b>."],
+];
+function scene(t) {
+  sceneWin("s1", t, 0, 6.5); pop("t1", t, .3); pop("t2", t, .7, 40); pop("t3", t, 1.6);
+
+  sceneWin("s2", t, 6.5, 22.5); pop("st", t, 7.3, 40); pop("mu", t, 10.5, 40); pop("mu3", t, 16, 10);
+
+  sceneWin("s3", t, 22.5, 34.5);
+  popS("po", t, 23.3); draw("g1", t, 25, 26.2); pop("g3l", t, 25.4, 10); popS("bd", t, 26.2);
+  draw("g2", t, 28.5, 29.7); pop("g4l", t, 28.9, 10); popS("of", t, 29.7);
+
+  sceneWin("s4", t, 34.5, 56.5);
+  popS("f1", t, 35.3); draw("fa", t, 36.5, 37.3); pop("f2", t, 37.2, 20);
+  pop("d1", t, 38, 8); pop("d2", t, 38.8, 8); pop("d3", t, 39.6, 8); pop("d4", t, 40.4, 8);
+  draw("fb", t, 42, 42.8); popS("f3", t, 42.8); draw("fc", t, 44.5, 45.3); popS("f4", t, 45.3);
+  ["cn1", "cn2"].forEach((id, i) => {
+    const a = 46 + i * 1.6, p = seg(t, a, a + 1.2);
+    $(id).style.opacity = p > 0 && p < 1 ? 1 : 0;
+    $(id).style.transform = `translateX(${p * 150}px)`;
+  });
+  pop("f5", t, 46.5, 10); pop("f6", t, 50, 20);
+
+  sceneWin("s5", t, 56.5, 68.5);
+  pop("p1", t, 57.3); pop("p2", t, 59.8); pop("p3", t, 62.3); pop("p4", t, 64.8);
+
+  sceneWin("s6", t, 68.5, 84.5);
+  popS("cs", t, 69.3); popS("cm", t, 69.6);
+  draw("m1", t, 70.8, 72.3); pop("ml1", t, 71.8, 10);
+  draw("m2", t, 74, 75.5); pop("ml2", t, 75, 10);
+  pop("dm", t, 77.5, 20);
+
+  sceneWin("s7", t, 84.5, DURATION, .9); pop("x1", t, 85.3, 30); pop("x2", t, 88.5, 30);
+}
+</script></body></html>

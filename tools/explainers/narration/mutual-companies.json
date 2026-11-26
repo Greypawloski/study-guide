@@ -1,0 +1,141 @@
+{
+  "slug": "mutual-companies",
+  "title": "Mutual insurance companies",
+  "lesson": "Section 2, Lesson 2.2 (Types of insurers)",
+  "status": "approved",
+  "original_duration": 98,
+  "segments": [
+    {
+      "id": "title",
+      "text": "Mutual insurance companies. These are insurers that are owned by the very people they insure.",
+      "at": 0,
+      "cues": []
+    },
+    {
+      "id": "owners",
+      "text": "Start with ownership. A stock insurance company is owned by its stockholders. Its customers buy policies, but they don't own the company. A mutual insurance company has no stockholders at all. Instead, it's owned by its policy owners. So anyone who buys a policy from a mutual insurer is both a customer and an owner of the company. Both types are organized and incorporated under state law.",
+      "at": 6.5,
+      "cues": [
+        [
+          7.3,
+          "A stock insurance company"
+        ],
+        [
+          10.5,
+          "A mutual insurance company"
+        ],
+        [
+          16,
+          "Both types are organized"
+        ]
+      ]
+    },
+    {
+      "id": "control",
+      "text": "So who runs a mutual? The policy owners vote for a board of directors. The board, in turn, elects or appoints the officers who operate the company day to day.",
+      "at": 22.5,
+      "cues": [
+        [
+          23.3,
+          "The policy owners vote"
+        ],
+        [
+          25,
+          "for a board of directors"
+        ],
+        [
+          28.5,
+          "elects or appoints the officers"
+        ]
+      ]
+    },
+    {
+      "id": "money",
+      "text": "Now, follow the money. The company collects premiums. First, it sets aside what it needs: money to pay claims, operating expenses, the reserves required by law, and funds for general business purposes. Whatever is left over is called the divisible surplus. A mutual returns that surplus to its policy owners as policy dividends, typically once a year. Compare that with a stock company, which pays its profits to shareholders as stock dividends.",
+      "at": 34.5,
+      "cues": [
+        [
+          35.3,
+          "The company collects premiums"
+        ],
+        [
+          37.2,
+          "First, it sets aside"
+        ],
+        [
+          42.8,
+          "the divisible surplus"
+        ],
+        [
+          45.3,
+          "returns that surplus"
+        ],
+        [
+          50,
+          "Compare that with a stock company"
+        ]
+      ]
+    },
+    {
+      "id": "dividends",
+      "text": "Here are the exam facts about policy dividends. A policy dividend is a partial refund of the premium, what's left after claims, expenses and reserves. Dividends are never guaranteed. They're generally not taxable, because they're considered a return of premium. And policies that pay dividends are called participating, or par, policies, because the policy owners participate in the company's surplus.",
+      "at": 56.5,
+      "cues": [
+        [
+          57.3,
+          "partial refund of the premium"
+        ],
+        [
+          59.8,
+          "never guaranteed"
+        ],
+        [
+          62.3,
+          "generally not taxable"
+        ],
+        [
+          64.8,
+          "participating, or par"
+        ]
+      ]
+    },
+    {
+      "id": "convert",
+      "text": "Companies can also change type. When a stock company converts into a mutual company, that's called mutualization. When a mutual company converts into a stock company, that's demutualization. In a demutualization, the existing policyholders receive shares of stock in proportion to their gross premiums. Companies often demutualize to raise money by selling stock.",
+      "at": 68.5,
+      "cues": [
+        [
+          69.3,
+          "change type"
+        ],
+        [
+          70.8,
+          "converts into a mutual"
+        ],
+        [
+          74,
+          "converts into a stock"
+        ],
+        [
+          77.5,
+          "In a demutualization"
+        ]
+      ]
+    },
+    {
+      "id": "recap",
+      "text": "One last term. An insurer that issues both participating and nonparticipating policies is using a mixed plan. To recap: a mutual is owned by its policy owners, who elect the board. Its surplus comes back as policy dividends, which are not guaranteed and generally not taxable, and the policies that pay them are participating policies.",
+      "at": 84.5,
+      "cues": [
+        [
+          85.3,
+          "An insurer that issues both"
+        ],
+        [
+          88.5,
+          "To recap"
+        ]
+      ]
+    }
+  ]
+}
